@@ -14,7 +14,7 @@
     <ProjectGuid>{1E12D07F-BD19-46F6-966E-0E11A4E77950}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Form</RootNamespace>
-    <ProjectName>Radio</ProjectName>
+    <ProjectName>Tal</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -86,7 +86,6 @@
   <ItemGroup>
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="RadioInput.cpp" />
-    <ClCompile Include="Source.cpp" />
     <ClCompile Include="TextBox.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
