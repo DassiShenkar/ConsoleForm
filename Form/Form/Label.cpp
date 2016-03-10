@@ -1,5 +1,6 @@
 #include "Label.h"
 #include <iostream>
+using namespace std;
 
 
 Label::Label() : x(0), y(0), text("hello world")
@@ -24,7 +25,7 @@ Label::Label() : x(0), y(0), text("hello world")
 
 
 }
-Label::Label(int _x, int _y, char * _text) : x(_x), y(_y), text(_text)
+Label::Label(int _x, int _y, string _text) : x(_x), y(_y), text(_text)
 {
 	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();

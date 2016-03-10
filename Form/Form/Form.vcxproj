@@ -80,10 +80,12 @@
   <ItemGroup>
     <ClInclude Include="Label.h" />
     <ClInclude Include="RadioInput.h" />
+    <ClInclude Include="TextBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="RadioInput.cpp" />
+    <ClCompile Include="TextBox.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,16 +1,20 @@
 #pragma once
 
+#include <string>
 #include <Windows.h>
+#include <iostream>
+using namespace std;
 
 class Label
 {
 private:
 	int x, y;
-	char * text;
+	string text;
 
 public:
 	Label();
-	Label(int, int, char * text);
+	Label(int, int, string);
+	
 
 };
 
