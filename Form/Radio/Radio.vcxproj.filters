@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Label.h">
+    <ClInclude Include="..\Form\RadioInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Label.cpp">
+    <ClCompile Include="..\Form\RadioInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LabelDemo.cpp">
+    <ClCompile Include="RadioDemocpp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

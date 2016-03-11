@@ -15,15 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Label.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Label.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LabelDemo.cpp">
+    <ClCompile Include="ComboBoxDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

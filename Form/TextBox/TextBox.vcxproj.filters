@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Label.h">
+    <ClInclude Include="..\Form\TextBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Label.cpp">
+    <ClCompile Include="..\Form\TextBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LabelDemo.cpp">
+    <ClCompile Include="TextBoxDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
