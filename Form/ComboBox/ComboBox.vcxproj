@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A6C93D24-F160-4355-9931-DCC4FD594FE0}</ProjectGuid>
+    <ProjectGuid>{BB6251F5-0D64-4B85-B23E-F2AFDF8B87E5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ComboBox</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -146,7 +146,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ComboBoxDemo.cpp" />
+    <ClInclude Include="ComboBox.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ComboBox.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
