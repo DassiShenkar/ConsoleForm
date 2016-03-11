@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Label.cpp" />
+    <ClCompile Include="maincpp.cpp" />
     <ClCompile Include="RadioInput.cpp" />
     <ClCompile Include="TextBox.cpp" />
   </ItemGroup>
