@@ -2,17 +2,25 @@
 #include <Windows.h>
 #include "Keys.h"
 
+class ConsoleHandler;
+/*
+	An abstract class that has the basic functionality of a Widget.
+	methods to be implemented in each separate widget:
+		actOnKeyEvent(KEY_EVENT_RECORD) - how will the widget respond to each key event
+		actOnMouseEvent(MOUSE_EVENT_RECORD) - how will the widget respond to each mouse event
+*/
 class Widget
 {
 protected:
+
 	//Starting coordinate for the Widget
 	COORD startPos;
 
-	//End coordinate for the Widget
-	COORD endPos;
-
 	//The dimensions
 	short width, height;
+
+	//End coordinate for the Widget
+	COORD endPos;
 
 	//The key event that is sent from ConsoleHandler
 	KEY_EVENT_RECORD key_input;
@@ -25,7 +33,7 @@ protected:
 	*/
 	bool isPositionLegal(COORD);
 
-	//A function that determines what type of key was pressed
+	//A method that determines what type of key was pressed
 	Keys determineTypeOfKey(KEY_EVENT_RECORD);
 
 
@@ -74,7 +82,7 @@ public:
 		It responds to the key event sent by the ConsoleHandler
 		(only for press down)
 	*/
-	virtual void actOnKetEvent(KEY_EVENT_RECORD) = 0;
+	virtual void actOnKeyEvent(KEY_EVENT_RECORD) = 0;
 
 	
 	virtual MOUSE_EVENT_RECORD getMouseEvent() const { return mouse_input; }

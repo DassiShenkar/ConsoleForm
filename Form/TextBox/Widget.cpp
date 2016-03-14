@@ -4,6 +4,7 @@
 
 using namespace std;
 
+//Prints the wigdet to the screen
 void Widget::PrintWidget(COORD pos)
 {
 	//Take over the output 
@@ -11,10 +12,14 @@ void Widget::PrintWidget(COORD pos)
 
 	//Set cursor to top left corner of text box
 	SetConsoleCursorPosition(hout, startPos);
+
+	//Prints the top boundary
 	for (int i = 0; i < width; i++)
 	{
 		printf("\xcd");
 	}
+
+	//Prints the right and left boundaries
 	for (int i = 0; i < height; i++)
 	{
 
@@ -23,6 +28,8 @@ void Widget::PrintWidget(COORD pos)
 		short startY = pos.Y + i;
 		SetConsoleCursorPosition(hout, { startX,startY });
 		printf("\xba");
+
+		//Prints the bootom boundary
 		if (i == height - 1)
 		{
 			for (int i = 0; i < width; i++)
@@ -30,8 +37,12 @@ void Widget::PrintWidget(COORD pos)
 				printf("\xcd");
 			}
 		}
+
+
 		short endX = pos.X + width;
 		short endY = pos.Y + i;
+
+		//Sets the consoleCursor position to the end
 		SetConsoleCursorPosition(hout, { endX,endY });
 		printf("\xba");
 
@@ -41,9 +52,9 @@ void Widget::PrintWidget(COORD pos)
 }
 
 
-
-
-
+/*A function that checks if the position of the console cursor
+is in the boundaries of the textBox
+*/
 bool Widget::isPositionLegal(COORD pos)
 {
 	if ((pos.X > this->getStartPosition().X && pos.X<this->getEndPosition().X) &&
@@ -54,6 +65,7 @@ bool Widget::isPositionLegal(COORD pos)
 	return false;
 }
 
+//A method that determines what type of key was pressed
 Keys Widget::determineTypeOfKey(KEY_EVENT_RECORD key)
 {
 	if (key.bKeyDown)

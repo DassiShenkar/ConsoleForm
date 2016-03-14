@@ -23,7 +23,7 @@ public:
 
 
 
-	~TextBox() {}
+	~TextBox() {  }
 
 
 };

@@ -1,8 +1,8 @@
-
+#include "TextBox.h"
 #include "Widget.h"
 #include <Windows.h>
 #include <iostream>
-#include "Keys.h"
+
 #include "LinkedList.h"
 
 
@@ -133,7 +133,7 @@ void ConsoleHandler::getInputRecord()
 void ConsoleHandler::KeyEventProc(KEY_EVENT_RECORD key)
 {
 
-	widgets[0].actOnKetEvent(key);
+	widgets[0].actOnKeyEvent(key);
 }
 
 
