@@ -18,8 +18,8 @@ public:
 	void setContent(string _content) { content = _content; }
 
 	//Override Widget's 
-	void setKeyEvent(KEY_EVENT_RECORD);
-	void setMouseEvent(MOUSE_EVENT_RECORD);
+	void actOnKeyEvent(KEY_EVENT_RECORD);
+	void actOnMouseEvent(MOUSE_EVENT_RECORD);
 
 
 

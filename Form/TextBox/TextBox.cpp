@@ -16,7 +16,7 @@ TextBox::TextBox(COORD pos, short _width, short _height) : Widget(pos, _width, _
 	this->PrintWidget(pos);
 }
 
-void TextBox::setKeyEvent(KEY_EVENT_RECORD key)
+void TextBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 {
 	//Take over the output 
 	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -118,7 +118,7 @@ void TextBox::setKeyEvent(KEY_EVENT_RECORD key)
 
 }
 
-void TextBox::setMouseEvent(MOUSE_EVENT_RECORD mouse)
+void TextBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 {
 	//Take over the output 
 	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);

@@ -133,11 +133,11 @@ void ConsoleHandler::getInputRecord()
 void ConsoleHandler::KeyEventProc(KEY_EVENT_RECORD key)
 {
 
-	widgets[0].setKeyEvent(key);
+	widgets[0].actOnKetEvent(key);
 }
 
 
 void ConsoleHandler::MouseEventProc(MOUSE_EVENT_RECORD mouse)
 {
-	widgets[0].setMouseEvent(mouse);
+	widgets[0].actOnMouseEvent(mouse);
 }
