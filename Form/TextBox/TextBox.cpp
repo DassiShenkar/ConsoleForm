@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-//Default 
+//Default Constructor
 TextBox::TextBox() :Widget()
 {
 	this->PrintWidget(startPos);
@@ -11,7 +11,7 @@ TextBox::TextBox() :Widget()
 
 
 
-TextBox::TextBox(COORD pos, short _width, short _height) : Widget(pos, _width, _height), content("")
+TextBox::TextBox(COORD pos, short _width, short _height) : Widget(pos, _width, _height), content(" ")
 {
 	this->PrintWidget(pos);
 }

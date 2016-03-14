@@ -3,6 +3,8 @@
 
 #include "Node.h"
 
+//A template for Linked Lists that hold refrences 
+
 template <class T>
 class LinkedList
 {

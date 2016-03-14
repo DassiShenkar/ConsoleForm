@@ -76,6 +76,9 @@ public:
 	//Gets the key event
 	virtual KEY_EVENT_RECORD getKeyEvent() const { return key_input; }
 
+	//Sets the key event
+	virtual void setKeyEvent(KEY_EVENT_RECORD key)  { key_input = key; }
+
 	/*
 		Acts on key event
 		Each widget should implement the function.
@@ -86,6 +89,9 @@ public:
 
 	
 	virtual MOUSE_EVENT_RECORD getMouseEvent() const { return mouse_input; }
+
+	//Sets the mouse event
+	virtual void setMouseEvent(MOUSE_EVENT_RECORD mouse) { mouse_input = mouse; }
 
 	/*
 		Acts on mouse event

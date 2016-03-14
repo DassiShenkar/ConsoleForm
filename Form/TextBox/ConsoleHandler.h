@@ -9,17 +9,16 @@
 using namespace std;
 
 /*
-The ConsoleHandler class holds the Widgets and handles
-the input and output commands.
+	The ConsoleHandler class holds the Widgets and Delivers
+	the input commands to the widgets.
 */
 
 class ConsoleHandler
 {
 private:
 
+	//The linked list will hold the widgets
 	LinkedList<Widget> widgets;
-
-
 
 public:
 	//Constructor - Already contains a textBox
@@ -45,7 +44,9 @@ The Constructor initializes a textbox at COORD(10,10) and dimentions of width (2
 */
 ConsoleHandler::ConsoleHandler()
 {
+	//The Linked list holds references and thats why the * outside parenthesis
 	widgets.addItem(*(new TextBox({ 10,10 }, 20, 10)));
+	
 	//Print the textBox
 	widgets[0].PrintWidget(widgets[0].getStartPosition());
 
@@ -63,7 +64,7 @@ void ConsoleHandler::getInputRecord()
 	INPUT_RECORD inputRecord[128];		//The size of the buffer to read
 
 
-										// Get the standard input handle.
+	// Get the standard input handle.
 	hStdin = GetStdHandle(STD_INPUT_HANDLE);
 
 
@@ -136,7 +137,7 @@ void ConsoleHandler::KeyEventProc(KEY_EVENT_RECORD key)
 	widgets[0].actOnKeyEvent(key);
 }
 
-
+//The function that responds to mouse events
 void ConsoleHandler::MouseEventProc(MOUSE_EVENT_RECORD mouse)
 {
 	widgets[0].actOnMouseEvent(mouse);

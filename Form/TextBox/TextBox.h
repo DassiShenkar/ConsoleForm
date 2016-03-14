@@ -17,7 +17,7 @@ public:
 	string getContent() { return content; }
 	void setContent(string _content) { content = _content; }
 
-	//Override Widget's 
+	//Implements the pure virtual functions of Widget
 	void actOnKeyEvent(KEY_EVENT_RECORD);
 	void actOnMouseEvent(MOUSE_EVENT_RECORD);
 
