@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8864CB8E-89D2-4A47-852E-62035F8F2A4A}</ProjectGuid>
+    <ProjectGuid>{25A5A25B-8635-46EE-B185-81C468A61387}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>RadioList</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>

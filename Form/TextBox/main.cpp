@@ -1,6 +1,13 @@
-#include <iostream>
 #include "TextBox.h"
+#include <Windows.h>
+#include "ConsoleHandler.h"
+#include <iostream>
 
-void main() {
-	TextBox textBox();
+using namespace std;
+
+int main()
+{
+	ConsoleHandler *sim = new ConsoleHandler();
+	printf("Stop!!");
+	return 0;
 }

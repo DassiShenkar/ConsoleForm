@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CheckList", "D:\Shenkar\3rd_year\2nd Semester\שיטות\ConsoleForm\ConsoleForm-master\Form\CheckList\CheckList.vcxproj", "{4962A116-AE2A-4A30-8947-7CB1979E8D9C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CheckList", "CheckList\CheckList.vcxproj", "{4962A116-AE2A-4A30-8947-7CB1979E8D9C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ComboBox", "D:\Shenkar\3rd_year\2nd Semester\שיטות\ConsoleForm\ConsoleForm-master\Form\ComboBox\ComboBox.vcxproj", "{A6C93D24-F160-4355-9931-DCC4FD594FE0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ComboBox", "ComboBox\ComboBox.vcxproj", "{A6C93D24-F160-4355-9931-DCC4FD594FE0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RadioList", "D:\Shenkar\3rd_year\2nd Semester\שיטות\ConsoleForm\ConsoleForm-master\Form\Radio\Radio.vcxproj", "{25A5A25B-8635-46EE-B185-81C468A61387}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RadioList", "RadioList\RadioList.vcxproj", "{25A5A25B-8635-46EE-B185-81C468A61387}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextBox", "D:\Shenkar\3rd_year\2nd Semester\שיטות\ConsoleForm\ConsoleForm-master\Form\TextBox\TextBox.vcxproj", "{B3FD1ED4-E8D2-4C0E-A9DD-7E142FC8D0EB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextBox", "TextBox\TextBox.vcxproj", "{B3FD1ED4-E8D2-4C0E-A9DD-7E142FC8D0EB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Label", "Label\Label.vcxproj", "{EAA1F596-13FC-4936-8F73-328A1DF45819}"
 EndProject

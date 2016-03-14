@@ -1,15 +1,29 @@
 #pragma once
 
 #include <Windows.h>
+#include "Widget.h"
+#include <iostream>
+using namespace std;
 
-class TextBox
+class TextBox : public Widget
 {
 private:
-	COORD startPos;
-	int width, height;
+	string content;
+
 
 public:
 	TextBox();
-	TextBox(COORD pos, int width, int height);
+	TextBox(COORD, short, short);
+	string getContent() { return content; }
+	void setContent(string _content) { content = _content; }
+
+	//Override Widget's 
+	void setKeyEvent(KEY_EVENT_RECORD);
+	void setMouseEvent(MOUSE_EVENT_RECORD);
+
+
+
+	~TextBox() {}
+
+
 };
-#pragma once

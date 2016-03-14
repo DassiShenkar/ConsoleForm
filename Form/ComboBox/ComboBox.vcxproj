@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BB6251F5-0D64-4B85-B23E-F2AFDF8B87E5}</ProjectGuid>
+    <ProjectGuid>{A6C93D24-F160-4355-9931-DCC4FD594FE0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ComboBox</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
