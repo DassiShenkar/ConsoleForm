@@ -40,10 +40,10 @@ public:
 	void clear();
 
 	//Overload operator[] for const objects
-	const T& operator[](int) const;
+	const Node<T> operator[](int) const;
 
 	//Overload operator[] for non-const objects
-	T& operator[](int);
+	Node<T> operator[](int);
 
 	//Overload operator= for non-const objects
 	LinkedList<T>& operator=(const LinkedList&);
@@ -192,7 +192,7 @@ bool LinkedList<T>::removeItem(int i)
 
 }
 template <class T>
-const T&  LinkedList<T>::operator[](int i) const
+const Node<T>  LinkedList<T>::operator[](int i) const
 {
 	if (getCount() < i || i <= 0)
 	{
@@ -208,12 +208,12 @@ const T&  LinkedList<T>::operator[](int i) const
 		counter++;
 
 	}
-	return tmp->getData();
+	return tmp;
 }
 
 
 template <class T>
-T&  LinkedList<T>::operator[](int i)
+Node<T>  LinkedList<T>::operator[](int i)
 {
 
 	if (getCount() < i || i < 0)
@@ -225,7 +225,7 @@ T&  LinkedList<T>::operator[](int i)
 	Node<T>* tmp = header;
 	if (i == 0)
 	{
-		return tmp->getData();
+		return *tmp;
 	}
 	//Gets the wanted index
 	while (tmp != NULL && i >= counter)
@@ -234,7 +234,7 @@ T&  LinkedList<T>::operator[](int i)
 		counter++;
 
 	}
-	return tmp->getData();
+	return *tmp;
 }
 
 template <class T>
@@ -307,7 +307,6 @@ void LinkedList<T>::printList() const
 	//cout << "Printing the items of the list...\n";
 	for (int i = 1; i <= counter; i++)
 	{
-		cout << i << ") \n\t";
 		tmp->printData();
 		tmp = tmp->getNext();
 

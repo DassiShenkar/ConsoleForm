@@ -101,7 +101,7 @@ template <class T>
 void Node<T>::printData() const
 {
 	//Assuming operator << is defined at the data class
-	cout << this->getData() << "\n";
+	cout << this->getData();
 }
 
 //Node destructor

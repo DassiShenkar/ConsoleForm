@@ -44,11 +44,12 @@ The Constructor initializes a textbox at COORD(10,10) and dimentions of width (2
 */
 ConsoleHandler::ConsoleHandler()
 {
+	widgets = (*new LinkedList<Widget>());
 	//The Linked list holds references and thats why the * outside parenthesis
 	widgets.addItem(*(new TextBox({ 10,10 }, 20, 10)));
 	
 	//Print the textBox
-	widgets[0].PrintWidget(widgets[0].getStartPosition());
+	widgets[0].getData().PrintWidget(widgets[0].getData().getStartPosition());
 
 	//Handle input
 	getInputRecord();
@@ -134,11 +135,11 @@ void ConsoleHandler::getInputRecord()
 void ConsoleHandler::KeyEventProc(KEY_EVENT_RECORD key)
 {
 
-	widgets[0].actOnKeyEvent(key);
+	widgets[0].getData().actOnKeyEvent(key);
 }
 
 //The function that responds to mouse events
 void ConsoleHandler::MouseEventProc(MOUSE_EVENT_RECORD mouse)
 {
-	widgets[0].actOnMouseEvent(mouse);
+	widgets[0].getData().actOnMouseEvent(mouse);
 }

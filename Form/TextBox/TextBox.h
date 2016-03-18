@@ -3,19 +3,25 @@
 #include <Windows.h>
 #include "Widget.h"
 #include <iostream>
+#include "LinkedList.h"
 using namespace std;
 
 class TextBox : public Widget
 {
 private:
-	string content;
-
+	
+	
+	PWCHAR body;
+	
+	
+	
+	
 
 public:
 	TextBox();
 	TextBox(COORD, short, short);
-	string getContent() { return content; }
-	void setContent(string _content) { content = _content; }
+	
+	
 
 	//Implements the pure virtual functions of Widget
 	void actOnKeyEvent(KEY_EVENT_RECORD);

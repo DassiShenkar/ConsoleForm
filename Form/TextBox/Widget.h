@@ -44,7 +44,7 @@ public:
 
 	//Constructor with parameters
 	Widget(COORD start, short _width, short _height) : startPos(start), width(_width), height(_height),
-		endPos({ startPos.X + _width,startPos.Y + _height }) {}
+		endPos({ startPos.X + _width,startPos.Y + _height-1 }) {}
 
 	//Prints the wigdet to the screen
 	virtual void PrintWidget(COORD);
