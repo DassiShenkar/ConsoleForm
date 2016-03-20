@@ -33,6 +33,7 @@ protected:
 	*/
 	bool isPositionLegal(COORD);
 
+
 	//A method that determines what type of key was pressed
 	Keys determineTypeOfKey(KEY_EVENT_RECORD);
 

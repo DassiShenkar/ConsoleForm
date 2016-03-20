@@ -65,27 +65,58 @@ bool Widget::isPositionLegal(COORD pos)
 	return false;
 }
 
+
+
 //A method that determines what type of key was pressed
 Keys Widget::determineTypeOfKey(KEY_EVENT_RECORD key)
 {
 	if (key.bKeyDown)
 	{
+		//Backspace
 		if (key.wVirtualKeyCode == 8)
 			return BACKSPACE;
+
+		//Tab
 		else if (key.wVirtualKeyCode == 9)
 			return TAB;
+
+		//Enter
 		else if (key.wVirtualKeyCode == 13)
-			return DOWN;
+			return ENTER;
+
+		//Spacebar
+		else if (key.wVirtualKeyCode == 32)
+			return SPACEBAR;
+
+		//Left arrow
 		else if (key.wVirtualKeyCode == 37)
 			return LEFT;
+
+		//Up arrow
 		else if (key.wVirtualKeyCode == 38)
 			return UP;
+
+		//Right arrow
 		else if (key.wVirtualKeyCode == 39)
 			return RIGHT;
+
+		//Down arrow
 		else if (key.wVirtualKeyCode == 40)
 			return DOWN;
-
-		else return OTHER;
+		//Delete
+		else if (key.wVirtualKeyCode == 46)
+			return DEL;
+		//Insert
+		else if (key.wVirtualKeyCode == 45)
+			return INSERT;
+		
+		//Anyother type of key
+		else if ((key.wVirtualKeyCode >= 48 && key.wVirtualKeyCode <= 57) ||
+			(key.wVirtualKeyCode>=65 && key.wVirtualKeyCode<=90) ||
+			(key.wVirtualKeyCode>=96 && key.wVirtualKeyCode<=111))
+		{
+			return OTHER;
+		}
 	}
 	return KEY_RELEASED;
 }

@@ -9,7 +9,12 @@
 TextBox::TextBox() :Widget()
 {
 	
-	
+	body = new WCHAR[((getWidth() - 2) * (getHeight() - 2))];
+	int end_of_string = ((getWidth() - 2) * (getHeight() - 2));
+	for (int i = 0; i <end_of_string; i++)
+	{
+		body[i] = WCHAR(' ');
+	}
 	this->PrintWidget(startPos);
 }
 
@@ -47,11 +52,10 @@ void TextBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 
 	
 	
-	
 	if (isPositionLegal(cursorPos))
 	{
 		//Location in string
-		int location = ((cursorPos.Y - startPos.Y - 1)*this->getWidth()) + cursorPos.X - startPos.X - 1;
+		int location = (cursorPos.Y - startPos.Y - 1)*(this->getWidth()-2) + cursorPos.X - startPos.X-1;
 
 		Keys keyPressed;
 		keyPressed = determineTypeOfKey(key);
@@ -82,18 +86,27 @@ void TextBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 				SetConsoleCursorPosition(s, { cursorPos.X + 1, cursorPos.Y });
 			break;
 
-		case BACKSPACE:	//Backspace - acts the same as LEFT arrow
-			if (isPositionLegal({ cursorPos.X - 1, cursorPos.Y }))
-				SetConsoleCursorPosition(s, { cursorPos.X - 1, cursorPos.Y });
-
+		case BACKSPACE:	//Backspace 
+			rePrintText(s, BACKSPACE, location);
 			break;
+
+		case SPACEBAR:	//Spacebar 
+			rePrintText(s, SPACEBAR, location);
+			break;
+
 		case TAB:	//Tab - equals 8 spaces
-			if (isPositionLegal({ (cursorPos.X + 8), cursorPos.Y }))
-				SetConsoleCursorPosition(s, { cursorPos.X + 8, cursorPos.Y });
+			rePrintText(s, TAB, location);
 
-
+		case ENTER: //Enter key
+			rePrintText(s, ENTER, location);
 			break;
 
+		case DEL: //delete key
+			rePrintText(s, DEL, location);
+			break;
+
+		case INSERT:
+			break;
 		case OTHER:
 
 			body[location] = key.uChar.UnicodeChar;
@@ -138,7 +151,134 @@ void TextBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 }
 
 
+void TextBox::rePrintText(HANDLE &hout, Keys key, int location)
+{
+	//Console's info
+	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
+	GetConsoleScreenBufferInfo(hout, ConsoleInfo);
 
+	//Save the current cursor position
+	COORD old_cursor_pos = ConsoleInfo->dwCursorPosition;
+
+	int chars_to_end_line = (this->getWidth()) - (old_cursor_pos.X - startPos.X+1);
+
+
+	//Gets the total size of the body 
+	int max_length = (this->getWidth() - 2)* (this->getHeight() - 2);
+
+	PWCHAR temp_array = new WCHAR[max_length];
+	for(int i = 0; i < max_length; i++)
+	{
+		temp_array[i] = ' ';
+	}
+	
+
+	switch (key)
+	{
+	case BACKSPACE:
+		if (location == 0)
+			return;
+		for (int i = 0; i < max_length - 1; i++)
+		{
+			if (i < location - 1)
+			{
+				temp_array[i] = body[i];
+			}
+			else if (i >= location - 1)
+			{
+				temp_array[i] = body[i + 1];
+			}
+		}
+
+		temp_array[max_length - 1] = ' ';
+
+		SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
+		for (int i = 0; i < max_length - 1; i++)
+		{
+			body[i] = temp_array[i];
+			if ((i % (getWidth() - 2)) == 0 && i != 0)
+			{
+				GetConsoleScreenBufferInfo(hout, ConsoleInfo);
+				SetConsoleCursorPosition(hout, { startPos.X + 1, ConsoleInfo->dwCursorPosition.Y + 1 });
+			}
+			printf("%c", body[i]);
+		}
+
+		if (isPositionLegal({old_cursor_pos.X - 1, old_cursor_pos.Y}))
+			SetConsoleCursorPosition(hout, { old_cursor_pos.X - 1,old_cursor_pos.Y });
+		else
+			SetConsoleCursorPosition(hout, { endPos.X-1 ,old_cursor_pos.Y-1 });
+
+		break;
+	case SPACEBAR:
+		for (int i = 0; i < max_length - 1; i++)
+		{
+			if (i < location+1)
+			{
+				temp_array[i] = body[i];
+			}
+			else if (i == location+1)
+			{
+				temp_array[i] = ' ';
+			}
+			else 
+			{
+				temp_array[i] = body[i - 1];
+			}
+		}
+
+		temp_array[max_length - 1] = body[max_length - 1];
+
+		SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
+		for (int i = 0; i < max_length - 1; i++)
+		{
+			body[i] = temp_array[i];
+			if ((i % (getWidth() - 2)) == 0 && i != 0)
+			{
+				GetConsoleScreenBufferInfo(hout, ConsoleInfo);
+				SetConsoleCursorPosition(hout, { startPos.X + 1, ConsoleInfo->dwCursorPosition.Y + 1 });
+			}
+			printf("%c", body[i]);
+		}
+
+		if (isPositionLegal({ old_cursor_pos.X + 1, old_cursor_pos.Y }))
+			SetConsoleCursorPosition(hout, { old_cursor_pos.X + 1,old_cursor_pos.Y });
+		else
+			SetConsoleCursorPosition(hout, { startPos.X + 1,old_cursor_pos.Y+1 });
+		
+		break;
+
+	case TAB:
+		for (int i = 0; i < 8; i++)
+		{
+			rePrintText(hout, SPACEBAR, location);
+		}
+		break;
+
+	case ENTER:
+		 
+		for (int i = 0; i < getWidth()-2; i++)
+		{
+			rePrintText(hout, SPACEBAR, location - 1);
+			
+			
+		}
+		break;
+	case DEL:
+		rePrintText(hout, BACKSPACE, location + 1);
+		
+		break;
+
+	case INSERT:
+		rePrintText(hout, BACKSPACE, location + 1);
+
+		break;
+
+	default:
+		break;
+	}
+
+}
 
 
 

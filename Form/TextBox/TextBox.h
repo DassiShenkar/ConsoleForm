@@ -12,8 +12,7 @@ private:
 	
 	
 	PWCHAR body;
-	
-	
+	void rePrintText(HANDLE&, Keys, int);
 	
 	
 
