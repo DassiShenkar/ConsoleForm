@@ -152,7 +152,7 @@
     <ClInclude Include="Label.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="RadioButtons.h" />
+    <ClInclude Include="RadioList.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="Widget.h" />
   </ItemGroup>
@@ -160,6 +160,7 @@
     <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RadioList.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="Widget.cpp" />
   </ItemGroup>

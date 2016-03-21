@@ -5,6 +5,7 @@
 #include "Label.h"
 #include "LinkedList.h"
 #include "ComboBox.h"
+#include "RadioList.h"
 
 
 using namespace std;
@@ -49,12 +50,14 @@ ConsoleHandler::ConsoleHandler()
 	//The Linked list holds references and thats why the * outside parenthesis
 	//widgets.addItem(*(new TextBox({ 10,10 }, 20, 10)));
 	// widgets.addItem(*(new Label({ 10,10 }, "label")));
-
+	
 	LinkedList<string&> *items = new LinkedList<string&>();
 	items->addItem(*(new string("Item 1")));
 	items->addItem(*(new string("Item 2")));
 	items->addItem(*(new string("Item 3")));
 	widgets.addItem(*(new ComboBox({ 10,10 }, items)));
+	//widgets.addItem(*(new RadioList({ 10,10 }, items)));
+
 	
 	//Print the textBox
 	//widgets[0].getData().PrintWidget(widgets[0].getData().getStartPosition());

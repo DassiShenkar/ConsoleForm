@@ -39,8 +39,8 @@
     <ClInclude Include="ComboBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RadioButtons.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="RadioList.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +57,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ComboBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RadioList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
