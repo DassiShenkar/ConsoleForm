@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CheckList.h" />
     <ClInclude Include="ComboBox.h" />
     <ClInclude Include="ConsoleHandler.h" />
     <ClInclude Include="Keys.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Widget.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CheckList.cpp" />
     <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="main.cpp" />

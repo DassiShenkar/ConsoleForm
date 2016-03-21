@@ -6,6 +6,7 @@
 #include "LinkedList.h"
 #include "ComboBox.h"
 #include "RadioList.h"
+#include "CheckList.h"
 
 
 using namespace std;
@@ -55,8 +56,9 @@ ConsoleHandler::ConsoleHandler()
 	items->addItem(*(new string("Item 1")));
 	items->addItem(*(new string("Item 2")));
 	items->addItem(*(new string("Item 3")));
-	widgets.addItem(*(new ComboBox({ 10,10 }, items)));
+	//widgets.addItem(*(new ComboBox({ 10,10 }, items)));
 	//widgets.addItem(*(new RadioList({ 10,10 }, items)));
+	widgets.addItem(*(new CheckList({ 10,10 }, items)));
 
 	
 	//Print the textBox
