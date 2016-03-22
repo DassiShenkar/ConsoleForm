@@ -59,6 +59,7 @@ void CheckList::printCheckList() const
 	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
 	GetConsoleScreenBufferInfo(hout, ConsoleInfo);
 	WORD originalColors = ConsoleInfo->wAttributes;
+	 
 
 	SetConsoleCursorPosition(hout, startPos);
 	for (int i = 0; i < getWidth(); i++)
@@ -72,7 +73,9 @@ void CheckList::printCheckList() const
 		SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + i + 1 });
 		if (checked[i]==true)
 		{
+			SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 			cout << "|X " << i + 1 << " " << item_list->operator[](i).getData();
+			SetConsoleTextAttribute(hout, originalColors);
 		}
 		else
 		{

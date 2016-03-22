@@ -64,7 +64,9 @@ void RadioList::printRadioList() const
 		SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + i + 1});
 		if (checked == i + 1)
 		{
+			SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 			cout << "|X " << i + 1 << " " << item_list->operator[](i).getData();
+			SetConsoleTextAttribute(hout, originalColors);
 		}
 		else
 		{

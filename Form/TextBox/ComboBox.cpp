@@ -82,8 +82,12 @@ void ComboBox::printComboBox()
 	{
 		cout << "-";
 	}
+	
 	SetConsoleCursorPosition(hout, { startPos.X,startPos.Y+1});
-	cout << '|' << "O| " << header;
+	cout << '|';
+	SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
+	cout << "O| " << header;
+	SetConsoleTextAttribute(hout, originalColors);
 	SetConsoleCursorPosition(hout, { startPos.X+getWidth()-1,startPos.Y+1 });
 	cout<<'|';
 	SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + 2 });

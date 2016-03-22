@@ -49,8 +49,8 @@ ConsoleHandler::ConsoleHandler()
 {
 	widgets = (*new LinkedList<Widget>());
 	//The Linked list holds references and thats why the * outside parenthesis
-	//widgets.addItem(*(new TextBox({ 10,10 }, 20, 10)));
-	// widgets.addItem(*(new Label({ 10,10 }, "label")));
+	widgets.addItem(*(new TextBox({ 10,10 }, 20, 10)));
+	
 	
 	LinkedList<string&> *items = new LinkedList<string&>();
 	items->addItem(*(new string("Item 1")));
@@ -58,8 +58,8 @@ ConsoleHandler::ConsoleHandler()
 	items->addItem(*(new string("Item 3")));
 	//widgets.addItem(*(new ComboBox({ 10,10 }, items)));
 	//widgets.addItem(*(new RadioList({ 10,10 }, items)));
-	widgets.addItem(*(new CheckList({ 10,10 }, items)));
-
+	//widgets.addItem(*(new CheckList({ 10,10 }, items)));
+	//widgets.addItem(*(new Label({ 10,10 },"Great Success!!")));
 	
 	//Print the textBox
 	//widgets[0].getData().PrintWidget(widgets[0].getData().getStartPosition());

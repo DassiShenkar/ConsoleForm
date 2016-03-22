@@ -13,6 +13,8 @@ void Widget::PrintWidget(COORD pos)
 	//Set cursor to top left corner of text box
 	SetConsoleCursorPosition(hout, startPos);
 
+	
+
 	//Prints the top boundary
 	for (int i = 0; i < width; i++)
 	{

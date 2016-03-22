@@ -25,7 +25,7 @@ Label::Label() : Widget(), text("hello world")
 
 }
 
-Label::Label(COORD start, string _text) : Widget(start, _text.length() + 4, 5), text(_text)
+Label::Label(COORD start, string _text) : Widget(start, _text.length() + 4, 3), text(_text)
 {
 	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
@@ -34,7 +34,7 @@ Label::Label(COORD start, string _text) : Widget(start, _text.length() + 4, 5), 
 
 	CONSOLE_CURSOR_INFO console;
 	PrintWidget(startPos);
-	COORD center = { startPos.X + ((getWidth() - 1 - (text.length() - 1)) / 2),startPos.Y + 2 };
+	COORD center = { startPos.X + ((getWidth() - 1 - (text.length() - 1)) / 2),startPos.Y + 1 };
 	SetConsoleCursorPosition(s, center);
 	SetConsoleTextAttribute(s, FOREGROUND_GREEN);
 	console.bVisible = FALSE;

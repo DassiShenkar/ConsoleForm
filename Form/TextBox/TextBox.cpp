@@ -8,12 +8,36 @@
 //Default Constructor
 TextBox::TextBox() :Widget()
 {
+	//Take over the output 
+	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	//Console's info
+	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
+	GetConsoleScreenBufferInfo(hout, ConsoleInfo);
+
+	//Save original color settings
+	WORD originalColors = ConsoleInfo->wAttributes;
+
 	
+
+	SetConsoleTextAttribute(hout, 0x93 & 0xDD & 0xF5 | 0x0004 | 0x0008);
+	SetConsoleCursorPosition(hout, startPos);
+	for (short i = 0; i < getWidth(); i++)
+	{
+		for (short j = 0; j < getHeight(); j++)
+		{
+			cout << ' ';
+		}
+		SetConsoleCursorPosition(hout, {startPos.X, startPos.Y + i + 1});
+	}
+
+
 	body = new WCHAR[((getWidth() - 2) * (getHeight() - 2))];
 	int end_of_string = ((getWidth() - 2) * (getHeight() - 2));
 	for (int i = 0; i <end_of_string; i++)
 	{
 		body[i] = WCHAR(' ');
+		
 	}
 	this->PrintWidget(startPos);
 }
@@ -22,12 +46,29 @@ TextBox::TextBox() :Widget()
 
 TextBox::TextBox(COORD pos, short _width, short _height) : Widget(pos, _width, _height)
 {
-	
+	//Take over the output 
+	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	//Console's info
+	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
+	GetConsoleScreenBufferInfo(hout, ConsoleInfo);
+
+	//Save original color settings
+	WORD originalColors = ConsoleInfo->wAttributes;
+
+	//Current console cursor position
+	COORD cursorPos = ConsoleInfo->dwCursorPosition;
+
+	SetConsoleTextAttribute(hout, 0x93&0xDD&0xF5 | 0x0004 | 0x0008);
+	SetConsoleCursorPosition(hout, startPos);
+
 	body = new WCHAR[((getWidth() - 2) * (getHeight() - 2))];
 	int end_of_string = ((getWidth() - 2) * (getHeight() - 2));
 	for (int i = 0; i <end_of_string ; i++)
 	{
 		body[i] = WCHAR(' ');
+		
+		
 	}
 
 	
@@ -159,6 +200,8 @@ void TextBox::rePrintText(HANDLE &hout, Keys key, int location)
 
 	//Save the current cursor position
 	COORD old_cursor_pos = ConsoleInfo->dwCursorPosition;
+
+
 
 	int chars_to_end_line = (this->getWidth()) - (old_cursor_pos.X - startPos.X+1);
 
