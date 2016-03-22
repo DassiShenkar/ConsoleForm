@@ -32,7 +32,60 @@ item_list(items)
 //The Check list does not respond to key events
 void CheckList::actOnKeyEvent(KEY_EVENT_RECORD key)
 {
-	;
+	//Gets the handle for the output
+	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	//Gets the console's info  
+	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
+	GetConsoleScreenBufferInfo(hout, ConsoleInfo);
+
+	//Saves the original colors of the console
+	WORD originalColors = ConsoleInfo->wAttributes;
+
+	//Save the current cursor position
+	COORD cursor_pos = ConsoleInfo->dwCursorPosition;
+
+
+	//If key is pressed
+	if (key.bKeyDown)
+	{
+		Keys type_of_key = determineTypeOfKey(key);
+		switch (type_of_key)
+		{
+		case DOWN:			//Down arrow 
+			if (cursor_pos.Y + 1 > short(startPos.Y+item_list->getCount()))
+				SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y + 1 });
+
+			else
+				SetConsoleCursorPosition(hout, { startPos.X + 1, cursor_pos.Y + 1 });
+							
+			break;
+		case UP:				//Up arrow
+			if (cursor_pos.Y - 1 < startPos.Y+1)
+				SetConsoleCursorPosition(hout, { startPos.X + 1, short(startPos.Y + item_list->getCount()) });
+
+			else
+				SetConsoleCursorPosition(hout, { startPos.X + 1, cursor_pos.Y - 1 });
+								
+			break;
+
+		case ENTER:				//Enter key
+
+			for (int i = 0; i < item_list->getCount(); i++)
+			{
+				if (cursor_pos.Y - startPos.Y == i + 1)
+				{
+					checked[i] = !checked[i];
+					printCheckList();
+				}
+				SetConsoleCursorPosition(hout, cursor_pos);
+			}
+			
+		default:
+			break;
+		}
+	}
+
 }
 
 

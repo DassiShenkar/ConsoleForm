@@ -16,7 +16,90 @@ item_list(*items), header("Select Item"), drop_down(false)
 //The combo box does not respond to key events
 void ComboBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 {
-	;
+	//Gets the handle for the output
+	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	//Gets the console's info  
+	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
+	GetConsoleScreenBufferInfo(hout, ConsoleInfo);
+
+	//Saves the original colors of the console
+	WORD originalColors = ConsoleInfo->wAttributes;
+
+	//Save the current cursor position
+	COORD cursor_pos = ConsoleInfo->dwCursorPosition;
+
+
+	//If key is pressed
+	if (key.bKeyDown)
+	{
+		Keys type_of_key = determineTypeOfKey(key);
+		switch (type_of_key)
+		{
+		case DOWN:			//Down arrow 
+			
+			//If the drop down menu is closed then open it print the menu and set cursor to first item
+			if (drop_down == false)
+			{
+				drop_down = true;
+				printComboBox();
+				SetConsoleCursorPosition(hout,{startPos.X + 1, startPos.Y + 3});
+			}
+
+			//Else, move down the items
+			else
+			{
+
+				//If reaches the last item then go back to the first
+				if (cursor_pos.Y == (item_list.getCount()+2))
+					SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y + 3 });
+				else
+					SetConsoleCursorPosition(hout, { startPos.X + 1, cursor_pos.Y + 1 });
+			}
+			break;
+		case UP:				//Up arrow
+
+			//If the drop down menu is closed then open it print the menu and set cursor to last item
+			if (drop_down == false)
+			{
+				drop_down = true;
+				printComboBox();
+				SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y + short(item_list.getCount() + 2) });
+			}
+
+			//Else, iterate up through the items
+			else
+			{
+				
+				//If reaches the first item then go to the last item
+				if (cursor_pos.Y == (startPos.Y + 3))
+					SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y +short(item_list.getCount()+ 2) });
+				else
+					SetConsoleCursorPosition(hout, { startPos.X + 1, cursor_pos.Y - 1 });
+			}
+			break;
+
+		case ENTER:				//Enter key
+			
+			//If drop down menu is open
+			if (drop_down == true)
+			{
+				drop_down = false;
+				for (short i = 0; i < item_list.getCount(); i++)
+				{
+					if (cursor_pos.Y == startPos.Y + i+ 3)
+					{
+						setHeader(item_list[i].getData());
+						printComboBox();
+						
+						SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y + 1 });
+					}
+				}
+			}
+		default:
+			break;
+		}
+	}
 }
 
 //A ,ethod that respond to key events
