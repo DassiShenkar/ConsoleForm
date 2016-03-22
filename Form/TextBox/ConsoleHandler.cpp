@@ -20,8 +20,8 @@ ConsoleHandler::ConsoleHandler()
 	items->addItem(*(new string("Item 1")));
 	items->addItem(*(new string("Item 2")));
 	items->addItem(*(new string("Item 3")));
-	widgets.addItem(*(new ComboBox({ 5,0 }, items)));
-	//widgets.addItem(*(new RadioList({ 40,10 }, items)));
+	//widgets.addItem(*(new ComboBox({ 5,0 }, items)));
+	widgets.addItem(*(new RadioList({ 40,10 }, items)));
 	//widgets.addItem(*(new CheckList({ 40,20 }, items)));
 	//widgets.addItem(*(new Label({ 5,10 },"Great Success!!")));
 

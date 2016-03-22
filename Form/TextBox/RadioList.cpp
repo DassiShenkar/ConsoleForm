@@ -1,6 +1,7 @@
 #include "RadioList.h"
 #include <iostream>
 #include <string>
+#include "Keys.h"
 using namespace std;
 
 //A default constructor that activates Widget default constructor
@@ -16,10 +17,31 @@ item_list(items), checked(0)
 	printRadioList();
 }
 
-
+//A method that responds only to up and down arrows from the keybord
 void RadioList::actOnKeyEvent(KEY_EVENT_RECORD key)
 {
-	;
+	//On key pressed
+	if (key.bKeyDown)
+	{
+		Keys type_of_key = determineTypeOfKey(key);
+		switch (type_of_key)
+		{
+		case DOWN:		//Down arrow
+			checked += 1;
+			if (checked == item_list->getCount()+1)
+				checked = 1;
+			printRadioList();
+			break;
+		case UP:		//Down arrow
+			checked -= 1;
+			if (checked <= 0)
+				checked = item_list->getCount();
+			printRadioList();
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 //A method that responds to mouse events
