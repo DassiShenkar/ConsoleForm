@@ -59,7 +59,7 @@ TextBox::TextBox(COORD pos, short _width, short _height) : Widget(pos, _width, _
 	//Current console cursor position
 	COORD cursorPos = ConsoleInfo->dwCursorPosition;
 
-	SetConsoleTextAttribute(hout, 0x93&0xDD&0xF5 | 0x0004 | 0x0008);
+	//SetConsoleTextAttribute(hout, 0x93&0xDD&0xF5 | 0x0004 | 0x0008);
 	SetConsoleCursorPosition(hout, startPos);
 
 	body = new WCHAR[((getWidth() - 2) * (getHeight() - 2))];
