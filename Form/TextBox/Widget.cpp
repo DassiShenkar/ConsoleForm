@@ -115,7 +115,9 @@ Keys Widget::determineTypeOfKey(KEY_EVENT_RECORD key)
 		//Anyother type of key
 		else if ((key.wVirtualKeyCode >= 48 && key.wVirtualKeyCode <= 57) ||
 			(key.wVirtualKeyCode>=65 && key.wVirtualKeyCode<=90) ||
-			(key.wVirtualKeyCode>=96 && key.wVirtualKeyCode<=111))
+			(key.wVirtualKeyCode>=96 && key.wVirtualKeyCode<=111) ||
+			(key.wVirtualKeyCode >= 186 && key.wVirtualKeyCode <= 192) ||
+			(key.wVirtualKeyCode >= 219 && key.wVirtualKeyCode <= 222))
 		{
 			return OTHER;
 		}
