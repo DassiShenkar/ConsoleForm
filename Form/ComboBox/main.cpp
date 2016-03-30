@@ -1,6 +1,12 @@
+#include <Windows.h>
+#include "ConsoleHandler.h"
 #include <iostream>
-#include "ComboBox.h"
 
-void main() {
-	ComboBox comboBox();
+using namespace std;
+
+int main()
+{
+	ConsoleHandler *sim = new ConsoleHandler();
+	printf("Stop!!");
+	return 0;
 }

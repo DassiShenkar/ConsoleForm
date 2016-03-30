@@ -1,8 +1,12 @@
+#include <Windows.h>
+#include "ConsoleHandler.h"
 #include <iostream>
-#include "CheckList.h"
 
 using namespace std;
 
-void main() {
-	CheckList checklist();
+int main()
+{
+	ConsoleHandler *sim = new ConsoleHandler();
+	printf("Stop!!");
+	return 0;
 }

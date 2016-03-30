@@ -1,15 +1,15 @@
-#include "TextBox.h"
 #include "Widget.h"
 #include <Windows.h>
 #include <iostream>
 #include "LinkedList.h"
+#include "RadioList.h"
 
 
 using namespace std;
 
 /*
-	The ConsoleHandler class holds the Widgets and Delivers
-	the input commands to the widgets.
+The ConsoleHandler class holds the Widgets and Delivers
+the input commands to the widgets.
 */
 
 class ConsoleHandler

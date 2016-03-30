@@ -1,6 +1,12 @@
+#include <Windows.h>
+#include "ConsoleHandler.h"
 #include <iostream>
-#include "RadioList.h"
 
-void main() {
-	RadioList radioList();
+using namespace std;
+
+int main()
+{
+	ConsoleHandler *sim = new ConsoleHandler();
+	printf("Stop!!");
+	return 0;
 }

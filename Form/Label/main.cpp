@@ -1,6 +1,12 @@
+#include <Windows.h>
+#include "ConsoleHandler.h"
 #include <iostream>
-#include "Label.h"
 
-void main() {
-	Label label();
+using namespace std;
+
+int main()
+{
+	ConsoleHandler *sim = new ConsoleHandler();
+	printf("Stop!!");
+	return 0;
 }

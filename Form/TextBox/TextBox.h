@@ -19,6 +19,7 @@ private:
 public:
 	TextBox();
 	TextBox(COORD, short, short);
+	void printTextBox();
 	
 	
 

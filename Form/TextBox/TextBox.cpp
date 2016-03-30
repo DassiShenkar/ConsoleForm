@@ -20,18 +20,7 @@ TextBox::TextBox() :Widget()
 
 	
 
-	SetConsoleTextAttribute(hout, 0x93 & 0xDD & 0xF5 | 0x0004 | 0x0008);
-	SetConsoleCursorPosition(hout, startPos);
-	for (short i = 0; i < getWidth(); i++)
-	{
-		for (short j = 0; j < getHeight(); j++)
-		{
-			cout << ' ';
-		}
-		SetConsoleCursorPosition(hout, {startPos.X, startPos.Y + i + 1});
-	}
-
-
+	//Initializes the body with spaces
 	body = new WCHAR[((getWidth() - 2) * (getHeight() - 2))];
 	int end_of_string = ((getWidth() - 2) * (getHeight() - 2));
 	for (int i = 0; i <end_of_string; i++)
@@ -39,7 +28,7 @@ TextBox::TextBox() :Widget()
 		body[i] = WCHAR(' ');
 		
 	}
-	this->PrintWidget(startPos);
+	this->printTextBox();
 }
 
 
@@ -72,7 +61,7 @@ TextBox::TextBox(COORD pos, short _width, short _height) : Widget(pos, _width, _
 	}
 
 	
-	this->PrintWidget(pos);
+	this->printTextBox();
 	
 }
 
@@ -97,6 +86,7 @@ void TextBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 	{
 		//Location in string
 		int location = (cursorPos.Y - startPos.Y - 1)*(this->getWidth()-2) + cursorPos.X - startPos.X-1;
+		int max_size = (getWidth() - 2)*(getHeight() - 2);
 
 		Keys keyPressed;
 		keyPressed = determineTypeOfKey(key);
@@ -149,7 +139,8 @@ void TextBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 		case INSERT:
 			break;
 		case OTHER:
-
+			if (location > max_size-2)
+				break;
 			body[location] = key.uChar.UnicodeChar;
 			printf("%c", key.uChar.UnicodeChar);
 			break;
@@ -203,12 +194,14 @@ void TextBox::rePrintText(HANDLE &hout, Keys key, int location)
 
 
 
-	int chars_to_end_line = (this->getWidth()) - (old_cursor_pos.X - startPos.X+1);
+	//int chars_to_end_line = (this->getWidth()) - (old_cursor_pos.X - startPos.X+1);
 
 
 	//Gets the total size of the body 
 	int max_length = (this->getWidth() - 2)* (this->getHeight() - 2);
 
+
+	//An auxilliary temporary array
 	PWCHAR temp_array = new WCHAR[max_length];
 	for(int i = 0; i < max_length; i++)
 	{
@@ -221,36 +214,52 @@ void TextBox::rePrintText(HANDLE &hout, Keys key, int location)
 	case BACKSPACE:
 		if (location == 0)
 			return;
-		for (int i = 0; i < max_length - 1; i++)
+		
+			
+		for (int i = 0; i < max_length-1; i++)
 		{
-			if (i < location - 1)
+			if (i < location-1)
 			{
 				temp_array[i] = body[i];
 			}
-			else if (i >= location - 1)
+			else if (i >= location-1)
 			{
 				temp_array[i] = body[i + 1];
 			}
+
 		}
 
 		temp_array[max_length - 1] = ' ';
+		temp_array[max_length] = ' ';
 
 		SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
-		for (int i = 0; i < max_length - 1; i++)
+		for (int i = 0; i < max_length-1; i++)
 		{
+			
+			
 			body[i] = temp_array[i];
+			
 			if ((i % (getWidth() - 2)) == 0 && i != 0)
 			{
 				GetConsoleScreenBufferInfo(hout, ConsoleInfo);
 				SetConsoleCursorPosition(hout, { startPos.X + 1, ConsoleInfo->dwCursorPosition.Y + 1 });
 			}
+			
 			printf("%c", body[i]);
-		}
+			
+			if (!isPositionLegal({ old_cursor_pos.X - 1, old_cursor_pos.Y }))
+				SetConsoleCursorPosition(hout, { endPos.X - 1,old_cursor_pos.Y - 1 });
+			
 
-		if (isPositionLegal({old_cursor_pos.X - 1, old_cursor_pos.Y}))
+			
+			
+		}
+		if (isPositionLegal({ old_cursor_pos.X - 1, old_cursor_pos.Y }))
 			SetConsoleCursorPosition(hout, { old_cursor_pos.X - 1,old_cursor_pos.Y });
 		else
-			SetConsoleCursorPosition(hout, { endPos.X-1 ,old_cursor_pos.Y-1 });
+			SetConsoleCursorPosition(hout, { endPos.X - 1,old_cursor_pos.Y - 1 });
+
+		
 
 		break;
 	case SPACEBAR:
@@ -323,6 +332,66 @@ void TextBox::rePrintText(HANDLE &hout, Keys key, int location)
 
 }
 
+void TextBox::printTextBox()
+{
+	//Take over the output 
+	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	//Set cursor to top left corner of text box
+	SetConsoleCursorPosition(hout, startPos);
+
+	SetConsoleTextAttribute(hout, 0x93 & 0xDD & 0xF5 | 0x0004 | 0x0008);
+
+	
+	for (short i = 0; i < getHeight(); i++)
+	{
+		for (short j = 0; j < getWidth(); j++)
+		{
+			cout << ' ';
+		}
+		SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + i + 1 });
+	}
+
+	SetConsoleCursorPosition(hout, startPos);
+
+	//Prints the top boundary
+	for (int i = 0; i < width; i++)
+	{
+		printf("\xcd");
+	}
+
+	//Prints the right and left boundaries
+	for (int i = 0; i < height; i++)
+	{
+
+		printf("\n");
+		short startX = startPos.X;
+		short startY = startPos.Y + i;
+		SetConsoleCursorPosition(hout, { startX,startY });
+		printf("\xba");
+
+		//Prints the bootom boundary
+		if (i == height - 1)
+		{
+			for (int i = 0; i < width; i++)
+			{
+				printf("\xcd");
+			}
+		}
+
+
+		short endX = startPos.X + width;
+		short endY = startPos.Y + i;
+
+		//Sets the consoleCursor position to the end
+		SetConsoleCursorPosition(hout, { endX,endY });
+		printf("\xba");
+
+		SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
+		
+	}
+
+}
 
 
 

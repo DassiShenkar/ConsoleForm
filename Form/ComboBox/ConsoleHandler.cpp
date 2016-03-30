@@ -11,12 +11,15 @@ The Constructor initializes a textbox at COORD(10,10) and dimentions of width (2
 ConsoleHandler::ConsoleHandler()
 {
 	widgets = (*new LinkedList<Widget>());
-	
-	
-	
-	
-	widgets.addItem(*(new TextBox({ 10,10 },20,10 )));
-	
+
+	LinkedList<string&> *items = new LinkedList<string&>();
+	items->addItem(*(new string("Item 1")));
+	items->addItem(*(new string("Item 2")));
+	items->addItem(*(new string("Item 3")));
+
+
+	widgets.addItem(*(new ComboBox({ 10,10 }, items)));
+
 
 	//Handle input
 	getInputRecord();

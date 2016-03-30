@@ -18,6 +18,20 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ComboBox.cpp" />
+    <ClCompile Include="ConsoleHandler.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Widget.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ComboBox.h" />
+    <ClInclude Include="ConsoleHandler.h" />
+    <ClInclude Include="Keys.h" />
+    <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Widget.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A6C93D24-F160-4355-9931-DCC4FD594FE0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -145,13 +159,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="ComboBox.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ComboBox.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

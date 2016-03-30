@@ -4,10 +4,10 @@
 
 class ConsoleHandler;
 /*
-	An abstract class that has the basic functionality of a Widget.
-	methods to be implemented in each separate widget:
-		actOnKeyEvent(KEY_EVENT_RECORD) - how will the widget respond to each key event
-		actOnMouseEvent(MOUSE_EVENT_RECORD) - how will the widget respond to each mouse event
+An abstract class that has the basic functionality of a Widget.
+methods to be implemented in each separate widget:
+actOnKeyEvent(KEY_EVENT_RECORD) - how will the widget respond to each key event
+actOnMouseEvent(MOUSE_EVENT_RECORD) - how will the widget respond to each mouse event
 */
 class Widget
 {
@@ -41,11 +41,11 @@ protected:
 public:
 
 	//Default widget Constructor parameters
-	Widget() : startPos{ 0,0 }, endPos({ width,height}), width(20), height(10) {}
+	Widget() : startPos{ 0,0 }, endPos({ width,height }), width(20), height(10) {}
 
 	//Constructor with parameters
 	Widget(COORD start, short _width, short _height) : startPos(start), width(_width), height(_height),
-		endPos({ startPos.X + _width,startPos.Y + _height-1}) {}
+		endPos({ startPos.X + _width,startPos.Y + _height - 1 }) {}
 
 	//Prints the wigdet to the screen
 	virtual void PrintWidget(COORD);
@@ -78,29 +78,29 @@ public:
 	virtual KEY_EVENT_RECORD getKeyEvent() const { return key_input; }
 
 	//Sets the key event
-	virtual void setKeyEvent(KEY_EVENT_RECORD key)  { key_input = key; }
+	virtual void setKeyEvent(KEY_EVENT_RECORD key) { key_input = key; }
 
 	/*
-		Acts on key event
-		Each widget should implement the function.
-		It responds to the key event sent by the ConsoleHandler
-		(only for press down)
+	Acts on key event
+	Each widget should implement the function.
+	It responds to the key event sent by the ConsoleHandler
+	(only for press down)
 	*/
 	virtual void actOnKeyEvent(KEY_EVENT_RECORD) = 0;
 
-	
+
 	virtual MOUSE_EVENT_RECORD getMouseEvent() const { return mouse_input; }
 
 	//Sets the mouse event
 	virtual void setMouseEvent(MOUSE_EVENT_RECORD mouse) { mouse_input = mouse; }
 
 	/*
-		Acts on mouse event
-		Each widget should implement the function.
-		It responds to the mouse event sent by the ConsoleHandler
-		(only for press down)
+	Acts on mouse event
+	Each widget should implement the function.
+	It responds to the mouse event sent by the ConsoleHandler
+	(only for press down)
 	*/
-	virtual void actOnMouseEvent(MOUSE_EVENT_RECORD ) = 0;
+	virtual void actOnMouseEvent(MOUSE_EVENT_RECORD) = 0;
 
 
 	//Destructor

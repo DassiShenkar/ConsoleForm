@@ -1,18 +1,24 @@
 #include "Label.h"
 #include <iostream>
+#include <string.h>
 using namespace std;
 
-
-Label::Label() : x(0), y(0), text("hello world")
+//A default constructor that activates the default Widget constructor
+Label::Label() : Widget(), text("hello world")
 {
 	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
 	GetConsoleScreenBufferInfo(s, ConsoleInfo);
+
+	
+
+	//Cursor's info
+	CONSOLE_CURSOR_INFO cursor_info = { 1,FALSE };
+	SetConsoleCursorInfo(s, &cursor_info);
+
 	WORD originalColors = ConsoleInfo->wAttributes;
-	COORD position;
-	position.X = x;
-	position.Y = y;
-	SetConsoleCursorPosition(s, position);
+
+	SetConsoleCursorPosition(s, startPos);
 	SetConsoleTextAttribute(s, FOREGROUND_RED);
 	CONSOLE_CURSOR_INFO console;
 	console.bVisible = FALSE;
@@ -25,21 +31,46 @@ Label::Label() : x(0), y(0), text("hello world")
 
 
 }
-Label::Label(int _x, int _y, string _text) : x(_x), y(_y), text(_text)
+
+//A constructor that recieves the starting coordinate
+Label::Label(COORD start, string _text) : Widget(start, _text.length() + 4, 3), text(_text)
 {
 	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
 	GetConsoleScreenBufferInfo(s, ConsoleInfo);
+
+	//Cursor's info
+	CONSOLE_CURSOR_INFO cursor_info = { 1,FALSE };
+	SetConsoleCursorInfo(s, &cursor_info);
+
 	WORD originalColors = ConsoleInfo->wAttributes;
-	COORD position;
+
 	CONSOLE_CURSOR_INFO console;
-	position.X = x;
-	position.Y = y;
-	SetConsoleCursorPosition(s, position);
+	PrintWidget(startPos);
+	COORD center = { startPos.X + ((getWidth() - 1 - (text.length() - 1)) / 2),startPos.Y + 1 };
+	SetConsoleCursorPosition(s, center);
 	SetConsoleTextAttribute(s, FOREGROUND_GREEN);
 	console.bVisible = FALSE;
 	SetConsoleCursorInfo(s, &console);
-	printf("%s", text);
+	cout << text;
 	SetConsoleTextAttribute(s, originalColors);
 
+
+
 }
+
+
+//The label does not respond to any key event
+void Label::actOnKeyEvent(KEY_EVENT_RECORD key)
+{
+	;
+}
+
+//The label does not respond to any mouse event
+void Label::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
+{
+	;
+}
+
+
+
