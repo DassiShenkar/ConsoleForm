@@ -139,10 +139,13 @@ void TextBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 		case INSERT:
 			break;
 		case OTHER:
-			if (location > max_size-2)
+			if (location > max_size - 2)
 				break;
 			body[location] = key.uChar.UnicodeChar;
+			
+			
 			printf("%c", key.uChar.UnicodeChar);
+			
 			break;
 		default:
 			break;
