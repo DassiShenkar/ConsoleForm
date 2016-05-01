@@ -7,6 +7,7 @@ using namespace std;
 int main()
 {
 	ConsoleHandler *sim = new ConsoleHandler();
+	
 	printf("Stop!!");
 	return 0;
 }

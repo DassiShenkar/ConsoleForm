@@ -73,4 +73,11 @@ void Label::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 }
 
 
+void Label::setText(string _text)
+{
+	COORD tmp = this->getStartPosition();
+	this->~Label();
+	new (this) Label(tmp, _text);
+}
+
 

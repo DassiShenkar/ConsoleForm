@@ -24,10 +24,17 @@ public:
 	Label(COORD, string);
 
 	//A method that handles key events
-	void actOnKeyEvent(KEY_EVENT_RECORD);
+	virtual void actOnKeyEvent(KEY_EVENT_RECORD);
 
 	//A method that handles mouse events
-	void actOnMouseEvent(MOUSE_EVENT_RECORD);
+	virtual void actOnMouseEvent(MOUSE_EVENT_RECORD);
+
+	virtual void setText(string _text);
+
+	string getText() const { return text; }
+
+	virtual ~Label() {};
+
 
 
 

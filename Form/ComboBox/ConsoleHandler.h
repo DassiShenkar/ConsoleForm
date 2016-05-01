@@ -34,6 +34,8 @@ public:
 	//The function that responds to the mouse events
 	void MouseEventProc(MOUSE_EVENT_RECORD);
 
+	LinkedList<Widget> getWidgetList() const { return widgets; }
+
 };
 
 
