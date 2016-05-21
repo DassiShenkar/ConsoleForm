@@ -4,30 +4,9 @@
 #include <string>
 using namespace std;
 
-/*
-The Constructor initializes a textbox at COORD(10,10) and dimentions of width (20) and height (10)
-
-*/
-ConsoleHandler::ConsoleHandler()
-{
-	widgets = (*new LinkedList<Widget*>());
-
-	LinkedList<string&> *items = new LinkedList<string&>();
-	items->addItem(*(new string("Item 1")));
-	items->addItem(*(new string("Item 2")));
-	items->addItem(*(new string("Item 3")));
 
 
-	widgets.addItem((new ComboBox({ 10,10 }, items)));
-
-
-	//Handle input
-	getInputRecord();
-}
-
-
-
-
+ConsoleHandler* ConsoleHandler::_instance = 0;
 //The main function that handles the input records
 
 void ConsoleHandler::getInputRecord()
@@ -77,11 +56,11 @@ void ConsoleHandler::getInputRecord()
 			switch (inputRecord[i].EventType)
 			{
 			case KEY_EVENT: // keyboard input 
-				KeyEventProc(inputRecord[i].Event.KeyEvent);
+				notifyWidgetsOnKey(inputRecord[i].Event.KeyEvent);
 				break;
 
 			case MOUSE_EVENT: // mouse input 
-				MouseEventProc(inputRecord[i].Event.MouseEvent);
+				notifyWidgetsOnMouse(inputRecord[i].Event.MouseEvent);
 				break;
 
 			case WINDOW_BUFFER_SIZE_EVENT: // scrn buf. resizing 
@@ -105,14 +84,20 @@ void ConsoleHandler::getInputRecord()
 }
 
 //The function that responds to keyboard events
-void ConsoleHandler::KeyEventProc(KEY_EVENT_RECORD key)
+void ConsoleHandler::notifyWidgetsOnKey(KEY_EVENT_RECORD key)
 {
+	for (int i = 0; i < widgets.size(); i++)
+	{
+		widgets.at(i)->actOnKeyEvent(key);
+	}
 
-	widgets[0].getData()->actOnKeyEvent(key);
 }
 
 //The function that responds to mouse events
-void ConsoleHandler::MouseEventProc(MOUSE_EVENT_RECORD mouse)
+void ConsoleHandler::notifyWidgetsOnMouse(MOUSE_EVENT_RECORD mouse)
 {
-	widgets[0].getData()->actOnMouseEvent(mouse);
+	for (int i = 0; i < widgets.size(); i++)
+	{
+		widgets.at(i)->actOnMouseEvent(mouse);
+	}
 }

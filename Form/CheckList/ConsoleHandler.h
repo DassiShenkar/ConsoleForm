@@ -20,7 +20,7 @@ class ConsoleHandler
 private:
 
 	//The linked list will hold the widgets
-	LinkedList<Widget> widgets;
+	LinkedList<Widget*> widgets;
 
 public:
 	//Constructor - Already contains a textBox
@@ -36,6 +36,8 @@ public:
 
 	//The function that responds to the mouse events
 	void MouseEventProc(MOUSE_EVENT_RECORD);
+
+	LinkedList<Widget*> getWidgetList() const { return widgets; }
 
 };
 

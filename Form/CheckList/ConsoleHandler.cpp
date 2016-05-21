@@ -4,28 +4,6 @@
 #include <string>
 using namespace std;
 
-/*
-The Constructor initializes a textbox at COORD(10,10) and dimentions of width (20) and height (10)
-
-*/
-ConsoleHandler::ConsoleHandler()
-{
-	widgets = (*new LinkedList<Widget>());
-
-
-	LinkedList<string&> *items = new LinkedList<string&>();
-	items->addItem(*(new string("Item 1")));
-	items->addItem(*(new string("Item 2")));
-	items->addItem(*(new string("Item 3")));
-
-	widgets.addItem(*(new CheckList({ 10,10 }, items)));
-
-
-	//Handle input
-	getInputRecord();
-}
-
-
 
 
 //The main function that handles the input records
@@ -108,11 +86,11 @@ void ConsoleHandler::getInputRecord()
 void ConsoleHandler::KeyEventProc(KEY_EVENT_RECORD key)
 {
 
-	widgets[0].getData().actOnKeyEvent(key);
+	widgets[0].getData()->actOnKeyEvent(key);
 }
 
 //The function that responds to mouse events
 void ConsoleHandler::MouseEventProc(MOUSE_EVENT_RECORD mouse)
 {
-	widgets[0].getData().actOnMouseEvent(mouse);
+	widgets[0].getData()->actOnMouseEvent(mouse);
 }

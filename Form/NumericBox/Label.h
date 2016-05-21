@@ -33,8 +33,6 @@ public:
 
 	string getText() const { return text; }
 
-	void printWidget(COORD) const;
-
 	virtual ~Label() {};
 
 

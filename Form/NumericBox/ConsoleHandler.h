@@ -1,8 +1,11 @@
+
 #include "Widget.h"
+
 #include <Windows.h>
 #include <iostream>
 #include "LinkedList.h"
-#include "ComboBox.h"
+#include "NumericBox.h"
+
 
 
 using namespace std;
@@ -17,7 +20,7 @@ class ConsoleHandler
 private:
 
 	//The linked list will hold the widgets
-	LinkedList<Widget *> widgets;
+	LinkedList<Widget*> widgets;
 
 public:
 	//Constructor - Already contains a textBox

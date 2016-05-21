@@ -10,7 +10,7 @@ The Constructor initializes a textbox at COORD(10,10) and dimentions of width (2
 */
 ConsoleHandler::ConsoleHandler()
 {
-	widgets = (*new LinkedList<Widget>());
+	widgets = (*new LinkedList<Widget*>());
 
 
 	LinkedList<string&> *items = new LinkedList<string&>();
@@ -18,7 +18,7 @@ ConsoleHandler::ConsoleHandler()
 	items->addItem(*(new string("Item 2")));
 	items->addItem(*(new string("Item 3")));
 
-	widgets.addItem(*(new RadioList({ 10,10 }, items)));
+	widgets.addItem((new RadioList({ 10,10 }, items)));
 
 
 	//Handle input
@@ -108,11 +108,11 @@ void ConsoleHandler::getInputRecord()
 void ConsoleHandler::KeyEventProc(KEY_EVENT_RECORD key)
 {
 
-	widgets[0].getData().actOnKeyEvent(key);
+	widgets[0].getData()->actOnKeyEvent(key);
 }
 
 //The function that responds to mouse events
 void ConsoleHandler::MouseEventProc(MOUSE_EVENT_RECORD mouse)
 {
-	widgets[0].getData().actOnMouseEvent(mouse);
+	widgets[0].getData()->actOnMouseEvent(mouse);
 }

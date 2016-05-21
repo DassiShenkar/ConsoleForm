@@ -2,6 +2,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <string>
+#include "NumericBox.h"
 using namespace std;
 
 /*
@@ -12,13 +13,13 @@ ConsoleHandler::ConsoleHandler()
 {
 	widgets = (*new LinkedList<Widget*>());
 
-	LinkedList<string&> *items = new LinkedList<string&>();
+
+	vector<string> *items = new vector<string>();
 	items->addItem(*(new string("Item 1")));
 	items->addItem(*(new string("Item 2")));
 	items->addItem(*(new string("Item 3")));
 
-
-	widgets.addItem((new ComboBox({ 10,10 }, items)));
+	widgets.addItem((new NumericBox({ 10,10 }, items)));
 
 
 	//Handle input
