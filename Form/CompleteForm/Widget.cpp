@@ -5,6 +5,59 @@
 using namespace std;
 
 
+//Sets the visibility of the widget
+void Widget::setVisibility(bool visibility)
+{
+	//If there is no change is visibility - do nothing
+	if (isVisible == visibility)
+		;
+	else
+	{
+		isVisible = visibility;		
+		if (isVisible)				
+			printWidget(startPos);
+		else
+			hideWidget();
+	}
+}
+
+//Sets the background color of the Widget
+void Widget::setBackground(BackgroundColor color)
+{
+	if (background == color)
+		;
+	else
+	{
+		background = color;
+		printWidget(startPos);
+	}
+}
+
+//Sets the foreground color of the Widget
+void Widget::setForeground(ForegroundColor color)
+{
+	if (foreground == color)
+		;
+	else
+	{
+		foreground = color;
+		printWidget(startPos);
+	}
+}
+
+//Sets the border type
+void Widget::setBorder(BorderType _border)
+{
+	if (border == _border)
+		;
+	else
+	{
+		border = _border;
+		printWidget(startPos);
+	}
+}
+
+
 
 
 /*A function that checks if the position of the console cursor

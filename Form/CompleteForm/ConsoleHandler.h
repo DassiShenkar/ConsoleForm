@@ -23,7 +23,7 @@ private:
 	//The linked list will hold the widgets
 	vector<Widget*> widgets;
 	static ConsoleHandler* _instance;
-	ConsoleHandler() : widgets(*new vector<Widget*>()) {}
+	ConsoleHandler();
 
 	ConsoleHandler(ConsoleHandler&);
 	ConsoleHandler& operator=(const ConsoleHandler&);
@@ -40,8 +40,10 @@ private:
 
 public:
 	
+	//Returns the Widget list that are attached to the console
 	vector<Widget*> getWidgetList() const { return widgets; }
 	
+	//Gets the single instance of the ConsoleHandler
 	static ConsoleHandler* getInstance()
 	{
 		if (!_instance)
@@ -51,6 +53,9 @@ public:
 
 	//Adds the widget to the list of widgets
 	void attach(Widget * widget) { widgets.push_back(widget); }
+
+	//starts reading the input
+	void start();
 
 	
 

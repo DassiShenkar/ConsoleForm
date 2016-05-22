@@ -343,7 +343,7 @@ void TextBox::printTextBox()
 	//Set cursor to top left corner of text box
 	SetConsoleCursorPosition(hout, startPos);
 
-	SetConsoleTextAttribute(hout, 0x93 & 0xDD & 0xF5 | 0x0004 | 0x0008);
+	//SetConsoleTextAttribute(hout, 0x93 & 0xDD & 0xF5 | 0x0004 | 0x0008);
 
 
 	for (short i = 0; i < getHeight(); i++)

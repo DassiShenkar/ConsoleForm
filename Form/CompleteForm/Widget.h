@@ -2,7 +2,12 @@
 #include <Windows.h>
 #include "Keys.h"
 
-class ConsoleHandler;
+
+
+enum class ForegroundColor { Red, Blue, Green, Purple, Teal, Yellow, White, Black };
+enum class BackgroundColor { Red, Blue, Green, Purple, Teal, Yellow, White, Black };
+enum class BorderType { Single, Double, None };
+
 /*
 An abstract class that has the basic functionality of a Widget.
 methods to be implemented in each separate widget:
@@ -28,6 +33,18 @@ protected:
 	//The mouse event that is sent from ConsoleHandler
 	MOUSE_EVENT_RECORD mouse_input;
 
+	//The visibility of the widget
+	bool isVisible;
+
+	//Indicates the foreground color of the wodget
+	ForegroundColor foreground;
+
+	//Indicates the background color of the wodget
+	BackgroundColor background;
+
+	//Indicates the type of border of the widget
+	BorderType border;
+
 	/*A function that checks if the position of the console cursor
 	is in the boundaries of the textBox
 	*/
@@ -37,15 +54,17 @@ protected:
 	//A method that determines what type of key was pressed
 	Keys determineTypeOfKey(KEY_EVENT_RECORD);
 
+	//A method to hide the widget
+	void hideWidget() const;
 
 public:
 
 	//Default widget Constructor parameters
-	Widget() : startPos{ 0,0 }, endPos({ width,height }), width(20), height(10) {}
+	Widget() : startPos{ 0,0 }, endPos({ width,height }), width(20), height(10), isVisible(true) {}
 
 	//Constructor with parameters
 	Widget(COORD start, short _width, short _height) : startPos(start), width(_width), height(_height),
-		endPos({ startPos.X + _width,startPos.Y + _height - 1 }) {}
+		endPos({ startPos.X + _width,startPos.Y + _height - 1 }) , isVisible(true) {}
 
 	//Prints the wigdet to the screen
 	virtual void printWidget(COORD) const = 0;
@@ -73,6 +92,18 @@ public:
 
 	//Sets the end coordinate
 	virtual void setEndPosition(COORD end) { endPos = end; }
+
+	//Sets the visibility of the widget
+	void setVisibility(bool visibility);
+
+	//Sets the Foreground color
+	void setForeground(ForegroundColor color);
+
+	//Sets the Background color
+	void setBackground(BackgroundColor color);
+
+	//Sets the border type
+	void setBorder(BorderType border);
 
 	//Gets the key event
 	virtual KEY_EVENT_RECORD getKeyEvent() const { return key_input; }

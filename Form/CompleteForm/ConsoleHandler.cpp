@@ -6,7 +6,19 @@ using namespace std;
 
 
 
+
 ConsoleHandler* ConsoleHandler::_instance = 0;
+
+ConsoleHandler::ConsoleHandler() : widgets(*new vector<Widget*>()) 
+{
+	
+}
+
+void ConsoleHandler::start() 
+{
+	getInputRecord();
+}
+
 //The main function that handles the input records
 
 void ConsoleHandler::getInputRecord()
@@ -41,6 +53,9 @@ void ConsoleHandler::getInputRecord()
 	while (true)
 	{
 		// Wait for the events. 
+		
+		
+		
 
 		if (!ReadConsoleInput(
 			hStdin,      // input buffer handle 

@@ -33,6 +33,6 @@ int main()
 	console->attach(comboBox);
 	console->attach(radioList);
 	console->attach(textBox);
-
+	console->start();
 	return 0;
 }
