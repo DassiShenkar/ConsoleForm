@@ -47,8 +47,8 @@ protected:
 	//Prints the wigdet to the screen
 	virtual void printWidget() const = 0;
 
-	//Prints the Border of the Widget
-//	virtual void printBorder() const = 0;
+	void printBorder() const;
+
 
 public:
 

@@ -34,6 +34,7 @@ int main()
 	console->attach(textBox);
 	textBox->setText("Hello World");
 	string tmp = textBox->getText();
+	label->setBorder(BorderType::None);
 	console->start();
 	return 0;
 }

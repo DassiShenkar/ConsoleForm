@@ -54,7 +54,29 @@ void Label::printWidget() const
 	WORD originalColors = ConsoleInfo->wAttributes;
 	CONSOLE_CURSOR_INFO console;
 	
-	COORD center = { startPos.X + ((getWidth() - 1 - (text.length() - 1)) / 2),startPos.Y + 1 };
+	COORD center = startPos;
+	char frame_top = ' ';
+	char frame_side = ' ';
+	switch (border)
+	{
+	case BorderType::None:
+		center = { startPos.X + (short)((getWidth()  - (text.length() - 1)) / 2),startPos.Y + 1 };
+		break;
+	case BorderType::Single:
+		center = { startPos.X + (short)((getWidth() - 1 - (text.length() - 1)) / 2),startPos.Y + 1 };
+		frame_top = '-';
+		frame_side = '|';
+		break;
+	case BorderType::Double:
+		center = { startPos.X + (short)((getWidth() - 2 - (text.length() - 1)) / 2),startPos.Y + 1 };
+		frame_top = '\xcd';
+		frame_side = '\xba';
+		break;
+	default:
+		break;
+	}
+	
+	printBorder();
 	SetConsoleCursorPosition(s, center);
 	SetConsoleTextAttribute(s, FOREGROUND_GREEN);
 	console.bVisible = FALSE;

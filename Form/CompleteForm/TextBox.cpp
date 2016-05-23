@@ -358,7 +358,7 @@ void TextBox::printWidget() const
 		SetConsoleCursorPosition(hout, { startX,startY });
 		printf("\xba");
 
-		//Prints the bootom boundary
+		//Prints the bottom boundary
 		if (i == height - 1)
 		{
 			for (int i = 0; i < width; i++)

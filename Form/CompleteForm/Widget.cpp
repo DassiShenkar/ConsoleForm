@@ -112,6 +112,76 @@ Keys Widget::determineTypeOfKey(KEY_EVENT_RECORD key)
 	return KEY_RELEASED;
 }
 
+void Widget::printBorder() const
+{
+	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
+	GetConsoleScreenBufferInfo(hout, ConsoleInfo);
 
+	//Cursor's info
+	CONSOLE_CURSOR_INFO cursor_info = { 1,FALSE };
+	SetConsoleCursorInfo(hout, &cursor_info);
+
+	WORD originalColors = ConsoleInfo->wAttributes;
+	CONSOLE_CURSOR_INFO console;
+
+
+	char frame_top = ' ';
+	char frame_side = ' ';
+	switch (border)
+	{
+	case BorderType::None:
+		break;
+	case BorderType::Single:
+		frame_top = '-';
+		frame_side = '|';
+		break;
+	case BorderType::Double:
+		frame_top = '\xcd';
+		frame_side = '\xba';
+		break;
+	default:
+		break;
+	}
+
+	SetConsoleCursorPosition(hout, startPos);
+	for (int i = 0; i < getWidth(); i++)
+	{
+		cout << frame_top;
+	}
+
+	//Prints the right and left boundaries
+	for (int i = 0; i < height; i++)
+	{
+		short startX = startPos.X;
+		short startY = startPos.Y + i;
+		SetConsoleCursorPosition(hout, { startX,startY });
+		cout << frame_side;
+
+		//Prints the bottom boundary
+		if (i == height - 1)
+		{
+			for (int i = 0; i < width; i++)
+			{
+				cout << frame_top;
+			}
+		}
+
+
+		short endX = startPos.X + width;
+		short endY = startPos.Y + i;
+
+		//Sets the consoleCursor position to the end
+		SetConsoleCursorPosition(hout, { endX,endY });
+		cout << frame_side;
+
+		SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
+
+	}
+
+
+	
+
+}
 
 Widget::~Widget() {}
