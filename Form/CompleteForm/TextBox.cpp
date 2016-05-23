@@ -28,7 +28,7 @@ TextBox::TextBox() :Widget()
 		body[i] = WCHAR(' ');
 
 	}
-	this->printTextBox();
+	this->printWidget();
 }
 
 
@@ -61,7 +61,7 @@ TextBox::TextBox(COORD pos, short _width, short _height) : Widget(pos, _width, _
 	}
 
 
-	this->printTextBox();
+	this->printWidget();
 
 }
 
@@ -194,10 +194,6 @@ void TextBox::rePrintText(HANDLE &hout, Keys key, int location)
 
 	//Save the current cursor position
 	COORD old_cursor_pos = ConsoleInfo->dwCursorPosition;
-
-
-
-	//int chars_to_end_line = (this->getWidth()) - (old_cursor_pos.X - startPos.X+1);
 
 
 	//Gets the total size of the body 
@@ -335,7 +331,7 @@ void TextBox::rePrintText(HANDLE &hout, Keys key, int location)
 
 }
 
-void TextBox::printTextBox()
+void TextBox::printWidget() const
 {
 	//Take over the output 
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);

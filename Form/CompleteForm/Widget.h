@@ -55,7 +55,7 @@ protected:
 	Keys determineTypeOfKey(KEY_EVENT_RECORD);
 
 	//A method to hide the widget
-	void hideWidget() const;
+	void hideWidget() const { ; }
 
 public:
 
@@ -67,7 +67,7 @@ public:
 		endPos({ startPos.X + _width,startPos.Y + _height - 1 }) , isVisible(true) {}
 
 	//Prints the wigdet to the screen
-	virtual void printWidget(COORD) const = 0;
+	virtual void printWidget() const = 0;
 
 	//Returns the width 
 	virtual short getWidth() const { return width; }

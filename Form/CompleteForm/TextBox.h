@@ -18,14 +18,14 @@ private:
 public:
 	TextBox();
 	TextBox(COORD, short, short);
-	void printTextBox();
+	//void printTextBox();
 
 
 
 	//Implements the pure virtual functions of Widget
 	void actOnKeyEvent(KEY_EVENT_RECORD);
 	void actOnMouseEvent(MOUSE_EVENT_RECORD);
-	void printWidget(COORD start) const { ; }
+	void printWidget() const;
 
 
 	~TextBox() {  }

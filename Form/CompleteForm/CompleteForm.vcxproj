@@ -146,9 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BorderDecorator.h" />
     <ClInclude Include="CheckList.h" />
-    <ClInclude Include="ColorDecorator.h" />
     <ClInclude Include="ComboBox.h" />
     <ClInclude Include="ConsoleHandler.h" />
     <ClInclude Include="Keys.h" />
@@ -156,12 +154,9 @@
     <ClInclude Include="RadioList.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="Widget.h" />
-    <ClInclude Include="WidgetDecorator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BorderDecorator.cpp" />
     <ClCompile Include="CheckList.cpp" />
-    <ClCompile Include="ColorDecorator.cpp" />
     <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="ConsoleHandler.cpp" />
     <ClCompile Include="Label.cpp" />
@@ -169,7 +164,6 @@
     <ClCompile Include="RadioList.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="Widget.cpp" />
-    <ClCompile Include="WidgetDecorator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

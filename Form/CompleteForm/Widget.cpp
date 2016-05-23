@@ -15,7 +15,7 @@ void Widget::setVisibility(bool visibility)
 	{
 		isVisible = visibility;		
 		if (isVisible)				
-			printWidget(startPos);
+			printWidget();
 		else
 			hideWidget();
 	}
@@ -29,7 +29,7 @@ void Widget::setBackground(BackgroundColor color)
 	else
 	{
 		background = color;
-		printWidget(startPos);
+		printWidget();
 	}
 }
 
@@ -41,7 +41,7 @@ void Widget::setForeground(ForegroundColor color)
 	else
 	{
 		foreground = color;
-		printWidget(startPos);
+		printWidget();
 	}
 }
 
@@ -53,7 +53,7 @@ void Widget::setBorder(BorderType _border)
 	else
 	{
 		border = _border;
-		printWidget(startPos);
+		printWidget();
 	}
 }
 

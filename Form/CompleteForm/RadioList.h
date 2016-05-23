@@ -32,9 +32,6 @@ public:
 	//A method that responds to mouse event
 	void actOnMouseEvent(MOUSE_EVENT_RECORD);
 
-	//Prints the Radio List
-	void printRadioList() const;
-
-	void printWidget(COORD startPos) const { ; }
+	void printWidget() const;
 
 };

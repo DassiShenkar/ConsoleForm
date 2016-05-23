@@ -13,8 +13,8 @@ private:
 	vector<string> item_list;			//A list to hold the items of the Combo Box
 	string header;							//The picked label
 	bool drop_down;							//Indicates whether the drop down menu is open
-	void clearLabel();						//A method to clear the header label
-	void clearBody();						//Hides the drop down menu
+	void clearLabel() const;						//A method to clear the header label
+	void clearBody() const;						//Hides the drop down menu
 public:
 
 	//A default constructor that activates the Widget default constructor
@@ -29,8 +29,6 @@ public:
 	//Sets the header label to a given string
 	void setHeader(string _header) { header = _header; }
 
-	//Prints the combo box to screen
-	void printComboBox();
 
 	//Method that responds to key events
 	void actOnKeyEvent(KEY_EVENT_RECORD);
@@ -38,6 +36,6 @@ public:
 	//Method that responds to mouse events
 	void actOnMouseEvent(MOUSE_EVENT_RECORD);
 
-	void printWidget(COORD startPos) const { ; }
+	void printWidget() const;
 };
 #pragma once

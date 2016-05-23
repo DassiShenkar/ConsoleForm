@@ -35,10 +35,7 @@ public:
 	//A method that responds to a mouse event
 	void actOnMouseEvent(MOUSE_EVENT_RECORD);
 
-	//Prints the check list
-	void printCheckList() const;
-
-	void printWidget(COORD startPos) const { ; }
+	void printWidget() const;
 
 };
 #pragma once

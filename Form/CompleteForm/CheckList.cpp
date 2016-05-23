@@ -14,6 +14,8 @@ CheckList::CheckList() : Widget()
 	//Cursor's info
 	CONSOLE_CURSOR_INFO cursor_info = { 1,FALSE };
 	SetConsoleCursorInfo(hout, &cursor_info);
+
+	printWidget();
 }
 
 //Constructor that recieves as parameters the starting coordinate and the items in a list 
@@ -29,13 +31,13 @@ item_list(items)
 	SetConsoleCursorInfo(hout, &cursor_info);
 
 	//Initializes the checked array to false
-	for (int i = 0; i < items->size(); i++)
+	for (size_t i = 0; i < items->size(); i++)
 	{
 		checked[i] = false;
 	}
 
 
-	printCheckList();
+	printWidget();
 }
 
 
@@ -73,7 +75,7 @@ void CheckList::actOnKeyEvent(KEY_EVENT_RECORD key)
 
 			GetConsoleScreenBufferInfo(hout, ConsoleInfo);
 			temp = ConsoleInfo->dwCursorPosition;
-			printCheckList();
+			printWidget();
 			SetConsoleCursorPosition(hout, temp);
 
 			break;
@@ -85,19 +87,19 @@ void CheckList::actOnKeyEvent(KEY_EVENT_RECORD key)
 				SetConsoleCursorPosition(hout, { startPos.X + 1, cursor_pos.Y - 1 });
 			GetConsoleScreenBufferInfo(hout, ConsoleInfo);
 			temp = ConsoleInfo->dwCursorPosition;
-			printCheckList();
+			printWidget();
 			SetConsoleCursorPosition(hout, temp);
 
 			break;
 
 		case ENTER:				//Enter key
 
-			for (int i = 0; i < item_list->size(); i++)
+			for (size_t i = 0; i < item_list->size(); i++)
 			{
 				if (cursor_pos.Y - startPos.Y == i + 1)
 				{
 					checked[i] = !checked[i];
-					printCheckList();
+					printWidget();
 				}
 				SetConsoleCursorPosition(hout, cursor_pos);
 			}
@@ -124,14 +126,14 @@ void CheckList::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 	WORD originalColors = ConsoleInfo->wAttributes;
 
 	//Updates the checked array based on the location of the mouse click and reprints the list
-	for (int i = 0; i < item_list->size(); i++)
+	for (size_t i = 0; i < item_list->size(); i++)
 	{
 		if (mouse.dwButtonState == 0x0001 &&				//If left click is pressed
 			mouse.dwMousePosition.X == startPos.X + 1 &&
 			mouse.dwMousePosition.Y == startPos.Y + i + 1)
 		{
 			checked[i] = !checked[i];			//Reverses state on each click
-			printCheckList();
+			printWidget();
 		}
 	}
 
@@ -140,7 +142,7 @@ void CheckList::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 }
 
 //Prints the check list
-void CheckList::printCheckList() const
+void CheckList::printWidget() const
 {
 	//Gets the output handle
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -163,7 +165,9 @@ void CheckList::printCheckList() const
 
 	short cursor_pos = current_pos.Y - startPos.Y;
 	//Iterates through the items
-	for (short i = 0; i < item_list->size(); i++)
+
+	short i = 0;
+	for (vector<string>::iterator it = item_list->begin(); it != item_list->end();it++, i++)
 	{
 		//Set the cursor to the next line
 		SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + i + 1 });
@@ -175,7 +179,7 @@ void CheckList::printCheckList() const
 
 			cout << "|";
 			SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_INTENSITY);
-			cout << "X " << i + 1 << " " << item_list->at(i);
+			cout << "X " << i + 1 << " " << *it;
 
 			//Restore original colors
 			SetConsoleTextAttribute(hout, originalColors);
@@ -187,7 +191,7 @@ void CheckList::printCheckList() const
 			cout << "|";
 			if (i + 1 == cursor_pos)
 				SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
-			cout << "O " << i + 1 << " " << item_list->at(i);
+			cout << "O " << i + 1 << " " << *it;
 			SetConsoleTextAttribute(hout, originalColors);
 		}
 

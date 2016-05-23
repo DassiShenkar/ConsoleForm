@@ -44,9 +44,8 @@ Label::Label(COORD start, string _text) : Widget(start, _text.length() + 4, 3), 
 	SetConsoleCursorInfo(s, &cursor_info);
 
 	WORD originalColors = ConsoleInfo->wAttributes;
-
 	CONSOLE_CURSOR_INFO console;
-	printWidget(startPos);
+	printWidget();
 	COORD center = { startPos.X + ((getWidth() - 1 - (text.length() - 1)) / 2),startPos.Y + 1 };
 	SetConsoleCursorPosition(s, center);
 	SetConsoleTextAttribute(s, FOREGROUND_GREEN);
@@ -80,7 +79,7 @@ void Label::setText(string _text)
 	new (this) Label(tmp, _text);
 }
 
-void Label::printWidget(COORD startPos) const
+void Label::printWidget() const
 {
 	
 }

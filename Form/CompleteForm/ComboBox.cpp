@@ -22,7 +22,7 @@ item_list(*items), header("Select Item"), drop_down(false)
 	//Cursor's info
 	CONSOLE_CURSOR_INFO cursor_info = { 1,FALSE };
 	SetConsoleCursorInfo(hout, &cursor_info);
-	printComboBox();
+	printWidget();
 }
 
 //The combo box does not respond to key events
@@ -58,7 +58,7 @@ void ComboBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 				SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y + 3 });
 				GetConsoleScreenBufferInfo(hout, ConsoleInfo);
 				temp = ConsoleInfo->dwCursorPosition;
-				printComboBox();
+				printWidget();
 				SetConsoleCursorPosition(hout, temp);
 			}
 
@@ -75,7 +75,7 @@ void ComboBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 
 				GetConsoleScreenBufferInfo(hout, ConsoleInfo);
 				temp = ConsoleInfo->dwCursorPosition;
-				printComboBox();
+				printWidget();
 				SetConsoleCursorPosition(hout, temp);
 
 			}
@@ -89,7 +89,7 @@ void ComboBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 				SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y + short(item_list.size() + 2) });
 				GetConsoleScreenBufferInfo(hout, ConsoleInfo);
 				temp = ConsoleInfo->dwCursorPosition;
-				printComboBox();
+				printWidget();
 				SetConsoleCursorPosition(hout, temp);
 			}
 
@@ -106,7 +106,7 @@ void ComboBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 
 				GetConsoleScreenBufferInfo(hout, ConsoleInfo);
 				temp = ConsoleInfo->dwCursorPosition;
-				printComboBox();
+				printWidget();
 				SetConsoleCursorPosition(hout, temp);
 			}
 			break;
@@ -117,12 +117,12 @@ void ComboBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 			if (drop_down == true)
 			{
 				drop_down = false;
-				for (short i = 0; i < item_list.size(); i++)
+				for (size_t i = 0; i < item_list.size(); i++)
 				{
 					if (cursor_pos.Y == startPos.Y + i + 3)
 					{
 						setHeader(item_list.at(i));
-						printComboBox();
+						printWidget();
 
 						SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y + 1 });
 					}
@@ -137,17 +137,7 @@ void ComboBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 //A ,ethod that respond to key events
 void ComboBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 {
-	//Take over the output 
-	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	//Console's info
-	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
-	GetConsoleScreenBufferInfo(hout, ConsoleInfo);
-
-	//Save original color settings
-	WORD originalColors = ConsoleInfo->wAttributes;
-
-
+	
 	if (mouse.dwButtonState == 0x0001 &&						//If left click is pressed
 		mouse.dwMousePosition.X == startPos.X + 1 &&
 		mouse.dwMousePosition.Y == startPos.Y + 1)
@@ -157,14 +147,14 @@ void ComboBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 		if (drop_down == false)
 		{
 			drop_down = true;
-			printComboBox();
+			printWidget();
 		}
 
 		//Else, close the menu
 		else
 		{
 			drop_down = false;
-			printComboBox();
+			printWidget();
 		}
 
 	}
@@ -174,15 +164,14 @@ void ComboBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 		mouse.dwMousePosition.X == startPos.X + 1)
 
 	{
-		for (int i = 0; i < item_list.size(); i++)
+		int i = 0;
+		for (vector<string>::iterator it = item_list.begin() ; it != item_list.end(); it++, i++)
 		{
 
 			//If the drop down menu is closed then do nothing
 			if (drop_down == false)
 			{
-
 				;
-
 			}
 
 			//Else if the drop menu is open and the click is on the given line 
@@ -191,14 +180,14 @@ void ComboBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 				if (mouse.dwMousePosition.Y == startPos.Y + i + 3)
 				{
 					//Set the header to the given item
-					this->setHeader(item_list.at(i));
+					this->setHeader(*it);
 
 					//Clears the header before updating
 					clearLabel();
 
 					//Closes the menu and reprints the combo box
 					drop_down = false;
-					printComboBox();
+					printWidget();
 				}
 			}
 		}
@@ -206,7 +195,7 @@ void ComboBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 }
 
 //Prints the Combo box
-void ComboBox::printComboBox()
+void ComboBox::printWidget() const
 {
 	//Gets the handle for the output
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -285,7 +274,7 @@ void ComboBox::printComboBox()
 }
 
 //Clears the header label
-void ComboBox::clearLabel()
+void ComboBox::clearLabel() const
 {
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
@@ -302,7 +291,7 @@ void ComboBox::clearLabel()
 }
 
 //Clears the body 
-void ComboBox::clearBody()
+void ComboBox::clearBody() const
 {
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();

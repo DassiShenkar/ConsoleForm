@@ -23,7 +23,7 @@ item_list(items), checked(0)
 
 
 
-	printRadioList();
+	printWidget();
 }
 
 //A method that responds only to up and down arrows from the keybord
@@ -40,13 +40,13 @@ void RadioList::actOnKeyEvent(KEY_EVENT_RECORD key)
 			checked += 1;
 			if (checked == item_list->size() + 1)
 				checked = 1;
-			printRadioList();
+			printWidget();
 			break;
 		case UP:		//Down arrow
 			checked -= 1;
 			if (checked <= 0)
 				checked = item_list->size();
-			printRadioList();
+			printWidget();
 			break;
 		default:
 			break;
@@ -75,7 +75,7 @@ void RadioList::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 			mouse.dwMousePosition.Y == startPos.Y + i + 1)
 		{
 			checked = i + 1;			//Holds the number of item that was chosen
-			printRadioList();		//Reprints the list
+			printWidget();		//Reprints the list
 		}
 	}
 
@@ -85,7 +85,7 @@ void RadioList::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 
 
 //Prints the Radio List
-void RadioList::printRadioList() const
+void RadioList::printWidget() const
 {
 
 	//Gets the output handle

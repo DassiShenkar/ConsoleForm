@@ -23,6 +23,9 @@ public:
 	//A constructor that recieves the starting coordinate
 	Label(COORD, string);
 
+	//A Constructor that recieves the length of the label as a parameter
+	Label(int width);
+
 	//A method that handles key events
 	virtual void actOnKeyEvent(KEY_EVENT_RECORD);
 
@@ -33,7 +36,7 @@ public:
 
 	string getText() const { return text; }
 
-	void printWidget(COORD) const;
+	void printWidget() const;
 
 	virtual ~Label() {};
 
