@@ -158,6 +158,8 @@ void CheckList::printWidget() const
 
 	//Sets the position to the start
 	SetConsoleCursorPosition(hout, startPos);
+
+	
 	for (int i = 0; i < getWidth(); i++)
 	{
 		cout << '-';		//Upper Boundary

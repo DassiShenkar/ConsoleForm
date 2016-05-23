@@ -24,7 +24,7 @@ public:
 	Label(COORD, string);
 
 	//A Constructor that recieves the length of the label as a parameter
-	Label(int width);
+	Label(int _width);
 
 	//A method that handles key events
 	virtual void actOnKeyEvent(KEY_EVENT_RECORD);
@@ -36,7 +36,9 @@ public:
 
 	string getText() const { return text; }
 
-	void printWidget() const;
+	virtual void printWidget() const;
+
+	//virtual void printBorder() const;
 
 	virtual ~Label() {};
 

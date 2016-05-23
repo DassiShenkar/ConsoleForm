@@ -339,17 +339,6 @@ void TextBox::printWidget() const
 	//Set cursor to top left corner of text box
 	SetConsoleCursorPosition(hout, startPos);
 
-	//SetConsoleTextAttribute(hout, 0x93 & 0xDD & 0xF5 | 0x0004 | 0x0008);
-
-
-	for (short i = 0; i < getHeight(); i++)
-	{
-		for (short j = 0; j < getWidth(); j++)
-		{
-			cout << ' ';
-		}
-		SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + i + 1 });
-	}
 
 	SetConsoleCursorPosition(hout, startPos);
 
@@ -389,7 +378,52 @@ void TextBox::printWidget() const
 		SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
 
 	}
+	SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
+	int h = 0;
+	for (short i = 0; i < getHeight() - 2; i++)
+	{
+		for (short j = 0; j < getWidth() - 2; j++)
+		{
+			printf("%c", body[h]);
+			h++;
+		}
+		SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y + i + 2 });
+	}
 
+}
+
+/*A function that checks if the position of the console cursor
+is in the boundaries of the textBox
+*/
+bool TextBox::isPositionLegal(COORD pos)
+{
+	if ((pos.X > this->getStartPosition().X && pos.X<this->getEndPosition().X) &&
+		(pos.Y>this->getStartPosition().Y && pos.Y < this->getEndPosition().Y)
+		)
+		return true;
+
+	return false;
+}
+
+void TextBox::setText(string text)
+{
+	for (int i = 0; i < text.length(); i++)
+	{
+		body[i] = text[i];
+	}
+
+	printWidget();
+}
+
+string TextBox::getText() const
+{
+	string text;
+	int body_length = ((getWidth() - 2) * (getHeight() - 2));
+	for (int i = 0; i < body_length; i++)
+	{
+		text.push_back(body[i]);
+	}
+	return text;
 }
 
 

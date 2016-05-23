@@ -27,11 +27,7 @@ protected:
 	//End coordinate for the Widget
 	COORD endPos;
 
-	//The key event that is sent from ConsoleHandler
-	KEY_EVENT_RECORD key_input;
-
-	//The mouse event that is sent from ConsoleHandler
-	MOUSE_EVENT_RECORD mouse_input;
+	
 
 	//The visibility of the widget
 	bool isVisible;
@@ -45,29 +41,24 @@ protected:
 	//Indicates the type of border of the widget
 	BorderType border;
 
-	/*A function that checks if the position of the console cursor
-	is in the boundaries of the textBox
-	*/
-	bool isPositionLegal(COORD);
-
-
 	//A method that determines what type of key was pressed
 	Keys determineTypeOfKey(KEY_EVENT_RECORD);
 
-	//A method to hide the widget
-	void hideWidget() const { ; }
+	//Prints the wigdet to the screen
+	virtual void printWidget() const = 0;
+
+	//Prints the Border of the Widget
+//	virtual void printBorder() const = 0;
 
 public:
 
 	//Default widget Constructor parameters
-	Widget() : startPos{ 0,0 }, endPos({ width,height }), width(20), height(10), isVisible(true) {}
+	Widget() : startPos{ 0,0 }, endPos({ width,height }), width(20), height(10), isVisible(true), border(BorderType::Single) {}
 
 	//Constructor with parameters
 	Widget(COORD start, short _width, short _height) : startPos(start), width(_width), height(_height),
-		endPos({ startPos.X + _width,startPos.Y + _height - 1 }) , isVisible(true) {}
+		endPos({ startPos.X + _width,startPos.Y + _height - 1 }) , isVisible(true), border(BorderType::Single) {}
 
-	//Prints the wigdet to the screen
-	virtual void printWidget() const = 0;
 
 	//Returns the width 
 	virtual short getWidth() const { return width; }
@@ -105,11 +96,7 @@ public:
 	//Sets the border type
 	void setBorder(BorderType border);
 
-	//Gets the key event
-	virtual KEY_EVENT_RECORD getKeyEvent() const { return key_input; }
-
-	//Sets the key event
-	virtual void setKeyEvent(KEY_EVENT_RECORD key) { key_input = key; }
+	
 
 	/*
 	Acts on key event
@@ -120,10 +107,6 @@ public:
 	virtual void actOnKeyEvent(KEY_EVENT_RECORD) = 0;
 
 
-	virtual MOUSE_EVENT_RECORD getMouseEvent() const { return mouse_input; }
-
-	//Sets the mouse event
-	virtual void setMouseEvent(MOUSE_EVENT_RECORD mouse) { mouse_input = mouse; }
 
 	/*
 	Acts on mouse event

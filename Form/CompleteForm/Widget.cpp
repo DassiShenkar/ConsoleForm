@@ -14,10 +14,7 @@ void Widget::setVisibility(bool visibility)
 	else
 	{
 		isVisible = visibility;		
-		if (isVisible)				
-			printWidget();
-		else
-			hideWidget();
+		printWidget();
 	}
 }
 
@@ -55,22 +52,6 @@ void Widget::setBorder(BorderType _border)
 		border = _border;
 		printWidget();
 	}
-}
-
-
-
-
-/*A function that checks if the position of the console cursor
-is in the boundaries of the textBox
-*/
-bool Widget::isPositionLegal(COORD pos)
-{
-	if ((pos.X > this->getStartPosition().X && pos.X<this->getEndPosition().X) &&
-		(pos.Y>this->getStartPosition().Y && pos.Y < this->getEndPosition().Y)
-		)
-		return true;
-
-	return false;
 }
 
 

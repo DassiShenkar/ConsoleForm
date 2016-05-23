@@ -32,6 +32,8 @@ int main()
 	console->attach(comboBox);
 	console->attach(radioList);
 	console->attach(textBox);
+	textBox->setText("Hello World");
+	string tmp = textBox->getText();
 	console->start();
 	return 0;
 }

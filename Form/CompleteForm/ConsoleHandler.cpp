@@ -101,9 +101,9 @@ void ConsoleHandler::getInputRecord()
 //The function that responds to keyboard events
 void ConsoleHandler::notifyWidgetsOnKey(KEY_EVENT_RECORD key)
 {
-	for (int i = 0; i < widgets.size(); i++)
+	for (vector<Widget*>::iterator it = widgets.begin(); it != widgets.end(); it++)
 	{
-		widgets.at(i)->actOnKeyEvent(key);
+		(*it)->actOnKeyEvent(key);
 	}
 
 }
@@ -111,8 +111,8 @@ void ConsoleHandler::notifyWidgetsOnKey(KEY_EVENT_RECORD key)
 //The function that responds to mouse events
 void ConsoleHandler::notifyWidgetsOnMouse(MOUSE_EVENT_RECORD mouse)
 {
-	for (int i = 0; i < widgets.size(); i++)
+	for (vector<Widget*>::iterator it = widgets.begin(); it != widgets.end(); it++)
 	{
-		widgets.at(i)->actOnMouseEvent(mouse);
+		(*it)->actOnMouseEvent(mouse);
 	}
 }

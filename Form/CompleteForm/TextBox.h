@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include "Widget.h"
 #include <iostream>
+#include <wchar.h>
 using namespace std;
 
 class TextBox : public Widget
@@ -11,14 +12,23 @@ private:
 
 
 	PWCHAR body;
+
+	//Reprints the textbox as a response to a special key event
 	void rePrintText(HANDLE&, Keys, int);
 
+	/*A function that checks if the position of the console cursor
+	is in the boundaries of the textBox
+	*/
+	bool isPositionLegal(COORD);
 
 
 public:
 	TextBox();
 	TextBox(COORD, short, short);
-	//void printTextBox();
+	void setText(string text);
+	string getText() const;
+
+	
 
 
 

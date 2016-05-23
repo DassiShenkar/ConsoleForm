@@ -68,7 +68,7 @@ void RadioList::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 	WORD originalColors = ConsoleInfo->wAttributes;
 
 	//Iterates through the item list
-	for (int i = 0; i < item_list->size(); i++)
+	for (size_t i = 0; i < item_list->size(); i++)
 	{
 		if (mouse.dwButtonState == 0x0001 &&					//If left click was pressed
 			mouse.dwMousePosition.X == startPos.X + 1 &&
@@ -102,14 +102,16 @@ void RadioList::printWidget() const
 	SetConsoleCursorPosition(hout, startPos);
 
 	//Prints the upper boundary
-	for (int i = 0; i < getWidth(); i++)
+	for (int j = 0; j < getWidth(); j++)
 	{
 		cout << '-';
 	}
 
 	//Iterates through the item list and prints the items
-	for (short i = 0; i < item_list->size(); i++)
+	short i = 0;
+	for (vector<string>::iterator it=item_list->begin(); it!= item_list->end(); it++,i++)
 	{
+
 		SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + i + 1 });
 		if (checked == i + 1)
 		{
@@ -117,12 +119,12 @@ void RadioList::printWidget() const
 
 			cout << "|";
 			SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
-			cout << "X " << i + 1 << " " << item_list->at(i);
+			cout << "X " << i + 1 << " " << *it;
 			SetConsoleTextAttribute(hout, originalColors);
 		}
 		else
 		{
-			cout << "|O " << i + 1 << " " << item_list->at(i);
+			cout << "|O " << i + 1 << " " << *it;
 		}
 		SetConsoleCursorPosition(hout, { startPos.X + getWidth() - 1, startPos.Y + i + 1 });
 		cout << '|';
@@ -131,7 +133,7 @@ void RadioList::printWidget() const
 	SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + short(item_list->size()) + 1 });
 
 	//Prints the lower boundary
-	for (int i = 0; i < getWidth(); i++)
+	for (int j = 0; j < getWidth(); j++)
 	{
 		cout << '-';
 	}
