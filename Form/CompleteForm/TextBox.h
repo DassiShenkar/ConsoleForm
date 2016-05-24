@@ -23,8 +23,7 @@ private:
 
 
 public:
-	TextBox();
-	TextBox(COORD, short, short);
+	TextBox(int _width, int _height = 1);
 	void setText(string text);
 	string getText() const;
 

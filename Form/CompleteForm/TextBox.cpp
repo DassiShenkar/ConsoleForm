@@ -5,35 +5,7 @@
 #include <string.h>
 
 
-//Default Constructor
-TextBox::TextBox() :Widget()
-{
-	//Take over the output 
-	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	//Console's info
-	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
-	GetConsoleScreenBufferInfo(hout, ConsoleInfo);
-
-	//Save original color settings
-	WORD originalColors = ConsoleInfo->wAttributes;
-
-
-
-	//Initializes the body with spaces
-	body = new WCHAR[((getWidth() - 2) * (getHeight() - 2))];
-	int end_of_string = ((getWidth() - 2) * (getHeight() - 2));
-	for (int i = 0; i <end_of_string; i++)
-	{
-		body[i] = WCHAR(' ');
-
-	}
-	this->printWidget();
-}
-
-
-
-TextBox::TextBox(COORD pos, short _width, short _height) : Widget(pos, _width, _height)
+TextBox::TextBox(int _width, int _height) : Widget(_width, _height)
 {
 	//Take over the output 
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -336,48 +308,7 @@ void TextBox::printWidget() const
 	//Take over the output 
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	//Set cursor to top left corner of text box
-	SetConsoleCursorPosition(hout, startPos);
-
-
-	SetConsoleCursorPosition(hout, startPos);
-
-	//Prints the top boundary
-	for (int i = 0; i < width; i++)
-	{
-		printf("\xcd");
-	}
-
-	//Prints the right and left boundaries
-	for (int i = 0; i < height; i++)
-	{
-
-		printf("\n");
-		short startX = startPos.X;
-		short startY = startPos.Y + i;
-		SetConsoleCursorPosition(hout, { startX,startY });
-		printf("\xba");
-
-		//Prints the bottom boundary
-		if (i == height - 1)
-		{
-			for (int i = 0; i < width; i++)
-			{
-				printf("\xcd");
-			}
-		}
-
-
-		short endX = startPos.X + width;
-		short endY = startPos.Y + i;
-
-		//Sets the consoleCursor position to the end
-		SetConsoleCursorPosition(hout, { endX,endY });
-		printf("\xba");
-
-		SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
-
-	}
+	printBorder();
 	SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
 	int h = 0;
 	for (short i = 0; i < getHeight() - 2; i++)

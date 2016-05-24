@@ -145,38 +145,32 @@ void Widget::printBorder() const
 	}
 
 	SetConsoleCursorPosition(hout, startPos);
-	for (int i = 0; i < getWidth(); i++)
+	for (int i = 0; i < getWidth()+1; i++)
 	{
 		cout << frame_top;
 	}
 
 	//Prints the right and left boundaries
-	for (int i = 0; i < height; i++)
+	for (int i = 0; i < height-1; i++)
 	{
 		short startX = startPos.X;
-		short startY = startPos.Y + i;
+		short startY = startPos.Y + i+1;
 		SetConsoleCursorPosition(hout, { startX,startY });
 		cout << frame_side;
 
-		//Prints the bottom boundary
-		if (i == height - 1)
-		{
-			for (int i = 0; i < width; i++)
-			{
-				cout << frame_top;
-			}
-		}
-
 
 		short endX = startPos.X + width;
-		short endY = startPos.Y + i;
+		short endY = startPos.Y + i+1;
 
 		//Sets the consoleCursor position to the end
 		SetConsoleCursorPosition(hout, { endX,endY });
 		cout << frame_side;
 
-		SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
-
+	}
+	SetConsoleCursorPosition(hout, { startPos.X ,startPos.Y + (short)getHeight()-1 });
+	for (int i = 0; i < width+1; i++)
+	{
+		cout << frame_top;
 	}
 
 

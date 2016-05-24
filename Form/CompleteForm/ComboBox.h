@@ -17,11 +17,8 @@ private:
 	void clearBody() const;						//Hides the drop down menu
 public:
 
-	//A default constructor that activates the Widget default constructor
-	ComboBox();
-
 	//A constructor that gets the starting coordinate of the Combo Box and the list of items
-	ComboBox(COORD, vector<string>*);
+	ComboBox(int _width, vector<string>*);
 
 	//Gets the header label
 	string getHeader() const { return header; }

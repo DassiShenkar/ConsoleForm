@@ -23,11 +23,8 @@ private:
 
 public:
 
-	//Default Constructor that activates the Widget default construcotr
-	CheckList();
-
 	//Constructor that recieves as parameters the starting coordinate and the items in a list
-	CheckList(COORD, vector<string>*);
+	CheckList(int _width, int _height, vector<string>*);
 
 	//A method that responds to a key event
 	void actOnKeyEvent(KEY_EVENT_RECORD);

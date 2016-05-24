@@ -3,25 +3,11 @@
 #include <string>
 using namespace std;
 
-//A default constructor that activates the Widget default constructor
-ComboBox::ComboBox() : Widget(), header("Select Item"), drop_down(false)
-{
-	//Take over the output 
-	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
-	//Cursor's info
-	CONSOLE_CURSOR_INFO cursor_info = { 1,FALSE };
-	SetConsoleCursorInfo(hout, &cursor_info);
-}
-
 //A constructor that gets the starting coordinate of the Combo Box and the list of items
-ComboBox::ComboBox(COORD start, vector<string>* items) : Widget(start, 20, items->size() + 4),
+ComboBox::ComboBox(int _width, vector<string>* items) : Widget(_width,5),
 item_list(*items), header("Select Item"), drop_down(false)
 {
-	//Take over the output 
-	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
-	//Cursor's info
-	CONSOLE_CURSOR_INFO cursor_info = { 1,FALSE };
-	SetConsoleCursorInfo(hout, &cursor_info);
+	
 	printWidget();
 }
 
@@ -209,60 +195,40 @@ void ComboBox::printWidget() const
 	//Saves the original colors of the console
 	WORD originalColors = ConsoleInfo->wAttributes;
 
-	//Set cursor to start position
-	SetConsoleCursorPosition(hout, startPos);
-
-
-	//Prints the upper boundary of the header
-	for (int i = 0; i < width; i++)
-	{
-		cout << "-";
-	}
+	printBorder();
 
 
 	//Outputs to the screen:   |O "header" | and sets background to white and font to black 
-	SetConsoleCursorPosition(hout, { startPos.X,startPos.Y + 1 });
-	cout << '|';
+	SetConsoleCursorPosition(hout, { startPos.X+1,startPos.Y + 1 });
 	SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 	cout << "O| " << header;
 	SetConsoleTextAttribute(hout, originalColors);
-	SetConsoleCursorPosition(hout, { startPos.X + getWidth() - 1,startPos.Y + 1 });
-	cout << '|';
-	SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + 2 });
-
-	//Prints the lower boundary of the label
-	for (int i = 0; i < width; i++)
+	SetConsoleCursorPosition(hout, { startPos.X+1, startPos.Y + 2 });
+	for (int i = 0; i < width-1; i++)
 	{
-		cout << "-";
+		cout << '-';
 	}
+
 
 	//If the drop down menu should be open
 	if (drop_down == true)
 	{
 		//Prints the body
-		SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + 3 });
+		SetConsoleCursorPosition(hout, { startPos.X+ (short)border, startPos.Y + 3 });
 		int body_height = item_list.size();
 		GetConsoleScreenBufferInfo(hout, ConsoleInfo);
 		short cursor_pos = current_pos.Y - startPos.Y;
 		for (short i = 0; i < body_height; i++)
 		{
 
-			cout << "|";
 			if (i + 3 == cursor_pos)
 				SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 			cout << i + 1 << "| " << item_list.at(i);
-			SetConsoleCursorPosition(hout, { startPos.X + getWidth() - 1,startPos.Y + i + 3 });
 			SetConsoleTextAttribute(hout, originalColors);
-			cout << '|';
-			SetConsoleCursorPosition(hout, { startPos.X ,startPos.Y + i + 4 });
+			SetConsoleCursorPosition(hout, { startPos.X + (short)border,startPos.Y + i + 4 });
 
 		}
 
-		//Prints the lower boundary
-		for (int i = 0; i < width; i++)
-		{
-			cout << "-";
-		}
 	}
 
 	//Else if the body should be hidden then clear it
@@ -284,7 +250,7 @@ void ComboBox::clearLabel() const
 	SetConsoleCursorPosition(hout, { startPos.X,startPos.Y + 1 });
 	for (int i = 0; i < width; i++)
 	{
-		cout << " ";
+		cout << ' ';
 	}
 
 
@@ -299,24 +265,24 @@ void ComboBox::clearBody() const
 	WORD originalColors = ConsoleInfo->wAttributes;
 
 	//Clears the body
-	SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + 3 });
+	SetConsoleCursorPosition(hout, { startPos.X+1, startPos.Y + 3 });
 	int body_height = item_list.size();
 
-	for (short i = 0; i < body_height; i++)
+	for (short i = 0; i < body_height-1; i++)
 	{
-		for (int j = 0; j < width; j++)
+		for (int j = 0; j < getWidth()-2; j++)
 		{
-			cout << " ";
+			cout << ' ';
 		}
-		SetConsoleCursorPosition(hout, { startPos.X + getWidth() - 1,startPos.Y + i + 3 });
+		SetConsoleCursorPosition(hout, { startPos.X + (short)getWidth() - 1,startPos.Y + i + 3 });
 		cout << ' ';
-		SetConsoleCursorPosition(hout, { startPos.X ,startPos.Y + i + 4 });
+		SetConsoleCursorPosition(hout, { startPos.X+1 ,startPos.Y + i + 4 });
 	}
 
 	//Clear lower boundary
-	for (int i = 0; i < width; i++)
+	for (int i = 0; i < width-1; i++)
 	{
-		cout << " ";
+		cout << ' ';
 	}
 
 }

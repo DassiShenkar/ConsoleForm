@@ -4,14 +4,9 @@
 #include "Keys.h"
 using namespace std;
 
-//A default constructor that activates Widget default constructor
-RadioList::RadioList() : Widget(), checked(0)
-{
-	item_list = new vector<string>;
-}
 
-//A constructor that recieves the starting coordinate and the list of items
-RadioList::RadioList(COORD start, vector<string>* items) : Widget(start, 20, items->size() + 4),
+//A constructor that recieves the dimensions and the list of items
+RadioList::RadioList(int _width, int _height, vector<string>* items) : Widget(_width, _height),
 item_list(items), checked(0)
 {
 	//Take over the output 
@@ -20,8 +15,6 @@ item_list(items), checked(0)
 	//Cursor's info
 	CONSOLE_CURSOR_INFO ConsoleInfo = { 1,FALSE };
 	SetConsoleCursorInfo(hout, &ConsoleInfo);
-
-
 
 	printWidget();
 }
@@ -98,43 +91,25 @@ void RadioList::printWidget() const
 	//Save the original colors of the console
 	WORD originalColors = ConsoleInfo->wAttributes;
 
-	//Sets cursor to start position
-	SetConsoleCursorPosition(hout, startPos);
-
-	//Prints the upper boundary
-	for (int j = 0; j < getWidth(); j++)
-	{
-		cout << '-';
-	}
-
+	printBorder();
 	//Iterates through the item list and prints the items
 	short i = 0;
 	for (vector<string>::iterator it=item_list->begin(); it!= item_list->end(); it++,i++)
 	{
 
-		SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + i + 1 });
+		SetConsoleCursorPosition(hout, { startPos.X+1, startPos.Y + i + 1 });
 		if (checked == i + 1)
 		{
 			//If item was chosen then mark as X and set background to white and font to black
-
-			cout << "|";
 			SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 			cout << "X " << i + 1 << " " << *it;
 			SetConsoleTextAttribute(hout, originalColors);
 		}
 		else
 		{
-			cout << "|O " << i + 1 << " " << *it;
+			cout << "O " << i + 1 << " " << *it;
 		}
-		SetConsoleCursorPosition(hout, { startPos.X + getWidth() - 1, startPos.Y + i + 1 });
-		cout << '|';
 
 	}
 	SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + short(item_list->size()) + 1 });
-
-	//Prints the lower boundary
-	for (int j = 0; j < getWidth(); j++)
-	{
-		cout << '-';
-	}
 }

@@ -3,21 +3,10 @@
 #include <string.h>
 using namespace std;
 
-//A default constructor that activates the default Widget constructor
-Label::Label() : Widget(), text("hello world")
-{
-	printWidget();
-}
 
-Label::Label(int _width): Widget({0,0},_width,1)
+Label::Label(int _width): Widget(_width,3)
 {
-	printWidget();
-}
-
-//A constructor that recieves the starting coordinate
-Label::Label(COORD start, string _text) : Widget(start, _text.length() + 4, 3), text(_text)
-{
-	printWidget();
+	
 }
 
 
@@ -36,9 +25,9 @@ void Label::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 
 void Label::setText(string _text)
 {
-	COORD tmp = this->getStartPosition();
-	this->~Label();
-	new (this) Label(tmp, _text);
+	text = _text;
+	width = _text.length()+2;
+	printWidget();
 }
 
 void Label::printWidget() const
@@ -64,13 +53,9 @@ void Label::printWidget() const
 		break;
 	case BorderType::Single:
 		center = { startPos.X + (short)((getWidth() - 1 - (text.length() - 1)) / 2),startPos.Y + 1 };
-		frame_top = '-';
-		frame_side = '|';
 		break;
 	case BorderType::Double:
 		center = { startPos.X + (short)((getWidth() - 2 - (text.length() - 1)) / 2),startPos.Y + 1 };
-		frame_top = '\xcd';
-		frame_side = '\xba';
 		break;
 	default:
 		break;

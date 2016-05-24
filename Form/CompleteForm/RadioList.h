@@ -20,11 +20,8 @@ private:
 
 public:
 
-	//A default constructor that activates Widget default constructor
-	RadioList();
-
 	//A constructor that recieves the starting coordinate and the list of items
-	RadioList(COORD, vector<string>*);
+	RadioList(int _width, int _height, vector<string>*);
 
 	//A method that responds to key event
 	void actOnKeyEvent(KEY_EVENT_RECORD);

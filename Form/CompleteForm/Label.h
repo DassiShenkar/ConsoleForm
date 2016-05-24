@@ -17,12 +17,6 @@ private:
 
 public:
 
-	//A default constructor that activates the default Widget constructor
-	Label();
-
-	//A constructor that recieves the starting coordinate
-	Label(COORD, string);
-
 	//A Constructor that recieves the length of the label as a parameter
 	Label(int _width);
 

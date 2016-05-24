@@ -27,8 +27,6 @@ protected:
 	//End coordinate for the Widget
 	COORD endPos;
 
-	
-
 	//The visibility of the widget
 	bool isVisible;
 
@@ -44,11 +42,7 @@ protected:
 	//A method that determines what type of key was pressed
 	Keys determineTypeOfKey(KEY_EVENT_RECORD);
 
-	//Prints the wigdet to the screen
-	virtual void printWidget() const = 0;
-
-	void printBorder() const;
-
+	
 
 public:
 
@@ -56,24 +50,24 @@ public:
 	Widget() : startPos{ 0,0 }, endPos({ width,height }), width(20), height(10), isVisible(true), border(BorderType::Single) {}
 
 	//Constructor with parameters
-	Widget(COORD start, short _width, short _height) : startPos(start), width(_width), height(_height),
-		endPos({ startPos.X + _width,startPos.Y + _height - 1 }) , isVisible(true), border(BorderType::Single) {}
+	Widget(int _width, int _height) : startPos({0,0}), width(_width), height(_height),
+		endPos({ startPos.X + (short)_width,startPos.Y + (short)_height - 1 }) , isVisible(true), border(BorderType::Single) {}
 
 
 	//Returns the width 
-	virtual short getWidth() const { return width; }
+	virtual int getWidth() const { return width; }
 
 	//Returns the height
-	virtual short getHeight() const { return height; }
+	virtual int getHeight() const { return height; }
 
 	//Sets the width
-	virtual void setWidth(short _width) { width = _width; }
+	virtual void setWidth(int _width) { width = _width; }
 
 	//Sets the height
-	virtual void setHeight(short _height) { height = _height; }
+	virtual void setHeight(int _height) { height = _height; }
 
 	//Sets the starting coordinate
-	virtual void setStartPosition(COORD start) { startPos = start; }
+	virtual void setStartPosition(COORD start) { startPos = start; endPos = { startPos.X + width, startPos.Y + height }; }
 
 	//Returns the starting coordinate
 	virtual COORD getStartPosition() const { return startPos; }
@@ -115,6 +109,12 @@ public:
 	(only for press down)
 	*/
 	virtual void actOnMouseEvent(MOUSE_EVENT_RECORD) = 0;
+
+	//Prints the widget to the screen
+	virtual void printWidget() const = 0;
+
+	//Prints the Border
+	void printBorder() const;
 
 
 	//Destructor

@@ -3,23 +3,10 @@
 #include <string>
 using namespace std;
 
-//Default Constructor that activates the Widget default construcotr
-CheckList::CheckList() : Widget()
-{
 
-	//Initializes a new list to hold the items
-	item_list = new vector<string>;
-	//Take over the output 
-	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
-	//Cursor's info
-	CONSOLE_CURSOR_INFO cursor_info = { 1,FALSE };
-	SetConsoleCursorInfo(hout, &cursor_info);
-
-	printWidget();
-}
 
 //Constructor that recieves as parameters the starting coordinate and the items in a list 
-CheckList::CheckList(COORD start, vector<string>* items) : Widget(start, 20, items->size() + 4),
+CheckList::CheckList(int _width, int _height, vector<string>* items) : Widget(_width, _height),
 item_list(items)
 {
 	checked = new bool[items->size()];
@@ -156,14 +143,7 @@ void CheckList::printWidget() const
 	//Saves the original colors of the screen
 	WORD originalColors = ConsoleInfo->wAttributes;
 
-	//Sets the position to the start
-	SetConsoleCursorPosition(hout, startPos);
-
-	
-	for (int i = 0; i < getWidth(); i++)
-	{
-		cout << '-';		//Upper Boundary
-	}
+	printBorder();
 
 	short cursor_pos = current_pos.Y - startPos.Y;
 	//Iterates through the items
@@ -172,14 +152,13 @@ void CheckList::printWidget() const
 	for (vector<string>::iterator it = item_list->begin(); it != item_list->end();it++, i++)
 	{
 		//Set the cursor to the next line
-		SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + i + 1 });
+		SetConsoleCursorPosition(hout, { startPos.X+1, startPos.Y + i + 1 });
 
 		//If the current item is checked
 		if (checked[i] == true)
 		{
 			//White background and black font
 
-			cout << "|";
 			SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_INTENSITY);
 			cout << "X " << i + 1 << " " << *it;
 
@@ -190,7 +169,6 @@ void CheckList::printWidget() const
 		//Else if item is not picked
 		else
 		{
-			cout << "|";
 			if (i + 1 == cursor_pos)
 				SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 			cout << "O " << i + 1 << " " << *it;
@@ -198,15 +176,10 @@ void CheckList::printWidget() const
 		}
 
 		//Set the cursor to the end of the line
-		SetConsoleCursorPosition(hout, { startPos.X + getWidth() - 1, startPos.Y + i + 1 });
-		cout << '|';
+		SetConsoleCursorPosition(hout, { startPos.X + (short)getWidth() - 1, startPos.Y + i + 1 });
+		
 
 	}
 
-	//Set the cursor to the end and pprint the bottom boundary
-	SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + short(item_list->size()) + 1 });
-	for (int i = 0; i < getWidth(); i++)
-	{
-		cout << '-';
-	}
+	
 }
