@@ -32,9 +32,6 @@ TextBox::TextBox(int _width, int _height) : Widget(_width, _height)
 
 	}
 
-
-	this->printWidget();
-
 }
 
 void TextBox::actOnKeyEvent(KEY_EVENT_RECORD key)

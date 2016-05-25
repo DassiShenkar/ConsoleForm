@@ -8,7 +8,6 @@ ComboBox::ComboBox(int _width, vector<string>* items) : Widget(_width,5),
 item_list(*items), header("Select Item"), drop_down(false)
 {
 	
-	printWidget();
 }
 
 //The combo box does not respond to key events

@@ -9,14 +9,7 @@ using namespace std;
 RadioList::RadioList(int _width, int _height, vector<string>* items) : Widget(_width, _height),
 item_list(items), checked(0)
 {
-	//Take over the output 
-	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
-
-	//Cursor's info
-	CONSOLE_CURSOR_INFO ConsoleInfo = { 1,FALSE };
-	SetConsoleCursorInfo(hout, &ConsoleInfo);
-
-	printWidget();
+	
 }
 
 //A method that responds only to up and down arrows from the keybord

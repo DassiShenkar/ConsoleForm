@@ -2,7 +2,7 @@
 
 Panel::Panel(int _width, int _height) : Widget(_width, _height), items(*new vector<Widget*>), focused(this)
 {
-	printWidget();
+
 }
 
 void Panel::addControl(Widget* control, COORD position)

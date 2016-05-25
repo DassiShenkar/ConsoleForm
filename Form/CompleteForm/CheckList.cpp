@@ -11,20 +11,13 @@ item_list(items)
 {
 	checked = new bool[items->size()];
 
-	//Take over the output 
-	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
-	//Cursor's info
-	CONSOLE_CURSOR_INFO cursor_info = { 1,FALSE };
-	SetConsoleCursorInfo(hout, &cursor_info);
-
+	
 	//Initializes the checked array to false
 	for (size_t i = 0; i < items->size(); i++)
 	{
 		checked[i] = false;
 	}
 
-
-	printWidget();
 }
 
 
