@@ -30,9 +30,7 @@ public:
 
 	string getText() const { return text; }
 
-	virtual void printWidget() const;
-
-	//virtual void printBorder() const;
+	virtual void printWidget() const
 
 	virtual ~Label() {};
 

@@ -36,9 +36,6 @@ int main()
 	panel->addControl(checkList, { 35,20 });
 	label->setText("Hello World");
 	panel->printWidget();
-	
 	form->run();
-	//console->attach(panel);
-	//console->start();
 	return 0;
 }
