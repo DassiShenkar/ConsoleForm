@@ -3,8 +3,6 @@
 #include <string>
 using namespace std;
 
-
-
 //Constructor that recieves as parameters the starting coordinate and the items in a list 
 CheckList::CheckList(int _width, int _height, vector<string>* items) : Widget(_width, _height),
 item_list(items)
