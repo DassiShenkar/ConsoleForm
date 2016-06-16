@@ -1,17 +1,17 @@
-#include "ComboBox.h"
+#include "ComboBox2.h"
 #include <iostream>
 #include <string>
 using namespace std;
 
 //A constructor that gets the starting coordinate of the Combo Box and the list of items
-ComboBox::ComboBox(int _width, vector<string> items) : Widget(_width,5),
+ComboBox2::ComboBox2(int _width, vector<string> items) : Control(5, _width),
 item_list(items), header("Select Item"), drop_down(false)
 {
-	
+
 }
 
 //The combo box does not respond to key events
-void ComboBox::actOnKeyEvent(KEY_EVENT_RECORD key)
+void ComboBox2::keyDown(KEY_EVENT_RECORD key)
 {
 	//Gets the handle for the output
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -120,12 +120,10 @@ void ComboBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 }
 
 //A ,ethod that respond to key events
-void ComboBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
+void ComboBox2::mousePressed(int x, int y)
 {
-	
-	if (mouse.dwButtonState == 0x0001 &&						//If left click is pressed
-		mouse.dwMousePosition.X == startPos.X + 1 &&
-		mouse.dwMousePosition.Y == startPos.Y + 1)
+	Control::setFocus(this);
+	if (x == startPos.X + 1 && y == startPos.Y + 1)
 	{
 
 		//If drop down menu is closed then open it
@@ -145,12 +143,11 @@ void ComboBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 	}
 
 	//Else if right click is pressed on the number on the left side
-	else if (mouse.dwButtonState == 0x0001 &&
-		mouse.dwMousePosition.X == startPos.X + 1)
+	else if (x == startPos.X + 1)
 
 	{
 		int i = 0;
-		for (vector<string>::iterator it = item_list.begin() ; it != item_list.end(); it++, i++)
+		for (vector<string>::iterator it = item_list.begin(); it != item_list.end(); it++, i++)
 		{
 
 			//If the drop down menu is closed then do nothing
@@ -162,7 +159,7 @@ void ComboBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 			//Else if the drop menu is open and the click is on the given line 
 			else
 			{
-				if (mouse.dwMousePosition.Y == startPos.Y + i + 3)
+				if (y == startPos.Y + i + 3)
 				{
 					//Set the header to the given item
 					this->setHeader(*it);
@@ -180,7 +177,7 @@ void ComboBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 }
 
 //Prints the Combo box
-void ComboBox::printWidget() const
+void ComboBox2::printWidget() 
 {
 	//Gets the handle for the output
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -194,16 +191,16 @@ void ComboBox::printWidget() const
 	//Saves the original colors of the console
 	WORD originalColors = ConsoleInfo->wAttributes;
 
-	printBorder();
+//	printBorder();
 
 
 	//Outputs to the screen:   |O "header" | and sets background to white and font to black 
-	SetConsoleCursorPosition(hout, { startPos.X+1,startPos.Y + 1 });
+	SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
 	SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
 	cout << "O| " << header;
 	SetConsoleTextAttribute(hout, originalColors);
-	SetConsoleCursorPosition(hout, { startPos.X+1, startPos.Y + 2 });
-	for (int i = 0; i < width-1; i++)
+	SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y + 2 });
+	for (int i = 0; i < width - 1; i++)
 	{
 		cout << '-';
 	}
@@ -213,7 +210,7 @@ void ComboBox::printWidget() const
 	if (drop_down == true)
 	{
 		//Prints the body
-		SetConsoleCursorPosition(hout, { startPos.X+ (short)border, startPos.Y + 3 });
+		SetConsoleCursorPosition(hout, { startPos.X + (short)border, startPos.Y + 3 });
 		int body_height = item_list.size();
 		GetConsoleScreenBufferInfo(hout, ConsoleInfo);
 		short cursor_pos = current_pos.Y - startPos.Y;
@@ -239,7 +236,7 @@ void ComboBox::printWidget() const
 }
 
 //Clears the header label
-void ComboBox::clearLabel() const
+void ComboBox2::clearLabel() const
 {
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
@@ -256,7 +253,7 @@ void ComboBox::clearLabel() const
 }
 
 //Clears the body 
-void ComboBox::clearBody() const
+void ComboBox2::clearBody() const
 {
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
@@ -264,24 +261,130 @@ void ComboBox::clearBody() const
 	WORD originalColors = ConsoleInfo->wAttributes;
 
 	//Clears the body
-	SetConsoleCursorPosition(hout, { startPos.X+1, startPos.Y + 3 });
+	SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y + 3 });
 	int body_height = item_list.size();
 
-	for (short i = 0; i < body_height-1; i++)
+	for (short i = 0; i < body_height - 1; i++)
 	{
-		for (int j = 0; j < getWidth()-2; j++)
+		for (int j = 0; j < getWidth() - 2; j++)
 		{
 			cout << ' ';
 		}
 		SetConsoleCursorPosition(hout, { startPos.X + (short)getWidth() - 1,startPos.Y + i + 3 });
 		cout << ' ';
-		SetConsoleCursorPosition(hout, { startPos.X+1 ,startPos.Y + i + 4 });
+		SetConsoleCursorPosition(hout, { startPos.X + 1 ,startPos.Y + i + 4 });
 	}
 
 	//Clear lower boundary
-	for (int i = 0; i < width-1; i++)
+	for (int i = 0; i < width - 1; i++)
 	{
 		cout << ' ';
+	}
+
+}
+
+//Clears the body 
+void ComboBox2::clearBody(Graphics &g, int left, int top, int layer) const
+{
+	
+
+	//Clears the body
+	g.moveTo(startPos.X + 1, startPos.Y + 3);
+	//SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y + 3 });
+	int body_height = item_list.size();
+
+	for (short i = 0; i < body_height - 1; i++)
+	{
+		for (int j = 0; j < getWidth() - 2; j++)
+		{
+			g.write(" ");
+			//cout << ' ';
+		}
+		g.moveTo(startPos.X + (short)getWidth() - 1, startPos.Y + i + 3);
+		//SetConsoleCursorPosition(hout, { startPos.X + (short)getWidth() - 1,startPos.Y + i + 3 });
+		g.write(" ");
+		//cout << ' ';
+		g.moveTo(startPos.X + 1, startPos.Y + i + 4);
+		//SetConsoleCursorPosition(hout, { startPos.X + 1 ,startPos.Y + i + 4 });
+	}
+
+	//Clear lower boundary
+	for (int i = 0; i < width - 1; i++)
+	{
+		g.write(" ");
+		//cout << ' ';
+	}
+
+}
+
+void ComboBox2::draw(Graphics &g, int left, int top, int layer)
+{
+	//Gets the handle for the output
+	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	//Gets the console's info  
+	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
+	GetConsoleScreenBufferInfo(hout, ConsoleInfo);
+
+	COORD current_pos = ConsoleInfo->dwCursorPosition;
+
+	//Saves the original colors of the console
+	WORD originalColors = ConsoleInfo->wAttributes;
+
+	printBorder(g,left,top,layer);
+
+
+	//Outputs to the screen:   |O "header" | and sets background to white and font to black 
+	g.moveTo(startPos.X + 1, startPos.Y + 1);
+	//SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
+	SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
+	
+	g.write("O| ");
+	g.write(header);
+	//cout << "O| " << header;
+	SetConsoleTextAttribute(hout, originalColors);
+	
+	g.moveTo(startPos.X + 1, startPos.Y + 2);
+	//SetConsoleCursorPosition(hout, { startPos.X + 1, startPos.Y + 2 });
+	for (int i = 0; i < width - 1; i++)
+	{
+		g.write("-");
+		//cout << '-';
+	}
+
+
+	//If the drop down menu should be open
+	if (drop_down == true)
+	{
+		//Prints the body
+		g.moveTo(startPos.X + (short)border, startPos.Y + 3);
+		//SetConsoleCursorPosition(hout, { startPos.X + (short)border, startPos.Y + 3 });
+		int body_height = item_list.size();
+		
+		//GetConsoleScreenBufferInfo(hout, ConsoleInfo);
+		short cursor_pos = current_pos.Y - startPos.Y;
+		for (short i = 0; i < body_height; i++)
+		{
+
+			if (i + 3 == cursor_pos)
+				SetConsoleTextAttribute(hout, BACKGROUND_BLUE | BACKGROUND_GREEN | BACKGROUND_RED);
+
+			g.write(convertToString(i + 1));
+			g.write("| ");
+			g.write(item_list.at(i));
+			//cout << i + 1 << "| " << item_list.at(i);
+			//SetConsoleTextAttribute(hout, originalColors);
+			g.moveTo(startPos.X + (short)border, startPos.Y + i + 4);
+			//SetConsoleCursorPosition(hout, { startPos.X + (short)border,startPos.Y + i + 4 });
+
+		}
+
+	}
+
+	//Else if the body should be hidden then clear it
+	else
+	{
+		clearBody();
 	}
 
 }

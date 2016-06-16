@@ -4,9 +4,7 @@
 
 
 
-enum class ForegroundColor { Red, Blue, Green, Purple, Teal, Yellow, White, Black };
-enum class BackgroundColor { Red, Blue, Green, Purple, Teal, Yellow, White, Black };
-enum class BorderType { Single, Double, None };
+
 
 /*
 An abstract class that has the basic functionality of a Widget.
@@ -78,8 +76,11 @@ public:
 	//Sets the end coordinate
 	virtual void setEndPosition(COORD end) { endPos = end; }
 
-	//Sets the visibility of the widget
-	void setVisibility(bool visibility);
+	
+
+	void Show();
+
+	void Hide();
 
 	//Sets the Foreground color
 	void setForeground(ForegroundColor color);

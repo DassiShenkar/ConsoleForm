@@ -9,13 +9,29 @@ void Panel::addControl(Widget* control, COORD position)
 {
 	items.push_back(control);
 	control->setStartPosition({ position.X + startPos.X, position.Y + startPos.Y });
+	
+}
+
+void Panel::setStartPosition(COORD position)
+{
+	vector<Widget*>::iterator it;
+	for (it = items.begin(); it != items.end(); it++)
+	{
+		(*it)->setStartPosition({ position.X + (*it)->getStartPosition().X, position.Y + (*it)->getStartPosition().Y });
+		(*it)->printWidget();
+	}
+	this->Widget::setStartPosition(position);
+	printWidget();
 }
 
 void Panel::printWidget() const 
 {
-	printBorder();
-	for(vector<Widget*>::const_iterator it = items.begin(); it != items.end(); it++)
-		(*it)->printWidget();
+	if (isVisible)
+	{
+		printBorder();
+		for (vector<Widget*>::const_iterator it = items.begin(); it != items.end(); it++)
+			(*it)->printWidget();
+	}
 }
 
 void Panel::actOnKeyEvent(KEY_EVENT_RECORD key)

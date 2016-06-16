@@ -23,7 +23,7 @@ public:
 		}
 		return _instance;
 	}
-	void run() { console->start(); }
+	void run() { console->start(); panel.printWidget(); }
 	void addControl(Widget* control, COORD position) { panel.addControl(control, position); }
 
 };

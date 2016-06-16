@@ -1,11 +1,13 @@
-#include "Widget.h"
+#include "Control.h"
 #include <iostream>
 
 
 using namespace std;
 
+Control* Control::focused = 0;
 
-void Widget::Show()
+ 
+void Control::Show()
 {
 	if (isVisible)
 		;
@@ -16,7 +18,7 @@ void Widget::Show()
 	}
 }
 
-void Widget::Hide()
+void Control::Hide()
 {
 	if (isVisible)
 	{
@@ -31,7 +33,7 @@ void Widget::Hide()
 }
 
 //Sets the background color of the Widget
-void Widget::setBackground(BackgroundColor color)
+void Control::setBackground(BackgroundColor color)
 {
 	if (background == color)
 		;
@@ -43,7 +45,7 @@ void Widget::setBackground(BackgroundColor color)
 }
 
 //Sets the foreground color of the Widget
-void Widget::setForeground(ForegroundColor color)
+void Control::setForeground(ForegroundColor color)
 {
 	if (foreground == color)
 		;
@@ -55,7 +57,7 @@ void Widget::setForeground(ForegroundColor color)
 }
 
 //Sets the border type
-void Widget::setBorder(BorderType _border)
+void Control::setBorder(BorderType _border)
 {
 	if (border == _border)
 		;
@@ -69,7 +71,7 @@ void Widget::setBorder(BorderType _border)
 
 
 //A method that determines what type of key was pressed
-Keys Widget::determineTypeOfKey(KEY_EVENT_RECORD key)
+Keys Control::determineTypeOfKey(KEY_EVENT_RECORD key)
 {
 	if (key.bKeyDown)
 	{
@@ -124,70 +126,87 @@ Keys Widget::determineTypeOfKey(KEY_EVENT_RECORD key)
 	return KEY_RELEASED;
 }
 
-void Widget::printBorder() const
+void Control::printBorder(Graphics &g, int left, int top, int layer) 
 {
-	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
-	GetConsoleScreenBufferInfo(hout, ConsoleInfo);
+	
 
-	//Cursor's info
-	CONSOLE_CURSOR_INFO cursor_info = { 1,FALSE };
-	SetConsoleCursorInfo(hout, &cursor_info);
-
-	WORD originalColors = ConsoleInfo->wAttributes;
-	CONSOLE_CURSOR_INFO console;
-
-
-	char frame_top = ' ';
-	char frame_side = ' ';
+	string frame_top = " ";
+	string frame_side = " ";
 	switch (border)
 	{
 	case BorderType::None:
 		break;
 	case BorderType::Single:
-		frame_top = '-';
-		frame_side = '|';
+		frame_top = "-";
+		frame_side = "|";
 		break;
 	case BorderType::Double:
-		frame_top = '\xcd';
-		frame_side = '\xba';
+		frame_top = "\xcd";
+		frame_side = "\xba";
 		break;
 	default:
 		break;
 	}
 
-	SetConsoleCursorPosition(hout, startPos);
-	for (int i = 0; i < getWidth()+1; i++)
+	g.moveTo(startPos.X, startPos.Y);
+	for (int i = 0; i < getWidth() + 1; i++)
 	{
-		cout << frame_top;
+		g.write(frame_top);
+		//cout << frame_top;
 	}
 
 	//Prints the right and left boundaries
-	for (int i = 0; i < height-1; i++)
+	for (int i = 0; i < height; i++)
 	{
 		short startX = startPos.X;
-		short startY = startPos.Y + i+1;
-		SetConsoleCursorPosition(hout, { startX,startY });
-		cout << frame_side;
+		short startY = startPos.Y + i + 1;
+		g.moveTo(startX, startY);
+		g.write(frame_side);
+		//cout << frame_side;
 
 
 		short endX = startPos.X + width;
-		short endY = startPos.Y + i+1;
+		short endY = startPos.Y + i + 1;
 
 		//Sets the consoleCursor position to the end
-		SetConsoleCursorPosition(hout, { endX,endY });
-		cout << frame_side;
+		g.moveTo(endX, endY);
+		g.write(frame_side);
+		//cout << frame_side;
 
 	}
-	SetConsoleCursorPosition(hout, { startPos.X ,startPos.Y + (short)getHeight()-1 });
-	for (int i = 0; i < width+1; i++)
+	g.moveTo(startPos.X ,startPos.Y + (short)getHeight()+1 );
+	for (int i = 0; i < width + 1; i++)
 	{
-		cout << frame_top;
+		g.write(frame_top);
+		//cout << frame_top;
 	}
 
 
-	
+
 
 }
 
-Widget::~Widget() {}
+string Control::convertToString(int val)
+{
+	string result = "";
+	string temp = "";
+	if (val < 0)
+	{
+		temp.append("-");
+		val = -val;
+	}
+	while (val > 0)
+	{
+
+		temp.append(to_string(val % 10));
+		val /= 10;
+	}
+	for (int i = temp.length() - 1; i >= 0; i--)
+	{
+		result += (temp.at(i));
+	}
+	return result;
+}
+
+
+Control::~Control() {}
