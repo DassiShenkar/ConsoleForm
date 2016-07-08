@@ -4,8 +4,11 @@
 #include <wchar.h>
 #include <string.h>
 
+TextBox2::TextBox2(int _width) : TextBox2(1, _width)
+{
 
-TextBox::TextBox(int _width, int _height) : Widget(_width, _height)
+}
+TextBox2::TextBox2(int _height, int _width) : Control(_height, _width)
 {
 	//Take over the output 
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -34,7 +37,7 @@ TextBox::TextBox(int _width, int _height) : Widget(_width, _height)
 
 }
 
-void TextBox::actOnKeyEvent(KEY_EVENT_RECORD key)
+void TextBox2::keyDown(KEY_EVENT_RECORD key)
 {
 	//Take over the output 
 	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -131,8 +134,9 @@ void TextBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 
 }
 
-void TextBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
+void TextBox2::mousePressed(int x, int y)
 {
+	Control::setFocus(this);
 	//Take over the output 
 	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -146,16 +150,16 @@ void TextBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 	//Current console cursor position
 	COORD cursorPos = ConsoleInfo->dwCursorPosition;
 
-	if (mouse.dwButtonState == 0x0001 &&
-		mouse.dwMousePosition.X > this->getStartPosition().X
-		&& mouse.dwMousePosition.X<this->getEndPosition().X
-		&&mouse.dwMousePosition.Y>this->getStartPosition().Y
-		&&mouse.dwMousePosition.Y < this->getEndPosition().Y)
-		SetConsoleCursorPosition(s, mouse.dwMousePosition);
+	if (
+		x > this->getStartPosition().X
+		&& x<this->getEndPosition().X
+		&& y>this->getStartPosition().Y
+		&& y < this->getEndPosition().Y)
+		SetConsoleCursorPosition(s, { short(x), short(y) });
 }
 
 
-void TextBox::rePrintText(HANDLE &hout, Keys key, int location)
+void TextBox2::rePrintText(HANDLE &hout, Keys key, int location)
 {
 	//Console's info
 	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
@@ -300,12 +304,12 @@ void TextBox::rePrintText(HANDLE &hout, Keys key, int location)
 
 }
 
-void TextBox::printWidget() const
+void TextBox2::printWidget()
 {
 	//Take over the output 
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	printBorder();
+	//	printBorder();
 	SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
 	int h = 0;
 	for (short i = 0; i < getHeight() - 2; i++)
@@ -323,7 +327,7 @@ void TextBox::printWidget() const
 /*A function that checks if the position of the console cursor
 is in the boundaries of the textBox
 */
-bool TextBox::isPositionLegal(COORD pos)
+bool TextBox2::isPositionLegal(COORD pos)
 {
 	if ((pos.X > this->getStartPosition().X && pos.X<this->getEndPosition().X) &&
 		(pos.Y>this->getStartPosition().Y && pos.Y < this->getEndPosition().Y)
@@ -333,7 +337,7 @@ bool TextBox::isPositionLegal(COORD pos)
 	return false;
 }
 
-void TextBox::setText(string text)
+void TextBox2::setText(string text)
 {
 	for (int i = 0; i < text.length(); i++)
 	{
@@ -343,7 +347,7 @@ void TextBox::setText(string text)
 	printWidget();
 }
 
-string TextBox::getText() const
+string TextBox2::getText() const
 {
 	string text;
 	int body_length = ((getWidth() - 2) * (getHeight() - 2));

@@ -1,39 +1,58 @@
 #pragma once
 #include "Button.h"
 
-Button::Button(int _width) : Label(_width)
-{
 
+Button2::Button2(int _width) : Control(2, _width), text(*(new Label2(_width))), listeners(*new vector<MouseListener2*>())
+{
+	text.setStartPosition(this->startPos);
 }
 
-void Button::actOnKeyEvent(KEY_EVENT_RECORD key)
+void Button2::keyDown(KEY_EVENT_RECORD key)
 {
 	;
 }
 
-void Button::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
+void Button2::mousePressed(int x, int y)
 {
-	for (int i = 0; i < listeners.size(); i++) {
-		listeners[i]->MousePressed(*this, mouse.dwMousePosition.X, mouse.dwMousePosition.Y, true);
+	vector<MouseListener2 *>::iterator it;
+	for (it = listeners.begin(); it != listeners.end(); it++)
+	{
+
+		(*it)->mousePressed(this, x, y, true);
+
 	}
+
 }
 
-void Button::printWidget() const
+void Button2::setStartPosition(COORD pos)
 {
-	Label::printWidget();
+	text.setStartPosition(pos);
+	Control::setStartPosition(pos);
 }
 
-void Button::setText(string value)
+void Button2::printWidget()
 {
-	Label::setText(value);
-	printWidget();
+	text.printWidget();
 }
 
-string Button::getText() {
-	return Label::getText();
-}
-
-void Button::addListener(MouseListener * listener)
+void Button2::setText(string value)
 {
-	listeners.push_back(listener);
+	text.setText(value);
+
 }
+
+string Button2::getText() const
+{
+	return text.getText();
+}
+
+void Button2::addMouseListener(MouseListener2* _listener)
+{
+	listeners.push_back(_listener);
+}
+
+void Button2::draw(Graphics &g, int left, int top, int layer)
+{
+	text.draw(g, left, top, layer);
+}
+

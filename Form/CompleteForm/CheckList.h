@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <Windows.h>
-#include "Widget.h"
+#include "OptionsContainer.h"
 #include <vector>
 #include <string>
 
@@ -13,26 +13,31 @@ using namespace std;
 This is a class that implements the Check List Wigdet
 
 */
-class CheckList : public Widget
+class CheckList2 : public OptionsContainer
 {
-
-private:
-
-	vector<string>* item_list;			//A Linked List to hold the items of the Check List
-	bool * checked;							//An array that keeps track if the item was picked
 
 public:
 
 	//Constructor that recieves as parameters the starting coordinate and the items in a list
-	CheckList(int _width, int _height, vector<string>*);
+	CheckList2(int height, int _width, vector<string>);
 
-	//A method that responds to a key event
-	void actOnKeyEvent(KEY_EVENT_RECORD);
+	//Acts on key event
+	virtual void keyDown(KEY_EVENT_RECORD key) { Panel2::keyDown(key); }
 
-	//A method that responds to a mouse event
-	void actOnMouseEvent(MOUSE_EVENT_RECORD);
+	//Acts on mouse event
+	virtual void mousePressed(int x, int y) { Panel2::mousePressed(x, y); };
 
-	void printWidget() const;
+	void addControl(Control& control, int x, int y) = delete;
+
+	void mousePressed(Control* widget, int x, int y, bool isLeft);
+
+	void selectIndex(size_t index);
+
+	void deselectIndex(size_t index);
+
+	void printWidget() {};
+
+
 
 };
-#pragma once
+

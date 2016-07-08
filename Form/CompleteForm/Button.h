@@ -1,27 +1,44 @@
 #pragma once
-#include "Widget.h"
+#include "Control.h"
 #include "Label.h"
 #include <iostream>
 #include <vector>
-#include "Widget.h"
+#include "MouseListener.h"
 
 using namespace std;
 
-typedef struct MouseListener {
-	virtual void MousePressed(Widget &widget, int x, int y, bool isLeft) = 0;
-} MouseListener;
 
-class Button : public Label
+class MouseListener2;
+class Button2 : public Control
 {
 private:
-	vector<MouseListener*> listeners;
+	Label2 text;
+	vector<MouseListener2 *> listeners;
+
 public:
 
-	Button(int _width = 10);
-	string getText();
+	//Constructor
+	Button2(int _width = 10);
+
+	//Sets the text of the button
 	void setText(string value);
-	void addListener(MouseListener *listener);
-	void actOnKeyEvent(KEY_EVENT_RECORD key);
-	void actOnMouseEvent(MOUSE_EVENT_RECORD mouse);
-	void printWidget() const;
+
+	string getText() const;
+
+	//Acts on key event
+	void keyDown(KEY_EVENT_RECORD key);
+
+	//Acts on Mouse event
+	void mousePressed(int x, int y);
+
+	//Adds a new listener
+	void addMouseListener(MouseListener2* _listener);
+
+	//Prints the button to the screen
+	void printWidget();
+
+	void setStartPosition(COORD pos);
+
+	virtual void draw(Graphics &g, int left, int top, int layer);
+
 };
