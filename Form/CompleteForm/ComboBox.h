@@ -7,7 +7,7 @@
 using namespace std;
 
 /*A class that implements a Combo Box Widget*/
-class ComboBox2 : public Panel2, public MouseListener2
+class ComboBox : public Panel, public MouseListener
 {
 private:
 	size_t index;
@@ -17,13 +17,13 @@ private:
 public:
 
 	//A constructor that gets the starting coordinate of the Combo Box and the list of items
-	ComboBox2(int _width, vector<string> options);
+	ComboBox(int _width, vector<string> options);
 
 	//Method that responds to key events
-	void keyDown(KEY_EVENT_RECORD key) { Panel2::keyDown(key); }
+	void keyDown(KEY_EVENT_RECORD key) { Panel::keyDown(key); }
 
 	//Method that responds to mouse events
-	void mousePressed(int x, int y) { Panel2::mousePressed(x, y); }
+	void mousePressed(int x, int y) { Panel::mousePressed(x, y); }
 
 	virtual void mousePressed(Control* widget, int x, int y, bool isLeft);
 
@@ -36,5 +36,7 @@ public:
 	void setSelectedIndex(size_t i) { index = i; };
 
 	size_t getSelectedIndex() const { return index; }
+
+	~ComboBox();
 };
 #pragma once

@@ -7,11 +7,11 @@ using namespace std;
 
 
 //A constructor that recieves the dimensions and the list of items
-RadioList2::RadioList2(int _height, int _width, vector<string> _items) : OptionsContainer(_height + 2, _width, _items)
+RadioList::RadioList(int _height, int _width, vector<string> _items) : OptionsContainer(_height + 2, _width, _items)
 {
 	for (vector<Control*>::iterator it = items.begin(); it != items.end(); it++)
 	{
-		static_cast<Button2*>(*it)->addMouseListener(this);
+		static_cast<Button*>(*it)->addMouseListener(this);
 	}
 }
 
@@ -87,7 +87,7 @@ SetConsoleCursorPosition(hout, { startPos.X, startPos.Y + short(item_list.size()
 
 
 
-string RadioList2::convertToString(int val)
+string RadioList::convertToString(int val)
 {
 	string result = "";
 	string temp = "";

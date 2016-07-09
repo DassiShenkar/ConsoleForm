@@ -9,7 +9,7 @@ using namespace std;
 /*
 A class that implements the Label Widget
 */
-class Label2 : public Control
+class Label : public Control
 {
 private:
 
@@ -18,7 +18,7 @@ private:
 public:
 
 	//A Constructor that recieves the length of the label as a parameter
-	Label2(int _width);
+	Label(int _width);
 
 	//A method that handles key events
 	virtual void keyDown(KEY_EVENT_RECORD);
@@ -32,7 +32,7 @@ public:
 
 	virtual void printWidget();
 
-	virtual ~Label2() {};
+	virtual ~Label() {};
 
 	virtual void draw(Graphics &g, int left, int top, int layer);
 

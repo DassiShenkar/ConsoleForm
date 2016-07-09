@@ -4,16 +4,16 @@
 using namespace std;
 
 
-class Panel2 : public Control
+class Panel : public Control
 {
 protected:
 	vector<Control*> items;
 	Control* controlInFocus;
 	bool clickedOnWidget(int x, int y, Control*);
-
+	int numberOfItems;
 
 public:
-	Panel2(int _height = 50, int _width = 50);
+	Panel(int _height = 50, int _width = 50);
 	void addControl(Control& control, int x, int y);
 	void keyDown(KEY_EVENT_RECORD key);
 	void mousePressed(int x, int y);
@@ -24,4 +24,5 @@ public:
 	vector<Control*> getItems() { return items; };
 	void setControlInFocus(Control* c) { controlInFocus = c; }
 	Control* getControlInFocus() const { return controlInFocus; }
+	~Panel();
 };

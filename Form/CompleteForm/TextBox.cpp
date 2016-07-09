@@ -4,11 +4,11 @@
 #include <wchar.h>
 #include <string.h>
 
-TextBox2::TextBox2(int _width) : TextBox2(1, _width)
+TextBox::TextBox(int _width) : TextBox(1, _width)
 {
 
 }
-TextBox2::TextBox2(int _height, int _width) : Control(_height, _width)
+TextBox::TextBox(int _height, int _width) : Control(_height, _width)
 {
 	//Take over the output 
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -37,7 +37,7 @@ TextBox2::TextBox2(int _height, int _width) : Control(_height, _width)
 
 }
 
-void TextBox2::keyDown(KEY_EVENT_RECORD key)
+void TextBox::keyDown(KEY_EVENT_RECORD key)
 {
 	//Take over the output 
 	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -134,7 +134,7 @@ void TextBox2::keyDown(KEY_EVENT_RECORD key)
 
 }
 
-void TextBox2::mousePressed(int x, int y)
+void TextBox::mousePressed(int x, int y)
 {
 	Control::setFocus(this);
 	//Take over the output 
@@ -159,7 +159,7 @@ void TextBox2::mousePressed(int x, int y)
 }
 
 
-void TextBox2::rePrintText(HANDLE &hout, Keys key, int location)
+void TextBox::rePrintText(HANDLE &hout, Keys key, int location)
 {
 	//Console's info
 	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
@@ -304,7 +304,7 @@ void TextBox2::rePrintText(HANDLE &hout, Keys key, int location)
 
 }
 
-void TextBox2::printWidget()
+void TextBox::printWidget()
 {
 	//Take over the output 
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -327,7 +327,7 @@ void TextBox2::printWidget()
 /*A function that checks if the position of the console cursor
 is in the boundaries of the textBox
 */
-bool TextBox2::isPositionLegal(COORD pos)
+bool TextBox::isPositionLegal(COORD pos)
 {
 	if ((pos.X > this->getStartPosition().X && pos.X<this->getEndPosition().X) &&
 		(pos.Y>this->getStartPosition().Y && pos.Y < this->getEndPosition().Y)
@@ -337,7 +337,7 @@ bool TextBox2::isPositionLegal(COORD pos)
 	return false;
 }
 
-void TextBox2::setText(string text)
+void TextBox::setText(string text)
 {
 	for (int i = 0; i < text.length(); i++)
 	{
@@ -347,7 +347,7 @@ void TextBox2::setText(string text)
 	printWidget();
 }
 
-string TextBox2::getText() const
+string TextBox::getText() const
 {
 	string text;
 	int body_length = ((getWidth() - 2) * (getHeight() - 2));
