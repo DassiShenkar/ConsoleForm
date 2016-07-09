@@ -6,7 +6,7 @@
 #include "Label.h"
 #include "Button.h"
 
-class MessageBox : public Panel2
+class MessageBox : public Panel
 {
 public:
 	MessageBox(int height, int width);
