@@ -8,6 +8,7 @@
 #include "RadioList.h"
 #include "CheckList.h"
 #include "MouseListener.h"
+#include "MessageBox.h"
 using namespace std;
 
 struct MyListener : public MouseListener2
@@ -35,6 +36,7 @@ int main(int argc, char **argv)
 	lInterests.setText("Interests:");
 	Label2 lAge(20);
 	lAge.setText("Age:");
+
 	/*TextBox2 tName(20);
 	tName.setText("Sherlock Holmes");
 	tName.setBorder(BorderType::Single);
@@ -67,7 +69,7 @@ int main(int argc, char **argv)
 	main.addControl(lAge, 1, 20);
 	//main.addControl(tName, 25, 2);
 	//main.addControl(tAddress, 25, 5);
-	main.addControl(cCountry, 25, 8);
+	//main.addControl(cCountry, 25, 8);
 	//main.addControl(rSex, 25, 11);
 	//main.addControl(clInterests, 25, 15);
 
