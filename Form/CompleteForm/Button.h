@@ -8,17 +8,17 @@
 using namespace std;
 
 
-class MouseListener2;
-class Button2 : public Control
+class MouseListener;
+class Button : public Control
 {
 private:
-	Label2 text;
-	vector<MouseListener2 *> listeners;
+	Label text;
+	vector<MouseListener *> listeners;
 
 public:
 
 	//Constructor
-	Button2(int _width = 10);
+	Button(int _width = 10);
 
 	//Sets the text of the button
 	void setText(string value);
@@ -32,7 +32,7 @@ public:
 	void mousePressed(int x, int y);
 
 	//Adds a new listener
-	void addMouseListener(MouseListener2* _listener);
+	void addMouseListener(MouseListener* _listener);
 
 	//Prints the button to the screen
 	void printWidget();

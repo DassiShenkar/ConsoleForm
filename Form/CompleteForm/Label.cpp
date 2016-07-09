@@ -4,33 +4,33 @@
 using namespace std;
 
 
-Label2::Label2(int _width) : Control(1, _width)
+Label::Label(int _width) : Control(1, _width)
 {
 
 }
 
 
 //The label does not respond to any key event
-void Label2::keyDown(KEY_EVENT_RECORD key)
+void Label::keyDown(KEY_EVENT_RECORD key)
 {
 	;
 }
 
 //The label does not respond to any mouse event
-void Label2::mousePressed(int x, int y)
+void Label::mousePressed(int x, int y)
 {
 	;
 }
 
 
-void Label2::setText(string _text)
+void Label::setText(string _text)
 {
 	text = _text;
 	width = _text.length() + 2;
 	//printWidget();
 }
 
-void Label2::printWidget()
+void Label::printWidget()
 {
 	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
@@ -71,7 +71,7 @@ void Label2::printWidget()
 
 }
 
-void Label2::draw(Graphics &g, int left, int top, int layer)
+void Label::draw(Graphics &g, int left, int top, int layer)
 {
 
 	COORD center = { left,top };
@@ -107,5 +107,4 @@ void Label2::draw(Graphics &g, int left, int top, int layer)
 
 
 }
-
 

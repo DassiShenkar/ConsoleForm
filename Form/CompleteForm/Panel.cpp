@@ -1,18 +1,18 @@
 #include "Panel.h"
 
-Panel2::Panel2(int _height, int _width) : Control(_height, _width), items(*new vector<Control*>), controlInFocus(this)
+Panel::Panel(int _height, int _width) : Control(_height, _width), items(*new vector<Control*>), controlInFocus(this)
 {
 
 }
 
-void Panel2::addControl(Control& control, int x, int y)
+void Panel::addControl(Control& control, int x, int y)
 {
 	items.push_back(&control);
 	control.setStartPosition({ short(x) + startPos.X, short(y) + startPos.Y });
-
+	numberOfItems++;
 }
 
-void Panel2::setStartPosition(COORD position)
+void Panel::setStartPosition(COORD position)
 {
 	vector<Control*>::iterator it;
 	for (it = items.begin(); it != items.end(); it++)
@@ -24,7 +24,7 @@ void Panel2::setStartPosition(COORD position)
 
 }
 
-void Panel2::printWidget()
+void Panel::printWidget()
 {
 	if (isVisible)
 	{
@@ -34,7 +34,7 @@ void Panel2::printWidget()
 	}
 }
 
-void Panel2::draw(Graphics &g, int left, int top, int layer)
+void Panel::draw(Graphics &g, int left, int top, int layer)
 {
 	if (isVisible)
 	{
@@ -45,7 +45,7 @@ void Panel2::draw(Graphics &g, int left, int top, int layer)
 
 }
 
-void Panel2::keyDown(KEY_EVENT_RECORD key)
+void Panel::keyDown(KEY_EVENT_RECORD key)
 {
 	if (controlInFocus == this)
 		;
@@ -57,7 +57,7 @@ void Panel2::keyDown(KEY_EVENT_RECORD key)
 
 
 
-void Panel2::mousePressed(int x, int y)
+void Panel::mousePressed(int x, int y)
 {
 
 	bool flag = false;
@@ -78,7 +78,7 @@ void Panel2::mousePressed(int x, int y)
 }
 
 
-bool Panel2::clickedOnWidget(int x, int y, Control* widget)
+bool Panel::clickedOnWidget(int x, int y, Control* widget)
 {
 	//First need to find global
 	if (x > widget->getStartPosition().X && x < widget->getEndPosition().X
@@ -87,7 +87,7 @@ bool Panel2::clickedOnWidget(int x, int y, Control* widget)
 	return false;
 }
 
-void Panel2::getAllControls(vector<Control*>* controls)
+void Panel::getAllControls(vector<Control*>* controls)
 {
 	vector<Control*>::iterator it;
 	for (it = items.begin(); it != items.end(); it++)
@@ -95,4 +95,8 @@ void Panel2::getAllControls(vector<Control*>* controls)
 		controls->push_back(*(it));
 	}
 
+}
+
+Panel::~Panel() {
+	
 }

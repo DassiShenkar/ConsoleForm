@@ -13,19 +13,19 @@ using namespace std;
 This is a class that implements the Check List Wigdet
 
 */
-class CheckList2 : public OptionsContainer
+class CheckList : public OptionsContainer
 {
 
 public:
 
 	//Constructor that recieves as parameters the starting coordinate and the items in a list
-	CheckList2(int height, int _width, vector<string>);
+	CheckList(int height, int _width, vector<string>);
 
 	//Acts on key event
-	virtual void keyDown(KEY_EVENT_RECORD key) { Panel2::keyDown(key); }
+	virtual void keyDown(KEY_EVENT_RECORD key) { Panel::keyDown(key); }
 
 	//Acts on mouse event
-	virtual void mousePressed(int x, int y) { Panel2::mousePressed(x, y); };
+	virtual void mousePressed(int x, int y) { Panel::mousePressed(x, y); };
 
 	void addControl(Control& control, int x, int y) = delete;
 
@@ -37,6 +37,7 @@ public:
 
 	void printWidget() {};
 
+	~CheckList();
 
 
 };

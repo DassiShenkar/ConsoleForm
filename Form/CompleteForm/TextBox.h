@@ -6,7 +6,7 @@
 #include <wchar.h>
 using namespace std;
 
-class TextBox2 : public Control
+class TextBox : public Control
 {
 private:
 
@@ -23,8 +23,8 @@ private:
 
 
 public:
-	TextBox2(int _width);
-	TextBox2(int _height, int _width);
+	TextBox(int _width);
+	TextBox(int _height, int _width);
 	void setText(string text);
 	string getText() const;
 
@@ -39,7 +39,7 @@ public:
 
 	virtual void draw(Graphics &g, int left, int top, int layer) {}
 
-	~TextBox2() {  }
+	~TextBox() {  }
 
 
 };

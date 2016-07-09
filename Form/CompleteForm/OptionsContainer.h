@@ -3,7 +3,7 @@
 #include "Control.h"
 #include "MouseListener.h"
 
-class OptionsContainer : public Panel2, public MouseListener2
+class OptionsContainer : public Panel, public MouseListener
 {
 protected:
 
@@ -27,5 +27,5 @@ public:
 
 	size_t getSelectedIndex() const;
 
-
+	~OptionsContainer();
 };

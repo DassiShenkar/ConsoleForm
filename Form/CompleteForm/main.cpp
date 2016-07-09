@@ -8,13 +8,12 @@
 #include "RadioList.h"
 #include "CheckList.h"
 #include "MouseListener.h"
-#include "MessageBox.h"
 using namespace std;
 
-struct MyListener : public MouseListener2
+struct MyListener : public MouseListener
 {
 	MyListener(Control &c) : _c(c) { }
-	void mousePressed(Button2 &b, int x, int y, bool isLeft)
+	void mousePressed(Button &b, int x, int y, bool isLeft)
 	{
 		_c.setForeground(ForegroundColor::Red);
 	}
@@ -23,44 +22,43 @@ private:
 };
 int main(int argc, char **argv)
 {
-	Label2 lName(20);
+	Label lName(20);
 	lName.setText("Name: ");
 
-	Label2 lAddress(20);
+	Label lAddress(20);
 	lAddress.setText("Address:");
-	Label2 lCountry(20);
+	Label lCountry(20);
 	lCountry.setText("Counrty:");
-	Label2 lSex(20);
+	Label lSex(20);
 	lSex.setText("Sex:");
-	Label2 lInterests(20);
+	Label lInterests(20);
 	lInterests.setText("Interests:");
-	Label2 lAge(20);
+	Label lAge(20);
 	lAge.setText("Age:");
-
-	/*TextBox2 tName(20);
+	/*TextBox tName(20);
 	tName.setText("Sherlock Holmes");
 	tName.setBorder(BorderType::Single);
-	//TextBox2 tAddress(25);
+	//TextBox tAddress(25);
 	tAddress.setText("221B Baker Street, London");
 	tAddress.setBorder(BorderType::Single);
 	*/
-	//ComboBox2 cCountry(20, { "Israel", "Great Britain", "United States" });
+	//ComboBox cCountry(20, { "Israel", "Great Britain", "United States" });
 	//cCountry.setSelectedIndex(1);
 	//cCountry.setBorder(BorderType::Single);
-	RadioList2 rSex(2, 15, { "Male", "Female" });
+	RadioList rSex(2, 15, { "Male", "Female" });
 	rSex.setBorder(BorderType::Single);
-	CheckList2 clInterests(3, 15, { "Sports", "Books", "Movies" });
+	CheckList clInterests(3, 15, { "Sports", "Books", "Movies" });
 	clInterests.selectIndex(1);
 	clInterests.setBorder(BorderType::Single);
-	NumericBox2 nAge(15, 18, 120);
+	NumericBox nAge(15, 18, 120);
 	nAge.setValue(23);
 	nAge.setBorder(BorderType::Single);
 	//MyListener listener(tAddress);
-	Button2 bSubmit(10);
+	Button bSubmit(10);
 	bSubmit.setText("Submit");
 	//bSubmit.addListener(listener);
 	bSubmit.setBorder(BorderType::Double);
-	Panel2 main;
+	Panel main;
 	main.addControl(lName, 1, 2);
 	main.addControl(lAddress, 1, 5);
 	main.addControl(lCountry, 1, 8);
