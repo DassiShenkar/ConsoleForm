@@ -95,7 +95,7 @@ public:
 
 	//Sets the global control in focus
 	static void setGlobalFocus(Control *control) { globalControlInFocus = control; }
-
+	
 	//Sets the layer
 	virtual void setLayer(int l) { layer = l; }
 

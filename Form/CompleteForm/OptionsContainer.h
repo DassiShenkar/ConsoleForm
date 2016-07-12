@@ -14,6 +14,7 @@ protected:
 public:
 	OptionsContainer(int height, int width, vector<string> _items);
 
+	void keyDown(KEY_EVENT_RECORD key);
 
 	virtual void draw(Graphics &g, int left, int top, int layer);
 

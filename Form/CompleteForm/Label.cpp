@@ -35,7 +35,7 @@ void Label::draw(Graphics &g, int left, int top, int _layer)
 	{
 		printBorder(g, left, top, _layer);
 		g.moveTo(getStartX() + 1, getStartY() + 1);
-		g.setForeground(Color::Green);
+		//g.setForeground(Color::Green);
 		g.setCursorVisibility(false);
 		g.write(text);
 		g.setForeground(Color::White);

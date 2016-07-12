@@ -15,6 +15,7 @@ OptionsContainer::OptionsContainer(int _height, int _width, vector<string> _item
 		addControl(*temp, 1, row++);
 		temp->getLayer();
 	}
+	
 	checked = new bool[_items.size()];
 	for (int i = 0; i < numberOfOptions; i++)
 	{
@@ -22,6 +23,16 @@ OptionsContainer::OptionsContainer(int _height, int _width, vector<string> _item
 	}
 
 
+}
+
+void OptionsContainer::keyDown(KEY_EVENT_RECORD key)
+{
+	Keys k = determineTypeOfKey(key);
+	switch (k)
+	{
+	case Keys::UP:
+		break;
+	}
 }
 
 

@@ -2,7 +2,7 @@
 
 Panel::Panel(int _height, int _width) : Control(_height, _width), items(*new vector<Control*>), panelControlInFocus(this)
 {
-
+	
 }
 
 void Panel::addControl(Control& control, int x, int y)
@@ -59,30 +59,39 @@ void Panel::keyDown(KEY_EVENT_RECORD key)
 
 void Panel::mousePressed(int x, int y, bool isLeft)
 {
-
-	bool flag = false;
-	//Moves the focus to the appropriate control
-	for (vector<Control*>::iterator it = items.begin(); it != items.end(); it++)
+	if (getGlobalInFocus() != 0 && isInside(x, y, getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY(),
+		getGlobalInFocus()->getWidth(), getGlobalInFocus()->getHeight()))
 	{
-		if (isInside(x, y, (*it)->getStartX(), (*it)->getStartY(), (*it)->getWidth(), (*it)->getHeight()))
+		getGlobalInFocus()->mousePressed(x, y, isLeft);
+	}
+	else
+	{
+		bool flag = false;
+		//Moves the focus to the appropriate control
+		for (vector<Control*>::iterator it = items.begin(); it != items.end(); it++)
 		{
-			flag = true;
-			if ((*it)->canGetFocus())
+			if (isInside(x, y, (*it)->getStartX(), (*it)->getStartY(), (*it)->getWidth(), (*it)->getHeight()))
 			{
+				flag = true;
+				if ((*it)->canGetFocus())
+				{
+					
+					Control::setGlobalFocus(*it);
+				}
 				panelControlInFocus = *it;
-				Control::setGlobalFocus(*it);
-			}
-			panelControlInFocus->mousePressed(x, y, isLeft);
+				panelControlInFocus->mousePressed(x, y, isLeft);
 
+			}
+		}
+
+		//If the click is in the panel and not on any of its widgets set focused to this
+		if (!flag && isInside(x, y, getStartX(), getStartY(), getWidth(), getHeight()))
+		{
+			panelControlInFocus = this;
+			Control::setGlobalFocus(this);
 		}
 	}
-
-	//If the click is in the panel and not on any of its widgets set focused to this
-	if (!flag && isInside(x, y, getStartX(), getStartY(), getWidth(), getHeight()))
-	{
-		panelControlInFocus = this;
-		Control::setGlobalFocus(this);
-	}
+	
 }
 
 
