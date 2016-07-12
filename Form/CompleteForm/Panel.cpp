@@ -59,7 +59,7 @@ void Panel::keyDown(KEY_EVENT_RECORD key)
 
 void Panel::mousePressed(int x, int y, bool isLeft)
 {
-	if (getGlobalInFocus() != 0 && isInside(x, y, getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY(),
+	if (getGlobalInFocus() != 0 && getGlobalInFocus()!=this && isInside(x, y, getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY(),
 		getGlobalInFocus()->getWidth(), getGlobalInFocus()->getHeight()))
 	{
 		getGlobalInFocus()->mousePressed(x, y, isLeft);
