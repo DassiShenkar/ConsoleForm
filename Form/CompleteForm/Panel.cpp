@@ -38,6 +38,7 @@ void Panel::setStartPosition(int x, int y)
 
 void Panel::draw(Graphics &g, int left, int top, int _layer)
 {
+	
 	if (isVisible)
 	{
 		if (layer == _layer)

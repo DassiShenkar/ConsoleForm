@@ -84,6 +84,10 @@ void Control::printBorder(Graphics &g, int left, int top, int _layer)
 
 	if (getLayer() != _layer)
 		return;
+	if (getGlobalInFocus() == this)
+	{
+		g.setForeground(Color::Cyan);
+	}
 	string frame_top = " ";
 	string frame_side = " ";
 	switch (border)
@@ -130,6 +134,7 @@ void Control::printBorder(Graphics &g, int left, int top, int _layer)
 	{
 		g.write(frame_top);
 	}
+	g.setForeground(Color::White);
 }
 
 string Control::convertToString(int val)
