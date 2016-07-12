@@ -1,12 +1,12 @@
 #pragma once
 
 #include <Windows.h>
-#include "Widget.h"
+#include "Control.h"
 #include <iostream>
 #include <wchar.h>
 using namespace std;
 
-class TextBox : public Widget
+class TextBox : public Control
 {
 private:
 
@@ -23,19 +23,17 @@ private:
 
 
 public:
-	TextBox(int _width, int _height = 1);
+	TextBox(int _width);
+	TextBox(int _height, int _width);
 	void setText(string text);
 	string getText() const;
 
+	//Implements the pure virtual functions of Widget
+	void keyDown(KEY_EVENT_RECORD key);
+	void mousePressed(int x, int y, bool isLeft);
 	
 
-
-
-	//Implements the pure virtual functions of Widget
-	void actOnKeyEvent(KEY_EVENT_RECORD);
-	void actOnMouseEvent(MOUSE_EVENT_RECORD);
-	void printWidget() const;
-
+	virtual void draw(Graphics &g, int left, int top, int layer) {}
 
 	~TextBox() {  }
 

@@ -1,41 +1,36 @@
 #pragma once
 #include <Windows.h>
 #include <vector>
-#include "Keys.h"
+#include "Enums.h"
 #include "Graphics.h"
 
 
-/*
-enum class ForegroundColor { Red, Blue, Green, Purple, Teal, Yellow, White, Black };
-enum class BackgroundColor { Red, Blue, Green, Purple, Teal, Yellow, White, Black };
-enum class BorderType { Single, Double, None };*/
 
-/*
-An abstract class that has the basic functionality of a Widget.
-methods to be implemented in each separate widget:
-actOnKeyEvent(KEY_EVENT_RECORD) - how will the widget respond to each key event
-actOnMouseEvent(MOUSE_EVENT_RECORD) - how will the widget respond to each mouse event
-*/
-//class Graphics;
 class Control
 {
 private:
-	static Control* focused;
+	//The global control in focus
+	static Control* globalControlInFocus;
 protected:
 
-	bool focusable;
 
-	//Starting coordinate for the Widget
-	COORD startPos;
+
+	//The starting coordinates
+	int startX, startY;
 
 	//The dimensions
-	short width, height;
+	int width, height;
 
-	//End coordinate for the Widget
-	COORD endPos;
+	//The cursor coordinates
+	int cursorX, cursorY;
+
+	int layer;
 
 	//The visibility of the widget
 	bool isVisible;
+
+	//Is the Control focusable
+	bool focusable;
 
 	//Indicates the foreground color of the wodget
 	ForegroundColor foreground;
@@ -49,19 +44,56 @@ protected:
 	//A method that determines what type of key was pressed
 	Keys determineTypeOfKey(KEY_EVENT_RECORD);
 
+	//Auxiliary method to convert int to string
 	string convertToString(int num);
 
 public:
 
-	//Default widget Constructor parameters
-	Control() : startPos{ 0,0 }, endPos({ width,height }), width(20),
-		height(10), isVisible(true), border(BorderType::Single), focusable(true) {}
-
 	//Constructor with parameters
-	Control(int _height, int _width) : startPos({ 0,0 }), width(_width), height(_height),
-		endPos({ startPos.X + (short)_width,startPos.Y + (short)_height - 1 }),
-		focusable(true),isVisible(true), border(BorderType::Single) {}
+	Control(int _height, int _width) : startX(0), startY(0), width(_width), height(_height),
+		cursorX(0), cursorY(0), focusable(true), isVisible(true), border(BorderType::Single), layer(0) {}
 
+	//Shows the control
+	void Show();
+
+	//Hides the Control
+	void Hide();
+
+	//Can the control get focus 
+	bool canGetFocus() { return focusable; };
+
+
+
+
+	/******************************************************************************/
+	/*                            Getters/Setters								  */
+	/******************************************************************************/
+
+	//Gets all the controls
+	void getAllControls(vector<Control*> controls) { controls.push_back(this); };
+
+	void setFocusable(bool f) { focusable = f; }
+
+	//Gets the global control in focus
+	static Control* getGlobalInFocus() { return globalControlInFocus; }
+
+	//Sets the global control in focus
+	static void setGlobalFocus(Control *control) { globalControlInFocus = control; }
+
+	//Sets the layer
+	virtual void setLayer(int l) { layer = l; }
+
+	//Gets the layer
+	virtual int getLayer() const { return layer; }
+
+	//Sets the Foreground color
+	void setForeground(ForegroundColor color) { foreground = color; }
+
+	//Sets the Background color
+	void setBackground(BackgroundColor color) { background = color; }
+
+	//Sets the border type
+	void setBorder(BorderType _border) { border = _border; }
 
 	//Returns the width 
 	virtual int getWidth() const { return width; }
@@ -76,59 +108,45 @@ public:
 	virtual void setHeight(int _height) { height = _height; }
 
 	//Sets the starting coordinate
-	virtual void setStartPosition(COORD start) { startPos = start; endPos = { startPos.X + width, startPos.Y + height }; }
+	virtual void setStartPosition(int x, int y) { startX = x; startY = y; }
 
-	//Returns the starting coordinate
-	virtual COORD getStartPosition() const { return startPos; }
+	//Returns the starting x coordinate
+	virtual int getStartX() const { return startX; }
 
-	//Returns the end coordinate
-	virtual COORD getEndPosition() const { return endPos; }
+	//Returns the starting x coordinate
+	virtual void setStartX(int x) { startX = x; }
 
-	//Sets the end coordinate
-	virtual void setEndPosition(COORD end) { endPos = end; }
+	//Returns the starting y coordinate
+	virtual int getStartY() const { return startY; }
 
+	//Returns the starting y coordinate
+	virtual void setStartY(int y) { startY = y; }
 
+	//Returns the cursor x coordinate
+	virtual int getCursorX() const { return cursorX; }
 
-	void Show();
+	//Returns the cursor x coordinate
+	virtual void setCursorX(int x) { cursorX = x; }
 
-	void Hide();
+	//Returns the cursor y coordinate
+	virtual int getCursorY() const { return cursorY; }
 
-	//Sets the Foreground color
-	void setForeground(ForegroundColor color);
-
-	//Sets the Background color
-	void setBackground(BackgroundColor color);
-
-	//Sets the border type
-	void setBorder(BorderType border);
-
-	static Control* getFocused() { return focused; }	static void setFocus(Control *control) { focused = control; };
-	bool canGetFocus() { return focusable; };
-	void getAllControls(vector<Control*>* controls) { controls->push_back(this); };
+	//Returns the cursor x coordinate
+	virtual void setCursorY(int y) { cursorY = y; }
 
 
-	/*
-	Acts on key event
-	Each widget should implement the function.
-	It responds to the key event sent by the ConsoleHandler
-	(only for press down)
-	*/
+	//Sets the cursor position
+	virtual void setCursorPosition(int x, int y) { cursorX = x; cursorY = y; }
+
+
+
+	//Responds to key events
 	virtual void keyDown(KEY_EVENT_RECORD) = 0;
 
+	//Responds to left Click
+	virtual void mousePressed(int x, int y, bool isLeft) = 0;
 
-
-	/*
-	Acts on mouse event
-	Each widget should implement the function.
-	It responds to the mouse event sent by the ConsoleHandler
-	(only for press down)
-	*/
-	virtual void mousePressed(int x, int y) = 0;
-
-	//Prints the widget to the screen
-	virtual void printWidget() = 0;
-
-	virtual void draw(Graphics &g, int left, int top, int layer)=0;
+	virtual void draw(Graphics &g, int left, int top, int layer) = 0;
 
 	//Prints the Border
 	void printBorder(Graphics &g, int left, int top, int layer);
@@ -138,3 +156,4 @@ public:
 	virtual ~Control() = 0;
 
 };
+

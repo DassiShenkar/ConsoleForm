@@ -1,5 +1,5 @@
 #pragma once
-#include "Widget.h"
+
 #include "Label.h"
 #include <iostream>
 #include <vector>
@@ -7,34 +7,24 @@
 
 using namespace std;
 
-
-
-class Button : public Widget
+class Button : public Label
 {
 private:
-	Label text;
 	vector<MouseListener*> listeners;
-	
+
 public:
 
 	//Constructor
-	Button(int _width=10);
-
-	//Sets the text of the button
-	void setText(string value);
+	Button(int _width = 10);
 
 	//Acts on key event
-	void actOnKeyEvent(KEY_EVENT_RECORD key);
+	void keyDown(KEY_EVENT_RECORD key);
 
 	//Acts on Mouse event
-	void actOnMouseEvent(MOUSE_EVENT_RECORD mouse);
+	void mousePressed(int x, int y, bool isLeft);
 
 	//Adds a new listener
 	void addMouseListener(MouseListener* _listener);
 
-	//Prints the button to the screen
-	void printWidget() const;
 
-	void setStartPosition(COORD pos);
-	
 };

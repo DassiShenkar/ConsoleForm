@@ -3,13 +3,13 @@
 #include <string>
 #include <Windows.h>
 #include <iostream>
-#include "Widget.h"
+#include "Control.h"
 using namespace std;
 
 /*
 A class that implements the Label Widget
 */
-class Label : public Widget
+class Label : public Control
 {
 private:
 
@@ -21,18 +21,19 @@ public:
 	Label(int _width);
 
 	//A method that handles key events
-	virtual void actOnKeyEvent(KEY_EVENT_RECORD);
+	virtual void keyDown(KEY_EVENT_RECORD);
 
 	//A method that handles mouse events
-	virtual void actOnMouseEvent(MOUSE_EVENT_RECORD);
+	virtual void mousePressed(int x, int y, bool isLeft);
 
 	virtual void setText(string _text);
 
 	string getText() const { return text; }
 
-	virtual void printWidget() const;
 
 	virtual ~Label() {};
+
+	virtual void draw(Graphics &g, int left, int top, int layer);
 
 
 

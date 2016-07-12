@@ -4,8 +4,11 @@
 #include <wchar.h>
 #include <string.h>
 
+TextBox::TextBox(int _width) : TextBox(1, _width)
+{
 
-TextBox::TextBox(int _width, int _height) : Widget(_width, _height)
+}
+TextBox::TextBox(int _height, int _width) : Control(_height, _width)
 {
 	//Take over the output 
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -34,7 +37,7 @@ TextBox::TextBox(int _width, int _height) : Widget(_width, _height)
 
 }
 
-void TextBox::actOnKeyEvent(KEY_EVENT_RECORD key)
+void TextBox::keyDown(KEY_EVENT_RECORD key)
 {
 	//Take over the output 
 	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -131,8 +134,9 @@ void TextBox::actOnKeyEvent(KEY_EVENT_RECORD key)
 
 }
 
-void TextBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
+void TextBox::mousePressed(int x, int y)
 {
+	Control::setFocus(this);
 	//Take over the output 
 	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -146,12 +150,12 @@ void TextBox::actOnMouseEvent(MOUSE_EVENT_RECORD mouse)
 	//Current console cursor position
 	COORD cursorPos = ConsoleInfo->dwCursorPosition;
 
-	if (mouse.dwButtonState == 0x0001 &&
-		mouse.dwMousePosition.X > this->getStartPosition().X
-		&& mouse.dwMousePosition.X<this->getEndPosition().X
-		&&mouse.dwMousePosition.Y>this->getStartPosition().Y
-		&&mouse.dwMousePosition.Y < this->getEndPosition().Y)
-		SetConsoleCursorPosition(s, mouse.dwMousePosition);
+	if (
+		x > this->getStartPosition().X
+		&& x<this->getEndPosition().X
+		&& y>this->getStartPosition().Y
+		&& y < this->getEndPosition().Y)
+		SetConsoleCursorPosition(s, { short(x), short(y) });
 }
 
 
@@ -300,12 +304,12 @@ void TextBox::rePrintText(HANDLE &hout, Keys key, int location)
 
 }
 
-void TextBox::printWidget() const
+void TextBox::printWidget()
 {
 	//Take over the output 
 	HANDLE hout = GetStdHandle(STD_OUTPUT_HANDLE);
 
-	printBorder();
+	//	printBorder();
 	SetConsoleCursorPosition(hout, { startPos.X + 1,startPos.Y + 1 });
 	int h = 0;
 	for (short i = 0; i < getHeight() - 2; i++)

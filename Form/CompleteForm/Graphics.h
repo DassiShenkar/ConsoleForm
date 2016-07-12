@@ -1,11 +1,10 @@
 #pragma once
-
+#include "Enums.h"
 #include <string>
 #include <Windows.h>
 
 using namespace std;
 
-enum class Color { Black, Blue, Green, Red, Cyan, Purple, Orange, White };
 
 class Graphics
 {

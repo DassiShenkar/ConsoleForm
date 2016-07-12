@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <Windows.h>
-#include "Widget.h"
+#include "OptionsContainer.h"
 #include <vector>
 #include <string>
 
@@ -12,23 +12,17 @@ using namespace std;
 /*
 A class that implements the Radio List Widget
 */
-class RadioList : public Widget
+class RadioList : public OptionsContainer
 {
-private:
-	vector<string> item_list;				//A list that holds the items
-	int checked;								//Holds the number of item that is chosen
 
 public:
 
 	//A constructor that recieves the starting coordinate and the list of items
-	RadioList(int _width, int _height, vector<string>);
+	RadioList(int _height, int _width, vector<string>);
 
-	//A method that responds to key event
-	void actOnKeyEvent(KEY_EVENT_RECORD);
+	void addControl(Control& control, int x, int y) = delete;
 
-	//A method that responds to mouse event
-	void actOnMouseEvent(MOUSE_EVENT_RECORD);
 
-	void printWidget() const;
+
 
 };
