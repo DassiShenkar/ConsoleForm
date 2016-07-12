@@ -62,6 +62,22 @@ public:
 	//Can the control get focus 
 	bool canGetFocus() { return focusable; };
 
+	//Prints the Border
+	void printBorder(Graphics &g, int left, int top, int layer);
+
+
+	/******************************************************************************/
+	/*                            Abstract functions								  */
+	/******************************************************************************/
+
+
+	//Responds to key events
+	virtual void keyDown(KEY_EVENT_RECORD) = 0;
+
+	//Responds to left Click
+	virtual void mousePressed(int x, int y, bool isLeft) = 0;
+
+	virtual void draw(Graphics &g, int left, int top, int layer) = 0;
 
 
 
@@ -140,16 +156,7 @@ public:
 
 
 
-	//Responds to key events
-	virtual void keyDown(KEY_EVENT_RECORD) = 0;
 
-	//Responds to left Click
-	virtual void mousePressed(int x, int y, bool isLeft) = 0;
-
-	virtual void draw(Graphics &g, int left, int top, int layer) = 0;
-
-	//Prints the Border
-	void printBorder(Graphics &g, int left, int top, int layer);
 
 
 	//Destructor

@@ -9,12 +9,8 @@ Control* Control::globalControlInFocus = 0;
 
 void Control::Show()
 {
-	if (isVisible)
-		;
-	else
-	{
+	if (!isVisible)
 		isVisible = true;
-	}
 }
 
 void Control::Hide()
@@ -22,11 +18,6 @@ void Control::Hide()
 	if (isVisible)
 	{
 		isVisible = false;
-	}
-
-	else
-	{
-		;
 	}
 }
 
@@ -88,16 +79,17 @@ Keys Control::determineTypeOfKey(KEY_EVENT_RECORD key)
 	return Keys::KEY_RELEASED;
 }
 
-void Control::printBorder(Graphics &g, int left, int top, int layer)
+void Control::printBorder(Graphics &g, int left, int top, int _layer)
 {
 
-
+	if (getLayer() != _layer)
+		return;
 	string frame_top = " ";
 	string frame_side = " ";
 	switch (border)
 	{
 	case BorderType::None:
-		break;
+		return;
 	case BorderType::Single:
 		frame_top = "-";
 		frame_side = "|";
@@ -114,17 +106,15 @@ void Control::printBorder(Graphics &g, int left, int top, int layer)
 	for (int i = 0; i < getWidth() + 1; i++)
 	{
 		g.write(frame_top);
-		//cout << frame_top;
 	}
 
 	//Prints the right and left boundaries
-	for (int i = 0; i < height; i++)
+	for (int i = 0; i < getHeight(); i++)
 	{
-		short startX = getStartX();
-		short startY = getStartX() + i + 1;
+		int startX = getStartX();
+		int startY = getStartY() + i + 1;
 		g.moveTo(startX, startY);
 		g.write(frame_side);
-		//cout << frame_side;
 
 
 		short endX = getStartX() + width;
@@ -133,30 +123,27 @@ void Control::printBorder(Graphics &g, int left, int top, int layer)
 		//Sets the consoleCursor position to the end
 		g.moveTo(endX, endY);
 		g.write(frame_side);
-		//cout << frame_side;
 
 	}
 	g.moveTo(getStartX(), getStartY() + (short)getHeight() + 1);
 	for (int i = 0; i < width + 1; i++)
 	{
 		g.write(frame_top);
-		//cout << frame_top;
 	}
-
-
-
-
 }
 
 string Control::convertToString(int val)
 {
 	string result = "";
 	string temp = "";
+	bool flag = false;
 	if (val < 0)
 	{
-		temp.append("-");
+		flag = true;
 		val = -val;
 	}
+	if (val == 0)
+		return "0";
 	while (val > 0)
 	{
 
@@ -165,6 +152,12 @@ string Control::convertToString(int val)
 	}
 	for (int i = temp.length() - 1; i >= 0; i--)
 	{
+		if (flag)
+		{
+			result += "-";
+			flag = false;
+		}
+
 		result += (temp.at(i));
 	}
 	return result;

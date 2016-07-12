@@ -1,47 +1,36 @@
 #include "NumericBox.h"
-#include <sstream>
-using namespace std;
 
-NumericBox::NumericBox(int _width, int _min, int _max) : Panel(5, _width), minus(*(new Button(3)))
-, plus(*(new Button(3))), label(3)
+NumericBox::NumericBox(int width, int min, int max) : Panel(3, width), text(*new Label(3))
 {
+	text.setText(convertToString(0));
+	text.setBorder(BorderType::None);
+	Button* minus = new Button(width / 2 - 2);
+	minus->setText("-");
+	minus->setBorder(BorderType::Single);
+	minus->addMouseListener(this);
+	Button* plus = new Button(width / 2 - 2);
+	plus->setText("+");
+	plus->setBorder(BorderType::Single);
+	plus->addMouseListener(this);
 
+	Panel::addControl(text, width / 2 - 1, getStartY());
+	Panel::addControl(*minus, 1, getStartY() + 2);
+	Panel::addControl(*plus, width / 2 + 1, getStartY() + 2);
 
-
-	min = _min;
-	max = _max;
-	currentValue = 0;
-	string result = convertToString(0);
-	label.setText(result);
-	minus.setText("-");
-	minus.addMouseListener(this);
-	plus.setText("+");
-	plus.addMouseListener(this);
-	this->addControl(plus, 2, 3);
-	this->addControl(minus, 6, 3);
-	this->addControl(label, 4, 1);
 
 }
-
-
-
 
 void NumericBox::buttonMousePressed(Control* control, int x, int y, bool isLeft)
 {
-	Control::setGlobalFocus(this);
-	if (control == &plus && isLeft)
-	{
-		label.setText(convertToString(++currentValue));
-	}
+	if (static_cast<Button*>(control)->getText().compare("-") == 0)
+		setValue(--value);
 	else
-	{
-		label.setText(convertToString(--currentValue));
-	}
+		setValue(++value);
 }
 
-NumericBox::~NumericBox()
+void NumericBox::setValue(int val)
 {
-	for (int i = 0; i < numberOfItems; i++) {
-		delete items[i];
-	}
+	value = val;
+	text.setText(convertToString(value));
+
 }

@@ -1,25 +1,18 @@
 #pragma once
-
-#include "Button.h"
 #include "Panel.h"
-#include "MouseListener.h"
-
+#include "Button.h"
 
 class NumericBox : public Panel, public MouseListener
 {
 private:
-	Label label;
-	Button minus;
-	Button plus;
-	int currentValue;
-	int min;
-	int max;
+	int value, min, max;
+	Label text;
 public:
+	NumericBox(int width, int min, int max);
 
-	NumericBox(int _width, int min, int _max);
-	void buttonMousePressed(Control* control, int x, int y, bool isLeft);
-	void setValue(int val) { currentValue = val; }
-	int getCurrentValue()const { return currentValue; }
+	virtual void buttonMousePressed(Control* control, int x, int y, bool isLeft);
 
-	~NumericBox();
+	void setValue(int val);
+
+	void addControl(Control& control, int x, int y) = delete;
 };

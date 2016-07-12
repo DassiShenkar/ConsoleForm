@@ -6,7 +6,7 @@ using namespace std;
 
 Label::Label(int _width) : Control(1, _width)
 {
-
+	setFocusable(false);
 }
 
 
@@ -26,24 +26,20 @@ void Label::mousePressed(int x, int y, bool isLeft)
 void Label::setText(string _text)
 {
 	text = _text;
-	width = _text.length() + 2;
-	//printWidget();
 }
 
 
-void Label::draw(Graphics &g, int left, int top, int layer)
+void Label::draw(Graphics &g, int left, int top, int _layer)
 {
-
-	
-	printBorder(g, left, top, layer);
-	g.moveTo(getStartX()+1, getStartY() + 1);
-	g.setForeground(Color::Green);
-	g.setCursorVisibility(false);
-	
-	g.write(text);
-	
-	g.setForeground(Color::White);
-
+	if (isVisible&& getLayer() == _layer)
+	{
+		printBorder(g, left, top, _layer);
+		g.moveTo(getStartX() + 1, getStartY() + 1);
+		g.setForeground(Color::Green);
+		g.setCursorVisibility(false);
+		g.write(text);
+		g.setForeground(Color::White);
+	}
 
 }
 

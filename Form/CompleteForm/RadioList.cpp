@@ -6,14 +6,21 @@ using namespace std;
 
 
 //A constructor that recieves the dimensions and the list of items
-RadioList::RadioList(int _height, int _width, vector<string> _items) : OptionsContainer(_height + 2, _width, _items)
+RadioList::RadioList(int _height, int _width, vector<string> _items) : OptionsContainer(_height, _width, _items)
 {
-	for (vector<Control*>::iterator it = items.begin(); it != items.end(); it++)
-	{
-		static_cast<Button*>(*it)->addMouseListener(this);
-	}
+
 }
 
 
+void RadioList::mousePressed(int x, int y, bool isLeft)
+{
+	for (int i = 0; i < numberOfOptions; i++)
+	{
+		if (y - getStartY() - 1 == i)
+			checked[i] = true;
+		else
+			checked[i] = false;
 
+	}
+}
 

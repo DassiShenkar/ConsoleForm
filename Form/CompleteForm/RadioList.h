@@ -20,7 +20,7 @@ public:
 	//A constructor that recieves the starting coordinate and the list of items
 	RadioList(int _height, int _width, vector<string>);
 
-	void addControl(Control& control, int x, int y) = delete;
+	virtual void mousePressed(int x, int y, bool isLeft);
 
 
 
