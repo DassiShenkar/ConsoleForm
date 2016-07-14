@@ -4,6 +4,7 @@
 using namespace std;
 
 //A constructor that gets the starting coordinate of the Combo Box and the list of items
+/*
 ComboBox::ComboBox(int _width, vector<string>* items) : Widget(_width,5),
 item_list(*items), header("Select Item"), drop_down(false)
 {
@@ -284,4 +285,4 @@ void ComboBox::clearBody() const
 		cout << ' ';
 	}
 
-}
+}*/

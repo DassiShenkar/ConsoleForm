@@ -7,6 +7,7 @@
 using namespace std;
 
 /*A class that implements a Combo Box Widget*/
+/*
 class ComboBox : public Panel, public MouseListener
 {
 private:
@@ -40,3 +41,4 @@ public:
 	~ComboBox();
 };
 #pragma once
+*/
