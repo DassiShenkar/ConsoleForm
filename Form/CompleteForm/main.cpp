@@ -9,6 +9,8 @@
 #include "CheckList.h"
 #include "ComboBox.h"
 #include "MouseListener.h"
+#include "Messagebox.h"
+
 using namespace std;
 
 struct MyListener : public MouseListener
@@ -42,6 +44,10 @@ int main(int argc, char **argv)
 	TextBox tAddress(25);
 	tAddress.setText("221B Baker Street, London");
 	tAddress.setBorder(BorderType::Single);
+	Messagebox msgbox(15, 20);
+	//msgbox.setTtl("");
+	//msgbox.setMsg("");
+	
 	
 	ComboBox cCountry(20, { "Israel", "Great Britain", "United States" });
 	cCountry.setSelectedIndex(1);
@@ -73,6 +79,8 @@ int main(int argc, char **argv)
 	main.addControl(cCountry, 25, 8);
 	main.addControl(rSex, 25, 11);
 	main.addControl(clInterests, 25, 15);
+	/////////
+	main.addControl(msgbox, 11, 5);
 
 	main.addControl(nAge, 25, 20);
 

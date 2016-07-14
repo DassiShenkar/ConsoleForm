@@ -1,40 +1,50 @@
-#include "MessageBox.h"
+#include "Messagebox.h"
 
-
-
-MessageBox::MessageBox(int height, int width) : Panel(height,width)
+Messagebox::Messagebox(int height, int width) : Panel(height, width), ttl(*new Label(10)), msg(*new Label(20))
 {
-	addControl(Label(0), 0, 0);
-	addControl(Label(0), 0, 4);
-	addControl(Button(), 5, 12);
+	ttl.setText("");
+	msg.setText("");
+	msg.setBorder(BorderType::None);
+	Button* ok = new Button(5);
+	ok->setText("OK");
+	ok->setBorder(BorderType::Single);
+	ok->addListener(static_cast<MouseListener*>(this));
+	ok->addListener(static_cast<KeyboardListener*>(this));
+
+	Panel::addControl(ttl, width / 2, getStartY());
+	Panel::addControl(msg, 1,  4);
+	Panel::addControl(*ok, width / 2, 10);
+	
 }
 
 
-MessageBox::~MessageBox()
+Messagebox::~Messagebox()
 {
+	ttl.~Label();
+	msg.~Label();
 }
 
-void MessageBox::setTtl(string ttl) {
-	vector<Control*>::iterator it;
-	//Control *ctrl = items.begin();
-	it = items.begin();
-	Label* tempttl = new Label(0);
-	tempttl->setText(ttl);
-	(*it) = tempttl;
-}
-
-void MessageBox::setMsg(string msg) {
-	int i = 0;
-	vector<Control*>::iterator it;
-	Label* tempmsg = new Label(0);
-	tempmsg->setText(msg);
-	for ( it = items.begin(); it != items.end(); it++ , i++)
+void Messagebox::mousePressed(Control* control, int x, int y)
+{
+	if (static_cast<Button*>(control)->getText() == "OK")
 	{
-		if (i == 1)
-		{
-			(*it) = tempmsg;
-		}
-		//(*it)->setStartPosition({ position.X + (*it)->getStartPosition().X, position.Y + (*it)->getStartPosition().Y });
+		static_cast<Button*>(control)->~Button();
+		this->~Messagebox();
 	}
+	else return;
 
+}
+
+void Messagebox::buttonKeyDown(KEY_EVENT_RECORD key)
+{
+	mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY());
+
+}
+
+void Messagebox::setTtl(string uttl) {
+	this->ttl.setText("uttl");
+}
+
+void Messagebox::setMsg(string umsg) {
+	this->msg.setText("umsg");
 }
