@@ -6,9 +6,9 @@
 #include "Control.h"
 using namespace std;
 
-/*
-A class that implements the Label Widget
-*/
+/*******************************************************************************
+*A Class that implements a Label control.									   *
+*******************************************************************************/
 class Label : public Control
 {
 private:
@@ -24,17 +24,21 @@ public:
 	virtual void keyDown(KEY_EVENT_RECORD);
 
 	//A method that handles mouse events
-	virtual void mousePressed(int x, int y);
+	virtual void mousePressed(int x, int y, bool isLeft);
 
+	//Sets the text of the Label
 	virtual void setText(string _text);
 
+	//Gets the text of the label
 	string getText() const { return text; }
 
-	virtual void printWidget();
+	//Draws the label on screen
+	virtual void draw(Graphics &g, int left, int top, int layer);
 
+	//Destructor
 	virtual ~Label() {};
 
-	virtual void draw(Graphics &g, int left, int top, int layer);
+	
 
 
 

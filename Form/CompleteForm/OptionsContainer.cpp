@@ -1,113 +1,104 @@
 #include "OptionsContainer.h"
-#include "Label.h"
 #include "Button.h"
 #include <iostream>
 using namespace std;
 
 OptionsContainer::OptionsContainer(int _height, int _width, vector<string> _items) : Panel(_height, _width)
+, mouseListeners(*new vector<MouseListener*>()), keyListeners(*new vector<KeyboardListener*>())
 {
-
-
 	int row = 0;
+	numberOfOptions = _items.size();
 	for (vector<string>::iterator it = _items.begin(); it != _items.end(); it++)
 	{
-		Button* temp = new Button(_width - 1);
-		temp->setText(*it);
-		this->addControl(*temp, 0, row++);
+		Button* temp = new Button(_width);
+		temp->setBorder(BorderType::None);
+		temp->setText("o " + *it);
+		temp->setFocusable(true);
+		temp->addListener(static_cast<MouseListener*>(this));
+		temp->addListener(static_cast<KeyboardListener*>(this));
+		addControl(*temp, 1, row++);
+		temp->getLayer();
 	}
+	
 	checked = new bool[_items.size()];
+	for (int i = 0; i < numberOfOptions; i++)
+	{
+		checked[i] = false;
+	}
 
-	//Initializes the checked array to false
-	setAllOptionsToFalse();
 
 }
 
+
 void OptionsContainer::draw(Graphics &g, int left, int top, int layer)
 {
-
-	printBorder(g, left, top, layer);
-	//Iterates through the item list and prints the items
-	short i = 0;
-	vector<Control*>::iterator it = items.begin();
-	for (; it != items.end(); it++, i++)
+	for (int i = 0; i < numberOfOptions; i++)
 	{
-		g.moveTo(startPos.X + 1, startPos.Y + i + 1);
-		if (checked[i] == true)
-		{
-			//White background and black font
-
-			g.setBackground(Color::White);
-			g.setForeground(Color::Black);
-
-
-			g.write("X ");
-			g.write(convertToString(i + 1));
-			g.write(" ");
-			g.write(static_cast<Button*>(*it)->getText());
-
-			//Restore original colors
-			g.setBackground(Color::Black);
-			g.setForeground(Color::White);
-		}
-		//Else if item is not picked
+		string temp = static_cast<Button*>(items[i])->getText();
+		if (checked[i] == false)
+			temp.replace(0, 1, "o");
 		else
 		{
-			g.write("O ");
-			g.write(convertToString(i + 1));
-			g.write(" ");
-			g.write(static_cast<Button*>(*it)->getText());
-
-			//Restore original colors
-			g.setBackground(Color::Black);
-			g.setForeground(Color::White);
-
+			temp.replace(0, 1, "x");
 		}
+		static_cast<Button*>(items[i])->setText(temp);
+		
 	}
-	g.moveTo(startPos.X, startPos.Y + 2);
-	g.setCursorVisibility(true);
+
+	Panel::draw(g, left, top, layer);
+}
+
+
+
+
+
+void OptionsContainer::setSelectedIndex(size_t index)
+{
+	for (int i = 0; i < numberOfOptions; i++)
+	{
+		checked[i] = false;
+	}
+	checked[index - 1] = true;
+}
+
+size_t OptionsContainer::getSelectedIndex() const
+{
+
+	for (size_t i = 0; i < items.size(); i++)
+	{
+		if (checked[i] == true)
+			return i + 1;
+	}
+	return 1;
+}
+
+void OptionsContainer::addListener(MouseListener* _listener)
+{
+	mouseListeners.push_back(_listener);
 }
 
 
 void OptionsContainer::keyDown(KEY_EVENT_RECORD key)
 {
+	Keys k = determineTypeOfKey(key);
+	vector<KeyboardListener*>::iterator it;
+	if (k == Keys::ENTER)
+		for (it = keyListeners.begin(); it != keyListeners.end(); it++)
+		{
 
+			(*it)->buttonKeyDown(key);
+
+		}
 }
 
-void OptionsContainer::mousePressed(Control* control, int x, int y, bool isLeft)
+void OptionsContainer::addListener(KeyboardListener* _listener)
 {
-	Control::setFocus(this);
-	int picked = control->getStartPosition().Y - this->getStartPosition().Y;
-	setAllOptionsToFalse();
-	checked[picked] = true;
-
-}
-
-void OptionsContainer::setAllOptionsToFalse()
-{
-	for (int i = 0; i < items.size(); i++)
-	{
-		checked[i] = false;
-	}
+	keyListeners.push_back(_listener);
 }
 
 
-void OptionsContainer::setSelectedIndex(size_t index)
-{
 
-	checked[index] = true;
-}
-
-size_t OptionsContainer::getSelectedIndex() const
-{
-	for (int i = 0; i < items.size(); i++)
-	{
-		if (checked[i] == true)
-			return i + 1;
-	}
-}
-
-
-OptionsContainer::~OptionsContainer() 
+OptionsContainer::~OptionsContainer()
 {
 	delete checked;
 }

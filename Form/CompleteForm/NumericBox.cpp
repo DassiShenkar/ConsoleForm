@@ -1,69 +1,45 @@
 #include "NumericBox.h"
-#include <sstream>
-using namespace std;
 
-NumericBox::NumericBox(int _width, int _min, int _max) : Panel(5, _width), minus(*(new Button(3)))
-, plus(*(new Button(3))), label(3)
+NumericBox::NumericBox(int width, int min, int max) : Panel(3, width), text(*new Label(3))
 {
+	text.setText(convertToString(0));
+	text.setBorder(BorderType::None);
+	Button* minus = new Button(width / 2 - 2);
+	minus->setText("-");
+	minus->setBorder(BorderType::Single);
+	minus->addListener(static_cast<MouseListener*>(this));
+	minus->addListener(static_cast<KeyboardListener*>(this));
+	Button* plus = new Button(width / 2 - 2);
+	plus->setText("+");
+	plus->setBorder(BorderType::Single);
+	plus->addListener(static_cast<MouseListener*>(this));
+	plus->addListener(static_cast<KeyboardListener*>(this));
 
 
+	Panel::addControl(text, width / 2 - 1, getStartY());
+	Panel::addControl(*minus, 1, getStartY() + 2);
+	Panel::addControl(*plus, width / 2 + 1, getStartY() + 2);
 
-	min = _min;
-	max = _max;
-	currentValue = 0;
-	string result = convertToString(0);
-	label.setText(result);
-	minus.setText("-");
-	minus.addMouseListener(this);
-	plus.setText("+");
-	plus.addMouseListener(this);
-	this->addControl(plus, 2, 3);
-	this->addControl(minus, 6, 3);
-	this->addControl(label, 4, 1);
 
 }
-
-
-
-string NumericBox::convertToString(int val)
-{
-	string result = "";
-	string temp = "";
-	if (val < 0)
-	{
-		temp.append("-");
-		val = -val;
-	}
-	while (val > 0)
-	{
-
-		temp.append(to_string(val % 10));
-		val /= 10;
-	}
-	for (int i = temp.length() - 1; i >= 0; i--)
-	{
-		result += (temp.at(i));
-	}
-	return result;
-}
-
 
 void NumericBox::mousePressed(Control* control, int x, int y, bool isLeft)
 {
-	Control::setFocus(this);
-	if (control == &plus && isLeft)
-	{
-		label.setText(convertToString(++currentValue));
-	}
+	if (static_cast<Button*>(control)->getText().compare("-") == 0)
+		setValue(--value);
 	else
-	{
-		label.setText(convertToString(--currentValue));
-	}
+		setValue(++value);
 }
 
-NumericBox::~NumericBox()
+void NumericBox::buttonKeyDown(KEY_EVENT_RECORD key)
 {
-	for (int i = 0; i < numberOfItems; i++) {
-		delete items[i];
-	}
+	mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY(), true);
+
+}
+
+void NumericBox::setValue(int val)
+{
+	value = val;
+	text.setText(convertToString(value));
+
 }

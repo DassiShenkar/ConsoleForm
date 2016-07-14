@@ -99,7 +99,9 @@ void Graphics::updateConsoleAttributes()
 
 bool isInside(int x, int y, int left, int top, int width, int height)
 {
-	x -= left;
-	y -= top;
-	return x >= 0 && y >= 0 && x < width && y < height;
+
+	if (x < left || x > left + width || y <= top || y > top + height)
+		return false;
+
+	return true;
 }

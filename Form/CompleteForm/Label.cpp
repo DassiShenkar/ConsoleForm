@@ -6,7 +6,7 @@ using namespace std;
 
 Label::Label(int _width) : Control(1, _width)
 {
-
+	setFocusable(false);
 }
 
 
@@ -17,7 +17,7 @@ void Label::keyDown(KEY_EVENT_RECORD key)
 }
 
 //The label does not respond to any mouse event
-void Label::mousePressed(int x, int y)
+void Label::mousePressed(int x, int y, bool isLeft)
 {
 	;
 }
@@ -25,86 +25,21 @@ void Label::mousePressed(int x, int y)
 
 void Label::setText(string _text)
 {
+	if (_text.size() > getWidth())
+		return;
 	text = _text;
-	width = _text.length() + 2;
-	//printWidget();
 }
 
-void Label::printWidget()
+
+void Label::draw(Graphics &g, int left, int top, int _layer)
 {
-	HANDLE s = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFO *ConsoleInfo = new CONSOLE_SCREEN_BUFFER_INFO();
-	GetConsoleScreenBufferInfo(s, ConsoleInfo);
-
-	//Cursor's info
-	CONSOLE_CURSOR_INFO cursor_info = { 1,FALSE };
-	SetConsoleCursorInfo(s, &cursor_info);
-
-	WORD originalColors = ConsoleInfo->wAttributes;
-	CONSOLE_CURSOR_INFO console;
-
-	COORD center = startPos;
-	char frame_top = ' ';
-	char frame_side = ' ';
-	switch (border)
+	if (isVisible&& getLayer() == _layer)
 	{
-	case BorderType::None:
-		center = { startPos.X + (short)((getWidth() - (text.length() - 1)) / 2),startPos.Y + 1 };
-		break;
-	case BorderType::Single:
-		center = { startPos.X + (short)((getWidth() - 1 - (text.length() - 1)) / 2),startPos.Y + 1 };
-		break;
-	case BorderType::Double:
-		center = { startPos.X + (short)((getWidth() - 2 - (text.length() - 1)) / 2),startPos.Y + 1 };
-		break;
-	default:
-		break;
+		printBorder(g, left, top, _layer);
+		g.moveTo(getStartX() + 1, getStartY() + 1);
+		g.write(text);
+		g.setForeground(Color::White);
 	}
-
-	//	printBorder();
-	SetConsoleCursorPosition(s, center);
-	SetConsoleTextAttribute(s, FOREGROUND_GREEN);
-	console.bVisible = FALSE;
-	SetConsoleCursorInfo(s, &console);
-	cout << text;
-	SetConsoleTextAttribute(s, originalColors);
-
-}
-
-void Label::draw(Graphics &g, int left, int top, int layer)
-{
-
-	COORD center = { left,top };
-	string frame_top = " ";
-	string frame_side = " ";
-	switch (border)
-	{
-	case BorderType::None:
-		center = { short(left) + (short)((getWidth() - (text.length() - 1)) / 2), short(top) + 1 };
-		break;
-	case BorderType::Single:
-		center = { short(left) + (short)((getWidth() - 1 - (text.length() - 1)) / 2), short(top) + 1 };
-		break;
-	case BorderType::Double:
-		center = { short(left) + (short)((getWidth() - 2 - (text.length() - 1)) / 2), short(top) + 1 };
-		break;
-	default:
-		break;
-	}
-
-	printBorder(g, left, top, layer);
-	g.moveTo(center.X, center.Y);
-	//SetConsoleCursorPosition(s, center);
-	g.setForeground(Color::Green);
-	//SetConsoleTextAttribute(s, FOREGROUND_GREEN);
-	g.setCursorVisibility(false);
-	//console.bVisible = FALSE;
-	//SetConsoleCursorInfo(s, &console);
-	g.write(text);
-	//cout << text;
-	g.setForeground(Color::White);
-	//SetConsoleTextAttribute(s, originalColors);
-
 
 }
 

@@ -1,102 +1,123 @@
 #include "Panel.h"
 
-Panel::Panel(int _height, int _width) : Control(_height, _width), items(*new vector<Control*>), controlInFocus(this)
+Panel::Panel(int _height, int _width) : Control(_height, _width), items(*new vector<Control*>), panelControlInFocus(this)
 {
-
+	this->setFocusable(false);
 }
 
 void Panel::addControl(Control& control, int x, int y)
 {
 	items.push_back(&control);
-	control.setStartPosition({ short(x) + startPos.X, short(y) + startPos.Y });
-	numberOfItems++;
+	control.setStartPosition(x + getStartX(), y + getStartY());
+	control.setLayer(getLayer() + 1);
+
 }
 
-void Panel::setStartPosition(COORD position)
+void Panel::setLayer(int l)
+{
+	Control::setLayer(l);
+	vector<Control*>::iterator it;
+	for (it = items.begin(); it != items.end(); it++)
+	{
+		(*it)->setLayer(getLayer() + 1);
+	}
+
+}
+
+void Panel::setStartPosition(int x, int y)
 {
 	vector<Control*>::iterator it;
 	for (it = items.begin(); it != items.end(); it++)
 	{
-		(*it)->setStartPosition({ position.X + (*it)->getStartPosition().X, position.Y + (*it)->getStartPosition().Y });
-
+		(*it)->setStartPosition((*it)->getStartX() + x, (*it)->getStartY() + y);
 	}
-	this->Control::setStartPosition(position);
+	setStartX(getStartX() + x);
+	setStartY(getStartY() + y);
 
 }
 
-void Panel::printWidget()
+void Panel::draw(Graphics &g, int left, int top, int _layer)
 {
+
 	if (isVisible)
 	{
-		//		printBorder();
-		for (vector<Control*>::const_iterator it = items.begin(); it != items.end(); it++)
-			(*it)->printWidget();
+		if (layer == _layer)
+			printBorder(g, left, top, _layer);
+		else
+		{
+			for (vector<Control*>::iterator it = items.begin(); it != items.end(); it++)
+				(*it)->draw(g, (*it)->getStartX(), (*it)->getStartY(), _layer);
+		}
 	}
-}
-
-void Panel::draw(Graphics &g, int left, int top, int layer)
-{
-	if (isVisible)
-	{
-		printBorder(g, left, top, layer);
-		for (vector<Control*>::const_iterator it = items.begin(); it != items.end(); it++)
-			(*it)->draw(g, (*it)->getStartPosition().X, (*it)->getStartPosition().Y, layer);
-	}
-
+	if (getGlobalInFocus()->getCursorVisibility() == true)
+		g.moveTo(getGlobalInFocus()->getCursorX(), getGlobalInFocus()->getCursorY());
+	else
+		g.setCursorVisibility(false);
 }
 
 void Panel::keyDown(KEY_EVENT_RECORD key)
 {
-	if (controlInFocus == this)
-		;
+	Control::getGlobalInFocus()->keyDown(key);
+
+}
+
+void Panel::mousePressed(int x, int y, bool isLeft)
+{
+	int _x = getGlobalInFocus()->getStartX();
+	int _y = getGlobalInFocus()->getStartY();
+	int _w = getGlobalInFocus()->getWidth();
+	int _h = getGlobalInFocus()->getHeight();
+
+
+	if (getGlobalInFocus() != 0 && getGlobalInFocus()!=this && isInside(x, y, _x,
+		_y,_w, _h))
+	{
+		getGlobalInFocus()->mousePressed(x, y, isLeft);
+	}
 	else
 	{
-		controlInFocus->keyDown(key);
-	}
-}
-
-
-
-void Panel::mousePressed(int x, int y)
-{
-
-	bool flag = false;
-	//Moves the focus to the appropriate widget
-	for (vector<Control*>::iterator it = items.begin(); it != items.end(); it++)
-	{
-		if (clickedOnWidget(x, y, *it))
+		bool flag = false;
+		
+		//Moves the focus to the appropriate control
+		for (vector<Control*>::iterator it = items.begin(); it != items.end(); it++)
 		{
-			flag = true;
-			controlInFocus = *it;
-			controlInFocus->mousePressed(x, y);
+			if (isInside(x, y, (*it)->getStartX(), (*it)->getStartY(), (*it)->getWidth(), (*it)->getHeight())&& flag==false)
+			{
+				flag = true;
+				if ((*it)->canGetFocus())
+				{
+					
+					Control::setGlobalFocus(*it);
+					getGlobalInFocus()->mousePressed(x, y, isLeft);
+				}
+				else
+				{
+					panelControlInFocus = *it;
+					panelControlInFocus->mousePressed(x, y, isLeft);
+				}
+			}
+		}
+
+		//If the click is in the panel and not on any of its widgets set focused to this
+		if (!flag && isInside(x, y, getStartX(), getStartY()+1, getWidth(), getHeight()))
+		{
+			//if (this->canGetFocus)
+			panelControlInFocus = this;
+			//Control::setGlobalFocus(this);
 		}
 	}
-
-	//If the click is in the panel and not on any of its widgets set focused to this
-	if (!flag && clickedOnWidget(x, y, this))
-		controlInFocus = this;
+	
 }
 
 
-bool Panel::clickedOnWidget(int x, int y, Control* widget)
+void Panel::getAllControls(vector<Control*>& controls)
 {
-	//First need to find global
-	if (x > widget->getStartPosition().X && x < widget->getEndPosition().X
-		&& y > widget->getStartPosition().Y && y < widget->getEndPosition().Y)
-		return true;
-	return false;
-}
-
-void Panel::getAllControls(vector<Control*>* controls)
-{
+	
 	vector<Control*>::iterator it;
 	for (it = items.begin(); it != items.end(); it++)
 	{
-		controls->push_back(*(it));
+		(*it)->getAllControls(controls);
 	}
+	controls.push_back(this);
 
-}
-
-Panel::~Panel() {
-	
 }

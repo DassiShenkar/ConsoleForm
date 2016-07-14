@@ -5,16 +5,28 @@
 using namespace std;
 
 
-//Sets the visibility of the widget
-void Widget::setVisibility(bool visibility)
+void Widget::Show()
 {
-	//If there is no change is visibility - do nothing
-	if (isVisible == visibility)
+	if (isVisible)
 		;
 	else
 	{
-		isVisible = visibility;		
+		isVisible = true;
 		printWidget();
+	}
+}
+
+void Widget::Hide()
+{
+	if (isVisible)
+	{
+		isVisible = false;
+		printWidget();
+	}
+
+	else
+	{
+		;
 	}
 }
 

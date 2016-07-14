@@ -8,37 +8,26 @@
 
 using namespace std;
 
-
-/*
-This is a class that implements the Check List Wigdet
-
-*/
+/*******************************************************************************
+*A Class that implements a CheckList control.								   *
+*Listener methods Need to be implemented.									   *
+*******************************************************************************/
 class CheckList : public OptionsContainer
 {
 
 public:
 
-	//Constructor that recieves as parameters the starting coordinate and the items in a list
-	CheckList(int height, int _width, vector<string>);
+	//A constructor that recieves the starting coordinate and the list of items
+	CheckList(int _height, int _width, vector<string>);
 
-	//Acts on key event
-	virtual void keyDown(KEY_EVENT_RECORD key) { Panel::keyDown(key); }
+	//Acts on the option button key press
+	void buttonKeyDown(KEY_EVENT_RECORD key);
 
-	//Acts on mouse event
-	virtual void mousePressed(int x, int y) { Panel::mousePressed(x, y); };
+	//Acts on the option button mouse click
+	void mousePressed(Control* control, int x, int y, bool isLeft);
 
-	void addControl(Control& control, int x, int y) = delete;
-
-	void mousePressed(Control* widget, int x, int y, bool isLeft);
-
+	//Sets the given option to checked
 	void selectIndex(size_t index);
-
-	void deselectIndex(size_t index);
-
-	void printWidget() {};
-
-	~CheckList();
 
 
 };
-

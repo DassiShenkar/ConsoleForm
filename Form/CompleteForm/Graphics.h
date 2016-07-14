@@ -1,12 +1,13 @@
 #pragma once
-
+#include "Enums.h"
 #include <string>
 #include <Windows.h>
 
 using namespace std;
 
-enum class Color { Black, Blue, Green, Red, Cyan, Purple, Orange, White };
-
+/*******************************************************************************
+*A Class that is in charge of the interaction with the console				   *
+*******************************************************************************/
 class Graphics
 {
 public:

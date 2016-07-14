@@ -1,44 +1,44 @@
 #pragma once
-#include "Control.h"
+
 #include "Label.h"
 #include <iostream>
 #include <vector>
 #include "MouseListener.h"
+#include "KeyboardListener.h"
 
 using namespace std;
 
 
-class MouseListener;
-class Button : public Control
+/*******************************************************************************
+*A Class that implements a Button control.									   *
+*Listener methods Need to be implemented.									   *
+*******************************************************************************/
+class Button : public Label
 {
 private:
-	Label text;
-	vector<MouseListener *> listeners;
+	vector<MouseListener*> mouseListeners;
+	vector<KeyboardListener*> keyListeners;
 
 public:
 
 	//Constructor
 	Button(int _width = 10);
 
-	//Sets the text of the button
-	void setText(string value);
-
-	string getText() const;
-
-	//Acts on key event
+	//Acts on key down event
 	void keyDown(KEY_EVENT_RECORD key);
 
-	//Acts on Mouse event
-	void mousePressed(int x, int y);
+	//Acts on Mouse right click event
+	void mousePressed(int x, int y, bool isLeft);
+
+	
 
 	//Adds a new listener
-	void addMouseListener(MouseListener* _listener);
+	void addListener(MouseListener* _listener);
 
-	//Prints the button to the screen
-	void printWidget();
+	//Adds a new listener
+	void addListener(KeyboardListener* _listener);
 
-	void setStartPosition(COORD pos);
 
-	virtual void draw(Graphics &g, int left, int top, int layer);
+
 
 };

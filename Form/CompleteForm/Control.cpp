@@ -4,18 +4,13 @@
 
 using namespace std;
 
-Control* Control::focused = 0;
+Control* Control::globalControlInFocus = 0;
 
 
 void Control::Show()
 {
-	if (isVisible)
-		;
-	else
-	{
+	if (!isVisible)
 		isVisible = true;
-		printWidget();
-	}
 }
 
 void Control::Hide()
@@ -23,48 +18,6 @@ void Control::Hide()
 	if (isVisible)
 	{
 		isVisible = false;
-		printWidget();
-	}
-
-	else
-	{
-		;
-	}
-}
-
-//Sets the background color of the Widget
-void Control::setBackground(BackgroundColor color)
-{
-	if (background == color)
-		;
-	else
-	{
-		background = color;
-		printWidget();
-	}
-}
-
-//Sets the foreground color of the Widget
-void Control::setForeground(ForegroundColor color)
-{
-	if (foreground == color)
-		;
-	else
-	{
-		foreground = color;
-		printWidget();
-	}
-}
-
-//Sets the border type
-void Control::setBorder(BorderType _border)
-{
-	if (border == _border)
-		;
-	else
-	{
-		border = _border;
-		printWidget();
 	}
 }
 
@@ -77,41 +30,41 @@ Keys Control::determineTypeOfKey(KEY_EVENT_RECORD key)
 	{
 		//Backspace
 		if (key.wVirtualKeyCode == 8)
-			return BACKSPACE;
+			return Keys::BACKSPACE;
 
 		//Tab
 		else if (key.wVirtualKeyCode == 9)
-			return TAB;
+			return Keys::TAB;
 
 		//Enter
 		else if (key.wVirtualKeyCode == 13)
-			return ENTER;
+			return Keys::ENTER;
 
 		//Spacebar
 		else if (key.wVirtualKeyCode == 32)
-			return SPACEBAR;
+			return Keys::SPACEBAR;
 
 		//Left arrow
 		else if (key.wVirtualKeyCode == 37)
-			return LEFT;
+			return Keys::LEFT;
 
 		//Up arrow
 		else if (key.wVirtualKeyCode == 38)
-			return UP;
+			return Keys::UP;
 
 		//Right arrow
 		else if (key.wVirtualKeyCode == 39)
-			return RIGHT;
+			return Keys::RIGHT;
 
 		//Down arrow
 		else if (key.wVirtualKeyCode == 40)
-			return DOWN;
+			return Keys::DOWN;
 		//Delete
 		else if (key.wVirtualKeyCode == 46)
-			return DEL;
+			return Keys::DEL;
 		//Insert
 		else if (key.wVirtualKeyCode == 45)
-			return INSERT;
+			return Keys::INSERT;
 
 		//Anyother type of key
 		else if ((key.wVirtualKeyCode >= 48 && key.wVirtualKeyCode <= 57) ||
@@ -120,22 +73,50 @@ Keys Control::determineTypeOfKey(KEY_EVENT_RECORD key)
 			(key.wVirtualKeyCode >= 186 && key.wVirtualKeyCode <= 192) ||
 			(key.wVirtualKeyCode >= 219 && key.wVirtualKeyCode <= 222))
 		{
-			return OTHER;
+			return Keys::OTHER;
 		}
 	}
-	return KEY_RELEASED;
+	return Keys::KEY_RELEASED;
 }
 
-void Control::printBorder(Graphics &g, int left, int top, int layer)
+
+void Control::setGlobalFocus(Control *control)
 {
+	globalControlInFocus = control; 
+	control->focusEvent();
+	
+}
 
+void Control::focusEvent()
+{
+	
+}
 
+void Control::printBorder(Graphics &g, int left, int top, int _layer)
+{
+	
+	if (ShowCursor)
+		g.setCursorVisibility(true);
+	else
+		g.setCursorVisibility(false);
+	if (getLayer() != _layer)
+		return;
+	if (getGlobalInFocus() == this)
+	{
+		g.setForeground(Color::Purple);
+
+	}
+	else
+	{
+		g.setForeground(foreground);
+	}
+	
 	string frame_top = " ";
 	string frame_side = " ";
 	switch (border)
 	{
 	case BorderType::None:
-		break;
+		return;
 	case BorderType::Single:
 		frame_top = "-";
 		frame_side = "|";
@@ -148,53 +129,49 @@ void Control::printBorder(Graphics &g, int left, int top, int layer)
 		break;
 	}
 
-	g.moveTo(startPos.X, startPos.Y);
+	g.moveTo(getStartX(), getStartY());
 	for (int i = 0; i < getWidth() + 1; i++)
 	{
 		g.write(frame_top);
-		//cout << frame_top;
 	}
 
 	//Prints the right and left boundaries
-	for (int i = 0; i < height; i++)
+	for (int i = 0; i < getHeight(); i++)
 	{
-		short startX = startPos.X;
-		short startY = startPos.Y + i + 1;
+		int startX = getStartX();
+		int startY = getStartY() + i + 1;
 		g.moveTo(startX, startY);
 		g.write(frame_side);
-		//cout << frame_side;
 
 
-		short endX = startPos.X + width;
-		short endY = startPos.Y + i + 1;
+		short endX = getStartX() + width;
+		short endY = getStartY() + i + 1;
 
 		//Sets the consoleCursor position to the end
 		g.moveTo(endX, endY);
 		g.write(frame_side);
-		//cout << frame_side;
 
 	}
-	g.moveTo(startPos.X, startPos.Y + (short)getHeight() + 1);
+	g.moveTo(getStartX(), getStartY() + (short)getHeight() + 1);
 	for (int i = 0; i < width + 1; i++)
 	{
 		g.write(frame_top);
-		//cout << frame_top;
 	}
-
-
-
-
+	g.setForeground(Color::White);
 }
 
 string Control::convertToString(int val)
 {
 	string result = "";
 	string temp = "";
+	bool flag = false;
 	if (val < 0)
 	{
-		temp.append("-");
+		flag = true;
 		val = -val;
 	}
+	if (val == 0)
+		return "0";
 	while (val > 0)
 	{
 
@@ -203,6 +180,12 @@ string Control::convertToString(int val)
 	}
 	for (int i = temp.length() - 1; i >= 0; i--)
 	{
+		if (flag)
+		{
+			result += "-";
+			flag = false;
+		}
+
 		result += (temp.at(i));
 	}
 	return result;

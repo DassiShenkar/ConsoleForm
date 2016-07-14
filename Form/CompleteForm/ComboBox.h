@@ -1,44 +1,46 @@
 #pragma once
-#include "Radiolist.h"
+#include "OptionsContainer.h"
 #include "Button.h"
+#include "MouseListener.h"
 #include <Windows.h>
 #include <vector>
 #include <string>
+#include "KeyboardListener.h"
 using namespace std;
 
-/*A class that implements a Combo Box Widget*/
-/*
-class ComboBox : public Panel, public MouseListener
+/*******************************************************************************
+*A Class that implements a ComboBox control.								   *
+*Listener methods Need to be implemented.									   *
+*******************************************************************************/
+class ComboBox : public Panel, public MouseListener, public KeyboardListener
 {
 private:
 	size_t index;
-	bool drop_down;
-	void clearLabel(Graphics &g, int left, int top, int layer) const;
-	void clearBody(Graphics &g, int left, int top, int layer) const;
+	bool drop_down;					//indicates if drop down menu is down
+	Button header;					//The header as a button
+	OptionsContainer& body;			//The drop_down menu - implemented as a RadioBox
+
 public:
 
 	//A constructor that gets the starting coordinate of the Combo Box and the list of items
 	ComboBox(int _width, vector<string> options);
 
-	//Method that responds to key events
-	void keyDown(KEY_EVENT_RECORD key) { Panel::keyDown(key); }
-
-	//Method that responds to mouse events
-	void mousePressed(int x, int y) { Panel::mousePressed(x, y); }
-
-	virtual void mousePressed(Control* widget, int x, int y, bool isLeft);
-
-	void printWidget() {};
-
+	//Delete the addControl method - The only way is to Use Panel::addControl
 	void addControl(Control& control, int x, int y) = delete;
 
-	virtual void draw(Graphics &g, int left, int top, int layer);
+	//Acts on mouse right Click
+	void mousePressed(int x, int y, bool isLeft);
 
-	void setSelectedIndex(size_t i) { index = i; };
+	//Set the selected index to true 
+	void setSelectedIndex(size_t i);
 
-	size_t getSelectedIndex() const { return index; }
+	//Responds to the options key events
+	void buttonKeyDown(KEY_EVENT_RECORD key);
 
-	~ComboBox();
+	//Responds to the options Mouse events
+	void mousePressed(Control* control, int x, int y, bool isLeft);
+
+	//Get the relevant controls for the TAB key
+	void getAllControls(vector<Control*>& controls);
+	
 };
-#pragma once
-*/

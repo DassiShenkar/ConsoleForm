@@ -1,39 +1,25 @@
 #pragma once
-
-#include "Button.h"
 #include "Panel.h"
-#include "MouseListener.h"
+#include "Button.h"
+#include "KeyboardListener.h"
 
-
-class NumericBox : public Panel, public MouseListener
+/*******************************************************************************
+*A Class that implements a NumericBox control.								   *
+*Listener methods to be implemented										       *
+*******************************************************************************/
+class NumericBox : public Panel, public MouseListener, public KeyboardListener
 {
 private:
-	Label label;
-	Button minus;
-	Button plus;
-	int currentValue;
-	int min;
-	int max;
-
-	string convertToString(int num);
+	int value, min, max;
+	Label text;
 public:
+	NumericBox(int width, int min, int max);
 
-	NumericBox(int _width, int min, int _max);
-	void mousePressed(Control* widget, int x, int y, bool isLeft);
-	void setValue(int val) { currentValue = val; }
-	int getCurrentValue()const { return currentValue; }
+	virtual void buttonKeyDown(KEY_EVENT_RECORD key);
 
+	virtual void mousePressed(Control* control, int x, int y, bool isLeft);
 
-	//Acts on key event
-	virtual void keyDown(KEY_EVENT_RECORD mouse) { Panel::keyDown(mouse); }
+	void setValue(int val);
 
-
-
-	//Acts on mouse event
-	virtual void mousePressed(int x, int y) { Panel::mousePressed(x, y); };
-
-	//Prints the widget to the screen
-	//virtual void printWidget() const = 0;
-
-	~NumericBox();
+	void addControl(Control& control, int x, int y) = delete;
 };

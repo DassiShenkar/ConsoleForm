@@ -5,36 +5,31 @@
 using namespace std;
 
 
-
-//Constructor that recieves as parameters the starting coordinate and the items in a list 
-CheckList::CheckList(int _height, int _width, vector<string> _items) : OptionsContainer(_height + 2, _width, _items)
+//A constructor that recieves the dimensions and the list of items
+CheckList::CheckList(int _height, int _width, vector<string> _items) : OptionsContainer(_height, _width, _items)
 {
-	for (vector<Control*>::iterator it = items.begin(); it != items.end(); it++)
-	{
-		static_cast<Button*>(*it)->addMouseListener(this);
-	}
 
 }
-
 
 void CheckList::mousePressed(Control* control, int x, int y, bool isLeft)
 {
-	Control::setFocus(this);
-	int i = control->getStartPosition().Y - this->getStartPosition().Y;
-	checked[i] = !checked[i];
+	Control::setGlobalFocus(control);
+	for (int i = 0; i < numberOfOptions; i++)
+	{
+		if (y - getStartY() - 1 == i)
+			checked[i] = !checked[i];
+
+	}
 }
+
+void CheckList::buttonKeyDown(KEY_EVENT_RECORD key)
+{
+	mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY()+1, true);
+}
+
 
 void CheckList::selectIndex(size_t index)
 {
-
-	checked[index] = true;
+	checked[index - 1] = true;
 }
 
-void CheckList::deselectIndex(size_t index)
-{
-	checked[index] = false;
-}
-
-CheckList::~CheckList()
-{
-}
