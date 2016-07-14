@@ -10,26 +10,31 @@ OptionsContainer::OptionsContainer(int _height, int _width, vector<string> _item
 	numberOfOptions = _items.size();
 	for (vector<string>::iterator it = _items.begin(); it != _items.end(); it++)
 	{
+		//temp is a button to be used for each option of the container
 		Button* temp = new Button(_width);
+
+		//Set attributes
 		temp->setBorder(BorderType::None);
 		temp->setText("o " + *it);
 		temp->setFocusable(true);
+
+		//Adds the OptionContainer as A listener to the mouse click and key event
 		temp->addListener(static_cast<MouseListener*>(this));
 		temp->addListener(static_cast<KeyboardListener*>(this));
+
+		//Adds the button in its place in the container (which is a Panel)
 		addControl(*temp, 1, row++);
-		temp->getLayer();
+		
 	}
 	
+	//Sets a boolean array of the size of the options with false values
 	checked = new bool[_items.size()];
 	for (int i = 0; i < numberOfOptions; i++)
-	{
 		checked[i] = false;
-	}
-
-
 }
 
 
+//Draws basically the same as a Panel  but adjusts the text according to the option's boolean value  
 void OptionsContainer::draw(Graphics &g, int left, int top, int layer)
 {
 	for (int i = 0; i < numberOfOptions; i++)
@@ -38,9 +43,8 @@ void OptionsContainer::draw(Graphics &g, int left, int top, int layer)
 		if (checked[i] == false)
 			temp.replace(0, 1, "o");
 		else
-		{
 			temp.replace(0, 1, "x");
-		}
+
 		static_cast<Button*>(items[i])->setText(temp);
 		
 	}
@@ -51,7 +55,7 @@ void OptionsContainer::draw(Graphics &g, int left, int top, int layer)
 
 
 
-
+//The default use of the OptionContainer - the concept of RadioList is implemented
 void OptionsContainer::setSelectedIndex(size_t index)
 {
 	for (int i = 0; i < numberOfOptions; i++)
@@ -61,6 +65,7 @@ void OptionsContainer::setSelectedIndex(size_t index)
 	checked[index - 1] = true;
 }
 
+//Returns the selected index 
 size_t OptionsContainer::getSelectedIndex() const
 {
 
@@ -85,7 +90,6 @@ void OptionsContainer::keyDown(KEY_EVENT_RECORD key)
 	if (k == Keys::ENTER)
 		for (it = keyListeners.begin(); it != keyListeners.end(); it++)
 		{
-
 			(*it)->buttonKeyDown(key);
 
 		}

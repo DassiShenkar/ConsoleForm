@@ -78,7 +78,7 @@ int main(int argc, char **argv)
 
 	main.addControl(bSubmit, 1, 22);
 
-	Control::setGlobalFocus(&rSex);
+	Control::setFocus(&rSex);
 	EventEngine engine;
 	engine.run(main);
 	return 0;

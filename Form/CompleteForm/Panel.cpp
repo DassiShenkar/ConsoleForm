@@ -49,30 +49,30 @@ void Panel::draw(Graphics &g, int left, int top, int _layer)
 				(*it)->draw(g, (*it)->getStartX(), (*it)->getStartY(), _layer);
 		}
 	}
-	if (getGlobalInFocus()->getCursorVisibility() == true)
-		g.moveTo(getGlobalInFocus()->getCursorX(), getGlobalInFocus()->getCursorY());
+	if (getFocused()->getCursorVisibility() == true)
+		g.moveTo(getFocused()->getCursorX(), getFocused()->getCursorY());
 	else
 		g.setCursorVisibility(false);
 }
 
 void Panel::keyDown(KEY_EVENT_RECORD key)
 {
-	Control::getGlobalInFocus()->keyDown(key);
+	Control::getFocused()->keyDown(key);
 
 }
 
 void Panel::mousePressed(int x, int y, bool isLeft)
 {
-	int _x = getGlobalInFocus()->getStartX();
-	int _y = getGlobalInFocus()->getStartY();
-	int _w = getGlobalInFocus()->getWidth();
-	int _h = getGlobalInFocus()->getHeight();
+	int _x = getFocused()->getStartX();
+	int _y = getFocused()->getStartY();
+	int _w = getFocused()->getWidth();
+	int _h = getFocused()->getHeight();
 
 
-	if (getGlobalInFocus() != 0 && getGlobalInFocus()!=this && isInside(x, y, _x,
+	if (getFocused() != 0 && getFocused()!=this && isInside(x, y, _x,
 		_y,_w, _h))
 	{
-		getGlobalInFocus()->mousePressed(x, y, isLeft);
+		getFocused()->mousePressed(x, y, isLeft);
 	}
 	else
 	{
@@ -87,8 +87,8 @@ void Panel::mousePressed(int x, int y, bool isLeft)
 				if ((*it)->canGetFocus())
 				{
 					
-					Control::setGlobalFocus(*it);
-					getGlobalInFocus()->mousePressed(x, y, isLeft);
+					Control::setFocus(*it);
+					getFocused()->mousePressed(x, y, isLeft);
 				}
 				else
 				{

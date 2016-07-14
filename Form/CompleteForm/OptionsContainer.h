@@ -28,6 +28,7 @@ public:
 
 	void mousePressed(Control* control, int x, int y, bool isLeft) = 0;
 
+	//The key event is delegated to the concrete class 
 	void buttonKeyDown(KEY_EVENT_RECORD key) = 0;
 
 	void addListener(MouseListener* _listener);

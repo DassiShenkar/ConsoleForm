@@ -11,11 +11,11 @@ ComboBox::ComboBox(int _width, vector<string> _items) : Panel(1, _width), header
 	header.setText(" o Select");
 	body.setBorder(BorderType::None);
 
+	//The comboBox is a listener for the Header button 
 	header.addListener(static_cast<MouseListener*>(this));
 	header.addListener(static_cast<KeyboardListener*>(this));
 	
-	body.addListener(static_cast<MouseListener*>(this));
-	body.addListener(static_cast<KeyboardListener*>(this));
+	
 	Panel::addControl(header, 0, 0);
 	Panel::addControl(body, 0, 1);
 	body.Hide();
@@ -25,7 +25,8 @@ ComboBox::ComboBox(int _width, vector<string> _items) : Panel(1, _width), header
 
 void ComboBox::mousePressed(Control* control, int x, int y, bool isLeft)
 {
-	Control::setGlobalFocus(&header);
+	//The header is the origin and therefore in focused
+	Control::setFocus(&header);
 	if (control == &header)
 	{
 		if (!drop_down)
@@ -64,11 +65,9 @@ void ComboBox::mousePressed(int x, int y, bool isLeft)
 
 void ComboBox::buttonKeyDown(KEY_EVENT_RECORD key)
 {
-	mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY()+1, true);
+	mousePressed(getFocused(), getFocused()->getStartX(), getFocused()->getStartY()+1, true);
 
 }
-
-
 
 
 

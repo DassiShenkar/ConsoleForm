@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Control* Control::globalControlInFocus = 0;
+Control* Control::controlInFocus = 0;
 
 
 void Control::Show()
@@ -80,17 +80,13 @@ Keys Control::determineTypeOfKey(KEY_EVENT_RECORD key)
 }
 
 
-void Control::setGlobalFocus(Control *control)
+void Control::setFocus(Control *control)
 {
-	globalControlInFocus = control; 
-	control->focusEvent();
+	controlInFocus = control; 
+	
 	
 }
 
-void Control::focusEvent()
-{
-	
-}
 
 void Control::printBorder(Graphics &g, int left, int top, int _layer)
 {
@@ -101,7 +97,7 @@ void Control::printBorder(Graphics &g, int left, int top, int _layer)
 		g.setCursorVisibility(false);
 	if (getLayer() != _layer)
 		return;
-	if (getGlobalInFocus() == this)
+	if (getFocused() == this)
 	{
 		g.setForeground(Color::Purple);
 

@@ -13,7 +13,7 @@ class Control
 {
 private:
 	//The global control in focus
-	static Control* globalControlInFocus;
+	static Control* controlInFocus;
 protected:
 
 
@@ -98,12 +98,11 @@ public:
 	void setFocusable(bool f) { focusable = f; }
 
 	//Gets the global control in focus
-	static Control* getGlobalInFocus() { return globalControlInFocus; }
+	static Control* getFocused() { return controlInFocus; }
 
-	virtual void focusEvent();
 
 	//Sets the global control in focus
-	static void setGlobalFocus(Control *control);
+	static void setFocus(Control *control);
 	
 	//Sets the layer
 	virtual void setLayer(int l) { layer = l; }
