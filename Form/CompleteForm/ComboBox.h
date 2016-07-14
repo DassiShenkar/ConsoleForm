@@ -34,7 +34,7 @@ public:
 	//Set the selected index to true 
 	void setSelectedIndex(size_t i);
 
-	//Since it is a Panel of a button and a RadioList the events are handled by them 
+	//Responds to the options key events
 	void buttonKeyDown(KEY_EVENT_RECORD key);
 
 	//Responds to the options Mouse events

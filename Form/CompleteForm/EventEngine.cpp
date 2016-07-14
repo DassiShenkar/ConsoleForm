@@ -31,7 +31,7 @@ void EventEngine::run(Control &c)
 		{
 		case KEY_EVENT:
 		{
-			auto f = Control::getFocused();
+			auto f = Control::getGlobalInFocus();
 			if (f != nullptr && record.Event.KeyEvent.bKeyDown)
 			{
 				auto code = record.Event.KeyEvent.wVirtualKeyCode;
@@ -77,5 +77,5 @@ void EventEngine::moveFocus(Control &main, Control *focused)
 		if (++it == controls.end())
 			it = controls.begin();
 	while (!(*it)->canGetFocus());
-	Control::setFocus(*it);
+	Control::setGlobalFocus(*it);
 }
