@@ -79,15 +79,38 @@ Keys Control::determineTypeOfKey(KEY_EVENT_RECORD key)
 	return Keys::KEY_RELEASED;
 }
 
+
+void Control::setGlobalFocus(Control *control)
+{
+	globalControlInFocus = control; 
+	control->focusEvent();
+	
+}
+
+void Control::focusEvent()
+{
+	
+}
+
 void Control::printBorder(Graphics &g, int left, int top, int _layer)
 {
-
+	
+	if (ShowCursor)
+		g.setCursorVisibility(true);
+	else
+		g.setCursorVisibility(false);
 	if (getLayer() != _layer)
 		return;
 	if (getGlobalInFocus() == this)
 	{
-		g.setForeground(Color::Cyan);
+		g.setForeground(Color::Purple);
+
 	}
+	else
+	{
+		g.setForeground(foreground);
+	}
+	
 	string frame_top = " ";
 	string frame_side = " ";
 	switch (border)

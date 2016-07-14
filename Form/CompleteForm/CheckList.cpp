@@ -11,9 +11,9 @@ CheckList::CheckList(int _height, int _width, vector<string> _items) : OptionsCo
 
 }
 
-
-void CheckList::mousePressed(int x, int y, bool isLeft)
+void CheckList::mousePressed(Control* control, int x, int y, bool isLeft)
 {
+	Control::setGlobalFocus(control);
 	for (int i = 0; i < numberOfOptions; i++)
 	{
 		if (y - getStartY() - 1 == i)
@@ -21,6 +21,12 @@ void CheckList::mousePressed(int x, int y, bool isLeft)
 
 	}
 }
+
+void CheckList::buttonKeyDown(KEY_EVENT_RECORD key)
+{
+	mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY()+1, true);
+}
+
 
 void CheckList::selectIndex(size_t index)
 {

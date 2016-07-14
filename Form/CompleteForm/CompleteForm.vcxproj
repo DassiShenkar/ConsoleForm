@@ -153,6 +153,7 @@
     <ClInclude Include="Enums.h" />
     <ClInclude Include="EventEngine.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="KeyboardListener.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="MessageBox.h" />
     <ClInclude Include="MouseListener.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="OptionsContainer.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="RadioList.cpp" />
+    <ClCompile Include="TextBox.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

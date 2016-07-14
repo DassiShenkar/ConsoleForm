@@ -20,8 +20,10 @@ public:
 	//A constructor that recieves the starting coordinate and the list of items
 	RadioList(int _height, int _width, vector<string>);
 
-	virtual void mousePressed(int x, int y, bool isLeft);
 
+	void mousePressed(Control* control, int x, int y, bool isLeft) ;
+
+	void buttonKeyDown(KEY_EVENT_RECORD key);
 
 
 

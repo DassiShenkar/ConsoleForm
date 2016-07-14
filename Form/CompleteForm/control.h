@@ -5,7 +5,10 @@
 #include "Graphics.h"
 
 
-
+/*******************************************************************************
+*An Abstract class that implements a control.								   *
+*draw, keyDown, mousePressed should be implemented							   *
+*******************************************************************************/
 class Control
 {
 private:
@@ -24,7 +27,11 @@ protected:
 	//The cursor coordinates
 	int cursorX, cursorY;
 
+	//The layer of the control
 	int layer;
+
+	//If cursor should be shown on screen
+	bool showCursor;
 
 	//The visibility of the widget
 	bool isVisible;
@@ -33,10 +40,10 @@ protected:
 	bool focusable;
 
 	//Indicates the foreground color of the wodget
-	ForegroundColor foreground;
+	Color foreground;
 
 	//Indicates the background color of the wodget
-	BackgroundColor background;
+	Color background;
 
 	//Indicates the type of border of the widget
 	BorderType border;
@@ -50,8 +57,8 @@ protected:
 public:
 
 	//Constructor with parameters
-	Control(int _height, int _width) : startX(0), startY(0), width(_width), height(_height),
-		cursorX(0), cursorY(0), focusable(true), isVisible(true), border(BorderType::Single), layer(0) {}
+	Control(int _height, int _width) : startX(0), startY(0), width(_width), height(_height),foreground(Color::White),
+		cursorX(0), cursorY(0), focusable(true), isVisible(true), border(BorderType::Single), layer(0), showCursor(false) {}
 
 	//Shows the control
 	void Show();
@@ -86,27 +93,35 @@ public:
 	/******************************************************************************/
 
 	//Gets all the controls
-	void getAllControls(vector<Control*> controls) { controls.push_back(this); };
+	virtual void getAllControls(vector<Control*>& controls) { controls.push_back(this); };
 
 	void setFocusable(bool f) { focusable = f; }
 
 	//Gets the global control in focus
 	static Control* getGlobalInFocus() { return globalControlInFocus; }
 
+	virtual void focusEvent();
+
 	//Sets the global control in focus
-	static void setGlobalFocus(Control *control) { globalControlInFocus = control; }
+	static void setGlobalFocus(Control *control);
 	
 	//Sets the layer
 	virtual void setLayer(int l) { layer = l; }
+
+	//Sets the bool value of showCursor
+	virtual void cursorVisibility(bool b) { showCursor = b; }
+
+	//Gets the bool value of showCursor
+	virtual bool getCursorVisibility() const { return showCursor; }
 
 	//Gets the layer
 	virtual int getLayer() const { return layer; }
 
 	//Sets the Foreground color
-	void setForeground(ForegroundColor color) { foreground = color; }
+	void setForeground(Color color) { foreground = color; }
 
 	//Sets the Background color
-	void setBackground(BackgroundColor color) { background = color; }
+	void setBackground(Color color) { background = color; }
 
 	//Sets the border type
 	void setBorder(BorderType _border) { border = _border; }
@@ -153,11 +168,6 @@ public:
 
 	//Sets the cursor position
 	virtual void setCursorPosition(int x, int y) { cursorX = x; cursorY = y; }
-
-
-
-
-
 
 	//Destructor
 	virtual ~Control() = 0;

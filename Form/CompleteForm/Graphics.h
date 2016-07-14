@@ -5,7 +5,9 @@
 
 using namespace std;
 
-
+/*******************************************************************************
+*A Class that is in charge of the interaction with the console				   *
+*******************************************************************************/
 class Graphics
 {
 public:

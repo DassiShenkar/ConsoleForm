@@ -13,11 +13,11 @@ protected:
 public:
 	Panel(int _width = 50, int _height = 50);
 	void addControl(Control& control, int x, int y);
-	void keyDown(KEY_EVENT_RECORD key);
+	virtual void keyDown(KEY_EVENT_RECORD key);
 	virtual void mousePressed(int x, int y, bool isLeft);
 	virtual void draw(Graphics &g, int left, int top, int layer);
 	void setLayer(int l);
 	void setStartPosition(int x, int y);
-	void getAllControls(vector<Control*> controls);
+	virtual void getAllControls(vector<Control*>& controls);
 	vector<Control*> getItems() { return items; }
 };

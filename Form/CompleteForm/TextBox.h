@@ -1,39 +1,29 @@
 #pragma once
 
 #include <Windows.h>
-#include "Control.h"
+#include "Button.h"
+#include "MouseListener.h"
 #include <iostream>
 #include <wchar.h>
+#include "KeyboardListener.h"
 using namespace std;
 
-class TextBox : public Control
+class TextBox : public Button, public MouseListener, public KeyboardListener
 {
 private:
-
-
-	PWCHAR body;
-
-	//Reprints the textbox as a response to a special key event
-	void rePrintText(HANDLE&, Keys, int);
-
-	/*A function that checks if the position of the console cursor
-	is in the boundaries of the textBox
-	*/
-	bool isPositionLegal(COORD);
-
+	
 
 public:
 	TextBox(int _width);
-	TextBox(int _height, int _width);
-	void setText(string text);
-	string getText() const;
-
-	//Implements the pure virtual functions of Widget
+	//void setText(string text);
+	//string getText() const;
 	void keyDown(KEY_EVENT_RECORD key);
+	void buttonKeyDown(KEY_EVENT_RECORD key) {};
+	void mousePressed(Control* control, int x, int y, bool isLeft);
 	void mousePressed(int x, int y, bool isLeft);
-	
+	void setStartPosition(int x, int y);
 
-	virtual void draw(Graphics &g, int left, int top, int layer) {}
+	//virtual void draw(Graphics &g, int left, int top, int layer);
 
 	~TextBox() {  }
 

@@ -2,7 +2,7 @@
 #include "Button.h"
 
 
-Button::Button(int _width) : Label(_width), listeners(*new vector<MouseListener*>())
+Button::Button(int _width) : Label(_width), mouseListeners(*new vector<MouseListener*>()), keyListeners(*new vector<KeyboardListener*>())
 {
 	setText("");
 	setFocusable(true);
@@ -11,12 +11,12 @@ Button::Button(int _width) : Label(_width), listeners(*new vector<MouseListener*
 void Button::keyDown(KEY_EVENT_RECORD key)
 {
 	Keys k = determineTypeOfKey(key);
-	vector<MouseListener*>::iterator it;
+	vector<KeyboardListener*>::iterator it;
 	if (k == Keys::ENTER)
-		for (it = listeners.begin(); it != listeners.end(); it++)
+		for (it = keyListeners.begin(); it != keyListeners.end(); it++)
 		{
 
-			(*it)->buttonMousePressed(this, getStartX(), getStartY(), true);
+			(*it)->buttonKeyDown(key);
 
 		}
 
@@ -25,18 +25,23 @@ void Button::keyDown(KEY_EVENT_RECORD key)
 void Button::mousePressed(int x, int y, bool isLeft)
 {
 	vector<MouseListener*>::iterator it;
-	for (it = listeners.begin(); it != listeners.end(); it++)
+	for (it = mouseListeners.begin(); it != mouseListeners.end(); it++)
 	{
 
-		(*it)->buttonMousePressed(this, x, y, true);
+		(*it)->mousePressed(this, x, y, true);
 
 	}
 
 }
 
-void Button::addMouseListener(MouseListener* _listener)
+void Button::addListener(MouseListener* _listener)
 {
-	listeners.push_back(_listener);
+	mouseListeners.push_back(_listener);
+}
+
+void Button::addListener(KeyboardListener* _listener)
+{
+	keyListeners.push_back(_listener);
 }
 
 

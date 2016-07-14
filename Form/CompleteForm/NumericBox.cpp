@@ -7,11 +7,14 @@ NumericBox::NumericBox(int width, int min, int max) : Panel(3, width), text(*new
 	Button* minus = new Button(width / 2 - 2);
 	minus->setText("-");
 	minus->setBorder(BorderType::Single);
-	minus->addMouseListener(this);
+	minus->addListener(static_cast<MouseListener*>(this));
+	minus->addListener(static_cast<KeyboardListener*>(this));
 	Button* plus = new Button(width / 2 - 2);
 	plus->setText("+");
 	plus->setBorder(BorderType::Single);
-	plus->addMouseListener(this);
+	plus->addListener(static_cast<MouseListener*>(this));
+	plus->addListener(static_cast<KeyboardListener*>(this));
+
 
 	Panel::addControl(text, width / 2 - 1, getStartY());
 	Panel::addControl(*minus, 1, getStartY() + 2);
@@ -20,12 +23,18 @@ NumericBox::NumericBox(int width, int min, int max) : Panel(3, width), text(*new
 
 }
 
-void NumericBox::buttonMousePressed(Control* control, int x, int y, bool isLeft)
+void NumericBox::mousePressed(Control* control, int x, int y, bool isLeft)
 {
 	if (static_cast<Button*>(control)->getText().compare("-") == 0)
 		setValue(--value);
 	else
 		setValue(++value);
+}
+
+void NumericBox::buttonKeyDown(KEY_EVENT_RECORD key)
+{
+	mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY(), true);
+
 }
 
 void NumericBox::setValue(int val)
