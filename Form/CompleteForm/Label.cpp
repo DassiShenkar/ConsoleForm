@@ -9,6 +9,10 @@ Label::Label(int _width) : Control(1, _width)
 	setFocusable(false);
 }
 
+/*Label::~Label() 
+{
+	free(this);
+}*/
 
 //The label does not respond to any key event
 void Label::keyDown(KEY_EVENT_RECORD key)

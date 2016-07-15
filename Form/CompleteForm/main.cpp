@@ -44,10 +44,6 @@ int main(int argc, char **argv)
 	TextBox tAddress(25);
 	tAddress.setText("221B Baker Street, London");
 	tAddress.setBorder(BorderType::Single);
-	Messagebox msgbox(15, 20);
-	//msgbox.setTtl("");
-	//msgbox.setMsg("");
-	
 	
 	ComboBox cCountry(20, { "Israel", "Great Britain", "United States" });
 	cCountry.setSelectedIndex(1);
@@ -67,6 +63,10 @@ int main(int argc, char **argv)
 	bSubmit.addListener(&listener);
 	bSubmit.setBorder(BorderType::Double);
 
+	Messagebox msgbox(10, 25);
+	msgbox.setTtl("Error");
+	msgbox.setMsg("stupid isLeft bug");
+
 	Panel main;
 	main.addControl(lName, 1, 2);
 	main.addControl(lAddress, 1, 5);
@@ -79,12 +79,12 @@ int main(int argc, char **argv)
 	main.addControl(cCountry, 25, 8);
 	main.addControl(rSex, 25, 11);
 	main.addControl(clInterests, 25, 15);
-	/////////
-	main.addControl(msgbox, 11, 5);
 
 	main.addControl(nAge, 25, 20);
 
 	main.addControl(bSubmit, 1, 22);
+
+	main.addControl(msgbox, 11, 5);
 
 	Control::setGlobalFocus(&rSex);
 	EventEngine engine;
