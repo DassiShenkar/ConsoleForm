@@ -8,6 +8,7 @@ using namespace std;
 ComboBox::ComboBox(int _width, vector<string> _items) : Panel(1, _width), header(*new Button(_width))
 , body(*new RadioList(_items.size(), _width, _items))
 {
+	
 	header.setText(" o Select");
 	body.setBorder(BorderType::None);
 
@@ -25,7 +26,7 @@ ComboBox::ComboBox(int _width, vector<string> _items) : Panel(1, _width), header
 
 void ComboBox::mousePressed(Control* control, int x, int y, bool isLeft)
 {
-	Control::setGlobalFocus(&header);
+	globalControlInFocus = (&header);
 	if (control == &header)
 	{
 		if (!drop_down)
@@ -64,10 +65,13 @@ void ComboBox::mousePressed(int x, int y, bool isLeft)
 
 void ComboBox::buttonKeyDown(KEY_EVENT_RECORD key)
 {
-	mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY()+1, true);
-
+	Keys k = determineTypeOfKey(key);
+	if (k == Keys::ENTER)
+		mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY() + 1, true);
+	
+	else
+		focusOut();
 }
-
 
 
 

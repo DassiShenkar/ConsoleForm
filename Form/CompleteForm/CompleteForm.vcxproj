@@ -150,6 +150,7 @@
     <ClInclude Include="CheckList.h" />
     <ClInclude Include="ComboBox.h" />
     <ClInclude Include="Control.h" />
+    <ClInclude Include="Enums.h" />
     <ClInclude Include="EventEngine.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="KeyboardListener.h" />

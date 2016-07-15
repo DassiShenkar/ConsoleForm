@@ -28,6 +28,8 @@ Keys Control::determineTypeOfKey(KEY_EVENT_RECORD key)
 {
 	if (key.bKeyDown)
 	{
+		if (key.wVirtualKeyCode == 27)
+			return Keys::ESCAPE;
 		//Backspace
 		if (key.wVirtualKeyCode == 8)
 			return Keys::BACKSPACE;
@@ -82,15 +84,13 @@ Keys Control::determineTypeOfKey(KEY_EVENT_RECORD key)
 
 void Control::setGlobalFocus(Control *control)
 {
+	if(getGlobalInFocus()!=0)
+		getGlobalInFocus()->focusOut();
 	globalControlInFocus = control; 
 	control->focusEvent();
 	
 }
 
-void Control::focusEvent()
-{
-	
-}
 
 void Control::printBorder(Graphics &g, int left, int top, int _layer)
 {

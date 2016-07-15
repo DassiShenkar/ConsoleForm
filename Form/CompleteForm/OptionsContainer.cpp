@@ -29,6 +29,39 @@ OptionsContainer::OptionsContainer(int _height, int _width, vector<string> _item
 
 }
 
+void OptionsContainer::buttonKeyDown(KEY_EVENT_RECORD key)
+{
+	Keys k = determineTypeOfKey(key);
+	Control* temp = getGlobalInFocus();
+	int index = 0;
+	for (index = 0; index < items.size(); index++)
+	{
+		if (items[index] == temp)
+			break;
+	}
+	
+	switch (k)
+	{
+	case  Keys::UP:
+		if (index == 0)
+			index = items.size();
+		index--;
+		setGlobalFocus(items[index]);
+		break;
+	case Keys::DOWN:
+		if (index == items.size()-1)
+			index = -1;
+		index++;
+		setGlobalFocus(items[index]);
+		break;
+	case Keys::ESCAPE:
+		vector<KeyboardListener*>::iterator it;
+		for (it = keyListeners.begin(); it != keyListeners.end(); it++)
+			(*it)->buttonKeyDown(key);
+		break;
+	}
+}
+
 
 void OptionsContainer::draw(Graphics &g, int left, int top, int layer)
 {
@@ -84,11 +117,7 @@ void OptionsContainer::keyDown(KEY_EVENT_RECORD key)
 	vector<KeyboardListener*>::iterator it;
 	if (k == Keys::ENTER)
 		for (it = keyListeners.begin(); it != keyListeners.end(); it++)
-		{
-
 			(*it)->buttonKeyDown(key);
-
-		}
 }
 
 void OptionsContainer::addListener(KeyboardListener* _listener)

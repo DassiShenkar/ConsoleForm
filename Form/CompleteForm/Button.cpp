@@ -12,13 +12,10 @@ void Button::keyDown(KEY_EVENT_RECORD key)
 {
 	Keys k = determineTypeOfKey(key);
 	vector<KeyboardListener*>::iterator it;
-	if (k == Keys::ENTER)
-		for (it = keyListeners.begin(); it != keyListeners.end(); it++)
-		{
+	for (it = keyListeners.begin(); it != keyListeners.end(); it++)
+		(*it)->buttonKeyDown(key);
 
-			(*it)->buttonKeyDown(key);
-
-		}
+		
 
 }
 
@@ -32,6 +29,15 @@ void Button::mousePressed(int x, int y, bool isLeft)
 
 	}
 
+}
+
+void Button::focusOut()
+{
+	vector<KeyboardListener*>::iterator it;
+	KEY_EVENT_RECORD key; 
+		key.wVirtualKeyCode = 27;
+	for (it = keyListeners.begin(); it != keyListeners.end(); it++)
+		(*it)->buttonKeyDown(key);
 }
 
 void Button::addListener(MouseListener* _listener)

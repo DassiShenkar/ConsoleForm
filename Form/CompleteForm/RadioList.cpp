@@ -27,19 +27,18 @@ void RadioList::mousePressed(Control* control, int x, int y, bool isLeft)
 
 void RadioList::buttonKeyDown(KEY_EVENT_RECORD key)
 {
+	OptionsContainer::buttonKeyDown(key);
 	Keys k = determineTypeOfKey(key);
+	
 	vector<KeyboardListener*>::iterator it;
-	if(keyListeners.size()==0)
-		mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY()+1, true);
+	if (keyListeners.size() == 0)
+		if (k == Keys::ESCAPE)
+			;
+		else
+			mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY()+1, true);
 	else if(k == Keys::ENTER)
-	{
 		for (it = keyListeners.begin(); it != keyListeners.end(); it++)
-		{
-
 			(*it)->buttonKeyDown(key);
-
-		}
-	}
 
 }
 

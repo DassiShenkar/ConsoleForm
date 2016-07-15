@@ -6,7 +6,7 @@ TextBox::TextBox(int width): Button(width)
 	setText("");
 	addListener(static_cast <MouseListener*>(this));
 	addListener(static_cast <KeyboardListener*>(this));
-	cursorVisibility(true);
+	
 }
 
 
@@ -14,10 +14,10 @@ TextBox::TextBox(int width): Button(width)
 
 void TextBox::keyDown(KEY_EVENT_RECORD key)
 {
+	cursorVisibility(true);
 	Keys k = determineTypeOfKey(key);
 	string temp;
 	int replace;
-	char space = ' ';
 	switch (k)
 	{
 	case Keys::BACKSPACE :
@@ -86,16 +86,13 @@ void TextBox::mousePressed(int x, int y, bool isLeft)
 
 void TextBox::mousePressed(Control* control, int x, int y, bool isLeft)
 {
-	
 	setCursorPosition(x, y);
 }
 
-
-void TextBox::setStartPosition(int x, int y)
+void TextBox::focusEvent()
 {
-	setStartX(x);
-	setStartY(y);
-	
+	cursorX = startX+1;
+	cursorY = startY+1;
 }
 
 

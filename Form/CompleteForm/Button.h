@@ -30,7 +30,7 @@ public:
 	//Acts on Mouse right click event
 	void mousePressed(int x, int y, bool isLeft);
 
-	
+	void focusOut();
 
 	//Adds a new listener
 	void addListener(MouseListener* _listener);

@@ -28,7 +28,7 @@ public:
 
 	void mousePressed(Control* control, int x, int y, bool isLeft) = 0;
 
-	void buttonKeyDown(KEY_EVENT_RECORD key) = 0;
+	virtual void buttonKeyDown(KEY_EVENT_RECORD key) = 0;
 
 	void addListener(MouseListener* _listener);
 

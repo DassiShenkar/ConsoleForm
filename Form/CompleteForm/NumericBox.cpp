@@ -33,7 +33,9 @@ void NumericBox::mousePressed(Control* control, int x, int y, bool isLeft)
 
 void NumericBox::buttonKeyDown(KEY_EVENT_RECORD key)
 {
-	mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY(), true);
+	Keys k = determineTypeOfKey(key);
+	if (k == ENTER || k == SPACEBAR)
+		mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY(), true);
 
 }
 

@@ -24,7 +24,10 @@ void CheckList::mousePressed(Control* control, int x, int y, bool isLeft)
 
 void CheckList::buttonKeyDown(KEY_EVENT_RECORD key)
 {
-	mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY()+1, true);
+	OptionsContainer::buttonKeyDown(key);
+	Keys k = determineTypeOfKey(key);
+	if(k ==ENTER || k == SPACEBAR)
+		mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY()+1, true);
 }
 
 

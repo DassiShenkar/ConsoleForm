@@ -11,13 +11,13 @@
 *******************************************************************************/
 class Control
 {
-private:
-	//The global control in focus
-	static Control* globalControlInFocus;
+
+	
 protected:
 
 
-
+	//The global control in focus
+	static Control* globalControlInFocus;
 	//The starting coordinates
 	int startX, startY;
 
@@ -100,7 +100,8 @@ public:
 	//Gets the global control in focus
 	static Control* getGlobalInFocus() { return globalControlInFocus; }
 
-	virtual void focusEvent();
+	virtual void focusEvent() {};
+	virtual void focusOut() {};
 
 	//Sets the global control in focus
 	static void setGlobalFocus(Control *control);
