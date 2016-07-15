@@ -150,12 +150,11 @@
     <ClInclude Include="CheckList.h" />
     <ClInclude Include="ComboBox.h" />
     <ClInclude Include="Control.h" />
-    <ClInclude Include="Enums.h" />
     <ClInclude Include="EventEngine.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="KeyboardListener.h" />
     <ClInclude Include="Label.h" />
-    <ClInclude Include="MessageBox.h" />
+    <ClInclude Include="Messagebox.h" />
     <ClInclude Include="MouseListener.h" />
     <ClInclude Include="NumericBox.h" />
     <ClInclude Include="OptionsContainer.h" />
@@ -172,7 +171,7 @@
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MessageBox.cpp" />
+    <ClCompile Include="Messagebox.cpp" />
     <ClCompile Include="NumericBox.cpp" />
     <ClCompile Include="OptionsContainer.cpp" />
     <ClCompile Include="Panel.cpp" />
