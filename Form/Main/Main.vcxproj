@@ -167,6 +167,9 @@
     <ProjectReference Include="..\KeyboardListener\KeyboardListener.vcxproj">
       <Project>{e3fcdc0f-6e93-422c-b05d-3ec8d244cf82}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\LabelTest\LabelTest.vcxproj">
+      <Project>{777854bb-1a89-47a3-874f-9ddda3e4e7db}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Label\Label.vcxproj">
       <Project>{6268697d-20b2-48be-a47c-ab5dd1b15d1b}</Project>
     </ProjectReference>

@@ -167,8 +167,11 @@
     <ClCompile Include="unittest1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CompleteForm\CompleteForm.vcxproj">
-      <Project>{99723cb2-e558-4201-b44b-25c28e08d036}</Project>
+    <ProjectReference Include="..\Control\Control.vcxproj">
+      <Project>{eae299c5-0ea8-479a-9548-2fa3777ef95b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Label\Label.vcxproj">
+      <Project>{6268697d-20b2-48be-a47c-ab5dd1b15d1b}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

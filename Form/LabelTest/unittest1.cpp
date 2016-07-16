@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "../Label/Label.h"
-//#include "../CompleteForm/Control.h"
+#include "../Control/Control.h"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace LabelTest
@@ -10,7 +10,7 @@ namespace LabelTest
 	{
 	public:
 		
-		TEST_METHOD(TestGetText)
+		TEST_METHOD(TestGetSetText)
 		{
 			Label l1(10);
 			l1.setText("Test");
@@ -19,7 +19,7 @@ namespace LabelTest
 			// TODO: Your test code here
 		}
 
-		TEST_METHOD(TestGetText)
+		TEST_METHOD(TestSetText)
 		{
 			Label l1(10);
 			l1.setText("Test");
@@ -27,6 +27,8 @@ namespace LabelTest
 			Assert::AreEqual(l1.getText(), s);
 			// TODO: Your test code here
 		}
+
+		
 
 	};
 }
