@@ -48,7 +48,7 @@ void TextBox::keyDown(KEY_EVENT_RECORD key)
 		break;
 
 	case Keys::RIGHT:
-		if (getCursorX() - getStartX() >= getText().size())
+		if (getCursorX() - getStartX() >= getText().size()+1)
 			break;
 		setCursorPosition(getCursorX() + 1, getCursorY());
 		break;

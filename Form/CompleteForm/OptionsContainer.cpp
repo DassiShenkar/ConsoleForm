@@ -54,10 +54,9 @@ void OptionsContainer::buttonKeyDown(KEY_EVENT_RECORD key)
 		index++;
 		setGlobalFocus(items[index]);
 		break;
-	case Keys::ESCAPE:
-		vector<KeyboardListener*>::iterator it;
-		for (it = keyListeners.begin(); it != keyListeners.end(); it++)
-			(*it)->buttonKeyDown(key);
+	case Keys::ENTER:
+		mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY() + 1, true);
+	default:
 		break;
 	}
 }
@@ -80,10 +79,6 @@ void OptionsContainer::draw(Graphics &g, int left, int top, int layer)
 
 	Panel::draw(g, left, top, layer);
 }
-
-
-
-
 
 void OptionsContainer::setSelectedIndex(size_t index)
 {
@@ -108,16 +103,6 @@ size_t OptionsContainer::getSelectedIndex() const
 void OptionsContainer::addListener(MouseListener* _listener)
 {
 	mouseListeners.push_back(_listener);
-}
-
-
-void OptionsContainer::keyDown(KEY_EVENT_RECORD key)
-{
-	Keys k = determineTypeOfKey(key);
-	vector<KeyboardListener*>::iterator it;
-	if (k == Keys::ENTER)
-		for (it = keyListeners.begin(); it != keyListeners.end(); it++)
-			(*it)->buttonKeyDown(key);
 }
 
 void OptionsContainer::addListener(KeyboardListener* _listener)

@@ -179,6 +179,11 @@
     <ClCompile Include="RadioList.cpp" />
     <ClCompile Include="TextBox.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TestRadio\TestRadio.vcxproj">
+      <Project>{0dca72ac-121a-4aa8-bdca-7472cab7b7d7}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -5,97 +5,81 @@
 using namespace std;
 
 //A constructor that gets the starting coordinate of the Combo Box and the list of items
-ComboBox::ComboBox(int _width, vector<string> _items) : Panel(1, _width), header(*new Button(_width))
-, body(*new RadioList(_items.size(), _width, _items))
+ComboBox::ComboBox(int _width, vector<string> _items) :OptionsContainer(_items.size(), _width, _items), drop_down(false)
 {
-	
-	header.setText(" o Select");
-	body.setBorder(BorderType::None);
-
-	header.addListener(static_cast<MouseListener*>(this));
-	header.addListener(static_cast<KeyboardListener*>(this));
-	
-	body.addListener(static_cast<MouseListener*>(this));
-	body.addListener(static_cast<KeyboardListener*>(this));
-	Panel::addControl(header, 0, 0);
-	Panel::addControl(body, 0, 1);
-	body.Hide();
-
-
+	setHeight(1);
+	setSelectedIndex(1);
+	hideDropDown();
 }
 
 void ComboBox::mousePressed(Control* control, int x, int y, bool isLeft)
 {
-	globalControlInFocus = (&header);
-	if (control == &header)
+	setGlobalFocus(items[0]);
+	if (control == items[0])
 	{
-		if (!drop_down)
+		if (drop_down)
 		{
-			body.Show();
-			setHeight(2 + body.getSize());
-			drop_down = true;
+			drop_down = false;
+			setHeight(1);
+			hideDropDown();
 		}
 		else
 		{
-			body.Hide();
-			setHeight(1);
-			drop_down = false;
+			drop_down = true;
+			setHeight(items.size());
+			showDropDown();
 		}
 	}
-
-	else 
+	else
 	{
-		setSelectedIndex(y - body.getStartY());
-		string temp = static_cast<Button*>(body.getItems()[body.getSelectedIndex()-1])->getText();
-		temp.replace(0, 1, " x");
-		header.setText(temp);
-		mousePressed(&header, header.getStartX(), header.getStartY(), true);
-
+		replaceHeader(control);
+		drop_down = false;
+		hideDropDown();
+		setHeight(1);
 	}
 }
 
-void ComboBox::mousePressed(int x, int y, bool isLeft)
-{
-	if (isInside(x, y, header.getStartX(), header.getStartY(), header.getWidth(), header.getHeight()))
-		mousePressed(&header, x, y, isLeft);
-	else
-		mousePressed(&body, x, y, isLeft);
 
-}
 
-void ComboBox::buttonKeyDown(KEY_EVENT_RECORD key)
+void ComboBox::replaceHeader(Control* c)
 {
-	Keys k = determineTypeOfKey(key);
-	if (k == Keys::ENTER)
-		mousePressed(getGlobalInFocus(), getGlobalInFocus()->getStartX(), getGlobalInFocus()->getStartY() + 1, true);
-	
-	else
-		focusOut();
+	string temp = static_cast<Button*>(items[0])->getText();
+	static_cast<Button*>(items[0])->setText(static_cast<Button*>(c)->getText());
+	static_cast<Button*>(c)->setText(temp);
+	setSelectedIndex(1);
 }
 
 
 
-
-void ComboBox::setSelectedIndex(size_t index)
-{
-	body.setSelectedIndex(index);
-}
 
 void ComboBox::getAllControls(vector<Control*>& controls)
 {
 	if (drop_down)
 	{
-		
 		vector<Control*>::iterator it;
 		for (it = items.begin(); it != items.end(); it++)
 		{
 			(*it)->getAllControls(controls);
 		}
-		controls.push_back(this);
 	}
 	else
 	{
-		controls.push_back(&header);
-		drop_down = false;
+		controls.push_back(items[0]);
+	}
+}
+
+void ComboBox::hideDropDown()
+{
+	for (int i = 1; i < items.size(); i++)
+	{
+		items[i]->Hide();
+	}
+}
+
+void ComboBox::showDropDown()
+{
+	for (int i = 1; i < items.size(); i++)
+	{
+		items[i]->Show();
 	}
 }
